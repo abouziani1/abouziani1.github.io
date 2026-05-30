@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<meta name="description" content="Página personal de Anas Bouziani — proyectos, herramientas y experimentos.">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f2eb;
+  --bg2: #ede9e0;
+  --ink: #1a1812;
+  --ink2: #5a5548;
+  --ink3: #9a9488;
+  --rule: #d8d3c8;
+  --accent: #c84b2f;
+  --accent2: #e8956a;
+  --spot: #2d5a3d;
+  --spot2: #4a8c62;
+  --radius: 14px;
+  --display: 'Syne', sans-serif;
+  --body: 'Instrument Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  min-height: 100vh;
+  cursor: none;
+}
+
+/* Custom cursor */
+.cursor {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
+  transform: translate(-50%, -50%);
+}
+.cursor.hover { width: 32px; height: 32px; background: transparent; border: 1.5px solid var(--accent); }
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.6;
+}
+
+.page { position: relative; z-index: 1; }
+
+/* TOP BAR */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 48px;
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0;
+  background: rgba(245,242,235,0.92);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+.logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.logo span { color: var(--accent); }
+.nav { display: flex; gap: 28px; list-style: none; }
+.nav a { font-size: 13px; color: var(--ink2); text-decoration: none; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
+.nav a:hover { color: var(--accent); }
+
+/* HERO */
+.hero {
+  padding: 100px 48px 80px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink3); margin-bottom: 28px;
+  font-weight: 500;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(52px, 9vw, 110px);
+  font-weight: 800;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-bottom: 36px;
+}
+.hero h1 .line2 { color: var(--accent); display: block; }
+.hero h1 .line3 { -webkit-text-stroke: 1.5px var(--ink); color: transparent; display: block; }
+
+.hero-desc {
+  max-width: 420px;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink2);
+  font-weight: 300;
+  margin-bottom: 40px;
+}
+
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 28px;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 100px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+  letter-spacing: 0.01em;
+}
+.hero-cta:hover { background: var(--accent); transform: translateY(-2px); }
+.hero-cta .arrow { transition: transform 0.2s; }
+.hero-cta:hover .arrow { transform: translateX(4px); }
+
+/* Floating decoration */
+.hero-deco {
+  position: absolute;
+  right: 48px; top: 80px;
+  width: 280px; height: 280px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.hero-deco::before {
+  content: '';
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  border: 1px dashed var(--rule);
+  position: absolute;
+  animation: spin 30s linear infinite;
+}
+.hero-deco::after {
+  content: 'AB';
+  font-family: var(--display);
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--bg2);
+  -webkit-text-stroke: 1px var(--rule);
+  letter-spacing: -0.05em;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* DIVIDER */
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 48px;
+  max-width: 1100px; margin: 0 auto 48px;
+  color: var(--ink3); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+}
+.divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--rule); }
+
+/* PROJECTS GRID */
+.projects {
+  max-width: 1100px; margin: 0 auto;
+  padding: 0 48px 80px;
+}
+
+.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+
+/* Card base */
+.card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--bg);
+}
+.card:hover {
+  border-color: var(--ink);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(26,24,18,0.12);
+}
+
+/* Card sizes */
+.card-xl { grid-column: span 7; min-height: 380px; }
+.card-lg { grid-column: span 5; min-height: 380px; }
+.card-md { grid-column: span 4; min-height: 220px; }
+.card-sm { grid-column: span 4; min-height: 220px; }
+.card-wide { grid-column: span 8; min-height: 200px; flex-direction: row; }
+
+.card-visual {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center;
+  padding: 32px;
+  font-size: 56px;
+  position: relative;
+  overflow: hidden;
+  min-height: 180px;
+}
+.card-wide .card-visual { width: 200px; flex: none; min-height: auto; }
+
+.card-body {
+  padding: 20px 24px;
+  border-top: 1px solid var(--rule);
+}
+.card-wide .card-body { flex: 1; border-top: none; border-left: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; }
+
+.card-tag {
+  display: inline-block;
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink3); font-weight: 500; margin-bottom: 8px;
+}
+.card-title {
+  font-family: var(--display);
+  font-size: 20px; font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink); margin-bottom: 6px;
+  line-height: 1.2;
+}
+.card-xl .card-title { font-size: 28px; }
+.card-desc {
+  font-size: 13px; color: var(--ink2); line-height: 1.6;
+  font-weight: 300;
+}
+
+.card-arrow {
+  position: absolute; bottom: 20px; right: 24px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+  color: var(--ink2);
+}
+.card:hover .card-arrow { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* Card color themes */
+.theme-morse .card-visual { background: #0a0a0f; }
+.theme-green .card-visual { background: #e8f4ed; }
+.theme-warm .card-visual { background: #fef3e8; }
+.theme-cool .card-visual { background: #e8eef8; }
+.theme-red .card-visual { background: #fdf0ee; }
+.theme-neutral .card-visual { background: var(--bg2); }
+
+/* Morse visual decoration */
+.morse-visual {
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
+}
+.morse-row { display: flex; gap: 6px; align-items: center; }
+.m-dot { width: 8px; height: 8px; border-radius: 50%; background: #4fc3f7; }
+.m-dash { width: 24px; height: 8px; border-radius: 4px; background: #ef5350; }
+.m-letter { font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(255,255,255,0.4); margin-left: 8px; }
+
+/* Coming soon badge */
+.badge-soon {
+  position: absolute; top: 14px; right: 14px;
+  background: var(--bg2); border: 1px solid var(--rule);
+  border-radius: 100px; padding: 4px 10px;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink3); font-weight: 500;
+}
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 32px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto;
+  font-size: 12px; color: var(--ink3);
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--ink3); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--accent); }
+
+/* Animations */
+.fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.6s ease forwards; }
+.fade-up:nth-child(1) { animation-delay: 0.1s; }
+.fade-up:nth-child(2) { animation-delay: 0.2s; }
+.fade-up:nth-child(3) { animation-delay: 0.3s; }
+.fade-up:nth-child(4) { animation-delay: 0.4s; }
+.fade-up:nth-child(5) { animation-delay: 0.5s; }
+.fade-up:nth-child(6) { animation-delay: 0.6s; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+.hero-animate { opacity: 0; animation: fadeUp 0.8s ease forwards; }
+.hero-animate.d1 { animation-delay: 0.05s; }
+.hero-animate.d2 { animation-delay: 0.15s; }
+.hero-animate.d3 { animation-delay: 0.25s; }
+.hero-animate.d4 { animation-delay: 0.35s; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topbar { padding: 20px 24px; }
+  .hero { padding: 60px 24px 48px; }
+  .hero-deco { display: none; }
+  .divider { padding: 0 24px; }
+  .projects { padding: 0 24px 60px; }
+  .card-xl, .card-lg, .card-md, .card-sm { grid-column: span 12; }
+  .card-wide { grid-column: span 12; flex-direction: column; }
+  .card-wide .card-visual { width: 100%; min-height: 140px; }
+  .card-wide .card-body { border-left: none; border-top: 1px solid var(--rule); }
+  footer { padding: 24px; }
+  .nav { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="page">
+  <nav class="topbar">
+    <a class="logo" href="#">Anas<span>.</span></a>
+    <ul class="nav">
+      <li><a href="#proyectos">Proyectos</a></li>
+      <li><a href="mailto:tu@email.com">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-eyebrow hero-animate d1">Bienvenido a mi espacio</div>
+    <h1 class="hero-animate d2">
+      Hola,<br>
+      <span class="line2">soy Anas</span>
+      <span class="line3">Bouziani.</span>
+    </h1>
+    <p class="hero-desc hero-animate d3">
+      Aquí reúno mis proyectos, herramientas y experimentos.
+      Cada tarjeta es algo que he creado y que puedes usar.
+    </p>
+    <a href="#proyectos" class="hero-cta hero-animate d4">
+      Ver proyectos <span class="arrow">→</span>
+    </a>
+
+    <div class="hero-deco"></div>
+  </section>
+
+  <div class="divider" id="proyectos">Proyectos</div>
+
+  <section class="projects">
+    <div class="grid">
+
+      <!-- MORSE — proyecto principal destacado -->
+      <a href="https://anasbouziani.github.io/morse-flashcards/" class="card card-xl theme-morse fade-up">
+        <div class="card-visual">
+          <div class="morse-visual">
+            <div class="morse-row"><div class="m-dot"></div><div class="m-dash"></div><span class="m-letter">A</span></div>
+            <div class="morse-row"><div class="m-dash"></div><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="m-letter">B</span></div>
+            <div class="morse-row"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="m-letter">S</span></div>
+            <div class="morse-row"><div class="m-dot"></div><div class="m-dash"></div><div class="m-dash"></div><div class="m-dash"></div><span class="m-letter">J</span></div>
+            <div class="morse-row"><div class="m-dash"></div><div class="m-dash"></div><div class="m-dash"></div><span class="m-letter">O</span></div>
+          </div>
+        </div>
+        <div class="card-body" style="position:relative;padding-bottom:28px">
+          <span class="card-tag">Herramienta de aprendizaje</span>
+          <div class="card-title">Código Morse</div>
+          <p class="card-desc">Aprende el alfabeto morse con tarjetas interactivas, quiz y diagrama completo. Incluye audio real.</p>
+          <div class="card-arrow">→</div>
+        </div>
+      </a>
+
+      <!-- Placeholder 2 -->
+      <div class="card card-lg theme-green fade-up">
+        <div class="card-visual" style="font-size:48px">🧮</div>
+        <div class="card-body" style="position:relative;padding-bottom:28px">
+          <span class="badge-soon">Próximamente</span>
+          <span class="card-tag">Herramienta</span>
+          <div class="card-title">Calculadora</div>
+          <p class="card-desc">Una calculadora científica con historial y modo conversión de unidades.</p>
+          <div class="card-arrow" style="opacity:0.3">→</div>
+        </div>
+      </div>
+
+      <!-- Placeholder 3 -->
+      <div class="card card-md theme-warm fade-up">
+        <div class="card-visual" style="font-size:44px">🎨</div>
+        <div class="card-body">
+          <span class="badge-soon">Próximamente</span>
+          <span class="card-tag">Diseño</span>
+          <div class="card-title">Paletas de color</div>
+          <p class="card-desc">Genera y exporta paletas de color.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder 4 -->
+      <div class="card card-md theme-cool fade-up">
+        <div class="card-visual" style="font-size:44px">📝</div>
+        <div class="card-body">
+          <span class="badge-soon">Próximamente</span>
+          <span class="card-tag">Productividad</span>
+          <div class="card-title">Notas rápidas</div>
+          <p class="card-desc">Bloc de notas minimalista con guardado local.</p>
+        </div>
+      </div>
+
+      <!-- Placeholder 5 -->
+      <div class="card card-md theme-neutral fade-up">
+        <div class="card-visual" style="font-size:44px">⏱️</div>
+        <div class="card-body">
+          <span class="badge-soon">Próximamente</span>
+          <span class="card-tag">Utilidad</span>
+          <div class="card-title">Pomodoro</div>
+          <p class="card-desc">Temporizador Pomodoro con estadísticas de sesión.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Anas Bouziani — anasbouziani.github.io</span>
+    <div class="footer-links">
+      <a href="https://github.com/anasbouziani" target="_blank">GitHub</a>
+      <a href="mailto:tu@email.com">Email</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.querySelectorAll('a, button, .card').forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// Scroll reveal for cards
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.style.animationPlayState = 'running'; } });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
