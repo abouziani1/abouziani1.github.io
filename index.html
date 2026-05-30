@@ -4,458 +4,428 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portfolio</title>
-<meta name="description" content="Página personal de Anas Bouziani — proyectos, herramientas y experimentos.">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Epilogue:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #f5f2eb;
-  --bg2: #ede9e0;
-  --ink: #1a1812;
-  --ink2: #5a5548;
-  --ink3: #9a9488;
-  --rule: #d8d3c8;
-  --accent: #c84b2f;
-  --accent2: #e8956a;
-  --spot: #2d5a3d;
-  --spot2: #4a8c62;
-  --radius: 14px;
-  --display: 'Syne', sans-serif;
-  --body: 'Instrument Sans', sans-serif;
+  --bg: #0e0e0e;
+  --bg2: #161616;
+  --bg3: #1e1e1e;
+  --line: #2a2a2a;
+  --line2: #333;
+  --text: #f0ede8;
+  --muted: #666;
+  --muted2: #444;
+  --gold: #c9a96e;
+  --gold2: #e8c99a;
+  --white: #f0ede8;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { scroll-behavior: smooth; }
 
 body {
   background: var(--bg);
-  color: var(--ink);
-  font-family: var(--body);
+  color: var(--text);
+  font-family: 'Epilogue', sans-serif;
+  font-weight: 300;
   min-height: 100vh;
-  cursor: none;
+  overflow-x: hidden;
 }
 
-/* Custom cursor */
-.cursor {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.15s ease, width 0.2s, height 0.2s, background 0.2s;
-  transform: translate(-50%, -50%);
+#cur {
+  position: fixed; width: 6px; height: 6px;
+  background: var(--gold); border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width .25s, height .25s, background .25s, opacity .2s;
 }
-.cursor.hover { width: 32px; height: 32px; background: transparent; border: 1.5px solid var(--accent); }
+#cur.big { width: 40px; height: 40px; background: transparent; border: 1px solid var(--gold); opacity: .6; }
+body { cursor: none; }
 
-/* Noise texture overlay */
-body::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0; opacity: 0.6;
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 56px;
 }
-
-.page { position: relative; z-index: 1; }
-
-/* TOP BAR */
-.topbar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 24px 48px;
-  border-bottom: 1px solid var(--rule);
-  position: sticky; top: 0;
-  background: rgba(245,242,235,0.92);
-  backdrop-filter: blur(12px);
-  z-index: 100;
+.nav-mark { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a {
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--white); text-decoration: none; font-weight: 400;
+  opacity: .4; transition: opacity .2s;
 }
-.logo {
-  font-family: var(--display);
-  font-weight: 800;
-  font-size: 18px;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-  text-decoration: none;
-}
-.logo span { color: var(--accent); }
-.nav { display: flex; gap: 28px; list-style: none; }
-.nav a { font-size: 13px; color: var(--ink2); text-decoration: none; font-weight: 400; letter-spacing: 0.02em; transition: color 0.2s; }
-.nav a:hover { color: var(--accent); }
+.nav-links a:hover { opacity: 1; }
 
-/* HERO */
 .hero {
-  padding: 100px 48px 80px;
-  max-width: 1100px;
-  margin: 0 auto;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 56px 72px;
   position: relative;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-num {
+  position: absolute;
+  top: 50%; right: 56px;
+  transform: translateY(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(180px, 28vw, 320px);
+  font-weight: 700;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line2);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.05em;
 }
 
 .hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--ink3); margin-bottom: 28px;
-  font-weight: 500;
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+  opacity: 0; animation: up .7s .1s ease forwards;
 }
-.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--accent); }
+.hero-eyebrow::before { content:''; width: 32px; height: 1px; background: var(--gold); display:block; }
 
 .hero h1 {
-  font-family: var(--display);
-  font-size: clamp(52px, 9vw, 110px);
-  font-weight: 800;
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  margin-bottom: 36px;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 9vw, 118px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.03em;
+  color: var(--white);
+  opacity: 0; animation: up .8s .2s ease forwards;
 }
-.hero h1 .line2 { color: var(--accent); display: block; }
-.hero h1 .line3 { -webkit-text-stroke: 1.5px var(--ink); color: transparent; display: block; }
+.hero h1 em { font-style: italic; color: var(--gold); }
 
-.hero-desc {
-  max-width: 420px;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--ink2);
-  font-weight: 300;
-  margin-bottom: 40px;
+.hero-sub {
+  margin-top: 36px;
+  font-size: 14px; color: var(--muted); line-height: 1.8;
+  max-width: 380px;
+  opacity: 0; animation: up .7s .35s ease forwards;
 }
 
-.hero-cta {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 14px 28px;
-  background: var(--ink);
-  color: var(--bg);
-  border-radius: 100px;
-  text-decoration: none;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s;
-  letter-spacing: 0.01em;
+.scroll-hint {
+  position: absolute; bottom: 32px; right: 56px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--muted2);
+  display: flex; align-items: center; gap: 10px;
+  opacity: 0; animation: up .6s .5s ease forwards;
 }
-.hero-cta:hover { background: var(--accent); transform: translateY(-2px); }
-.hero-cta .arrow { transition: transform 0.2s; }
-.hero-cta:hover .arrow { transform: translateX(4px); }
+.scroll-hint::after { content:''; display:block; width:40px; height:1px; background:var(--muted2); }
 
-/* Floating decoration */
-.hero-deco {
-  position: absolute;
-  right: 48px; top: 80px;
-  width: 280px; height: 280px;
-  border: 1px solid var(--rule);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  pointer-events: none;
-}
-.hero-deco::before {
-  content: '';
-  width: 180px; height: 180px;
-  border-radius: 50%;
-  border: 1px dashed var(--rule);
-  position: absolute;
-  animation: spin 30s linear infinite;
-}
-.hero-deco::after {
-  content: 'AB';
-  font-family: var(--display);
-  font-size: 56px;
-  font-weight: 800;
-  color: var(--bg2);
-  -webkit-text-stroke: 1px var(--rule);
-  letter-spacing: -0.05em;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes up { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 
-/* DIVIDER */
-.divider {
-  display: flex; align-items: center; gap: 16px;
-  padding: 0 48px;
-  max-width: 1100px; margin: 0 auto 48px;
-  color: var(--ink3); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+.section-header {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding: 56px 56px 40px;
+  border-bottom: 1px solid var(--line);
 }
-.divider::before, .divider::after { content:''; flex:1; height:1px; background:var(--rule); }
-
-/* PROJECTS GRID */
-.projects {
-  max-width: 1100px; margin: 0 auto;
-  padding: 0 48px 80px;
+.section-title {
+  font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--muted);
 }
+.section-count { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--muted2); }
 
-.grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-
-/* Card base */
-.card {
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  overflow: hidden;
+.proj {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  align-items: center;
+  gap: 0 40px;
+  padding: 32px 56px;
+  border-bottom: 1px solid var(--line);
   text-decoration: none;
   color: inherit;
-  transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
-  position: relative;
-  display: flex; flex-direction: column;
-  background: var(--bg);
-}
-.card:hover {
-  border-color: var(--ink);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(26,24,18,0.12);
-}
-
-/* Card sizes */
-.card-xl { grid-column: span 7; min-height: 380px; }
-.card-lg { grid-column: span 5; min-height: 380px; }
-.card-md { grid-column: span 4; min-height: 220px; }
-.card-sm { grid-column: span 4; min-height: 220px; }
-.card-wide { grid-column: span 8; min-height: 200px; flex-direction: row; }
-
-.card-visual {
-  flex: 1;
-  display: flex; align-items: center; justify-content: center;
-  padding: 32px;
-  font-size: 56px;
   position: relative;
   overflow: hidden;
-  min-height: 180px;
 }
-.card-wide .card-visual { width: 200px; flex: none; min-height: auto; }
+.proj::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--bg2);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+.proj:hover::before { transform: scaleX(1); }
+.proj > * { position: relative; z-index: 1; }
 
-.card-body {
-  padding: 20px 24px;
-  border-top: 1px solid var(--rule);
+.proj-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 13px; color: var(--muted2);
+  font-style: italic;
 }
-.card-wide .card-body { flex: 1; border-top: none; border-left: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; }
-
-.card-tag {
-  display: inline-block;
-  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--ink3); font-weight: 500; margin-bottom: 8px;
+.proj-tag {
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px; display: block;
 }
-.card-title {
-  font-family: var(--display);
-  font-size: 20px; font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink); margin-bottom: 6px;
-  line-height: 1.2;
+.proj-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 400; color: var(--white);
+  letter-spacing: -.02em; line-height: 1;
+  transition: color .2s;
 }
-.card-xl .card-title { font-size: 28px; }
-.card-desc {
-  font-size: 13px; color: var(--ink2); line-height: 1.6;
-  font-weight: 300;
+.proj:hover .proj-name { color: var(--gold2); }
+.proj-desc {
+  font-size: 13px; color: var(--muted); margin-top: 6px;
+  line-height: 1.6; max-width: 440px;
 }
-
-.card-arrow {
-  position: absolute; bottom: 20px; right: 24px;
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  border: 1px solid var(--rule);
+.proj-right { text-align: right; }
+.proj-arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--line2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  transition: all 0.2s;
-  color: var(--ink2);
+  font-size: 18px; color: var(--muted);
+  transition: all .2s; margin-left: auto; margin-bottom: 8px;
 }
-.card:hover .card-arrow { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-
-/* Card color themes */
-.theme-morse .card-visual { background: #0a0a0f; }
-.theme-green .card-visual { background: #e8f4ed; }
-.theme-warm .card-visual { background: #fef3e8; }
-.theme-cool .card-visual { background: #e8eef8; }
-.theme-red .card-visual { background: #fdf0ee; }
-.theme-neutral .card-visual { background: var(--bg2); }
-
-/* Morse visual decoration */
-.morse-visual {
-  display: flex; flex-direction: column; gap: 10px; align-items: flex-start;
-}
-.morse-row { display: flex; gap: 6px; align-items: center; }
-.m-dot { width: 8px; height: 8px; border-radius: 50%; background: #4fc3f7; }
-.m-dash { width: 24px; height: 8px; border-radius: 4px; background: #ef5350; }
-.m-letter { font-family: 'Space Mono', monospace; font-size: 14px; color: rgba(255,255,255,0.4); margin-left: 8px; }
-
-/* Coming soon badge */
-.badge-soon {
-  position: absolute; top: 14px; right: 14px;
-  background: var(--bg2); border: 1px solid var(--rule);
-  border-radius: 100px; padding: 4px 10px;
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink3); font-weight: 500;
+.proj:hover .proj-arrow { border-color: var(--gold); color: var(--gold); transform: rotate(45deg); }
+.proj-year { font-size: 11px; color: var(--muted2); letter-spacing: .1em; }
+.proj.soon { pointer-events: none; }
+.proj.soon .proj-name { color: var(--muted2); }
+.proj.soon .proj-tag { color: var(--muted2); }
+.proj-badge {
+  display: inline-block;
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  border: 1px solid var(--line2); color: var(--muted2);
+  padding: 3px 8px; border-radius: 100px; margin-top: 6px;
 }
 
-/* FOOTER */
+.about {
+  display: grid; grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+.about-left {
+  padding: 64px 56px;
+  border-right: 1px solid var(--line);
+}
+.about-left p {
+  font-size: 15px; line-height: 1.85; color: var(--muted);
+  font-weight: 300; max-width: 420px;
+}
+.about-left p strong { color: var(--text); font-weight: 400; }
+.about-right {
+  padding: 64px 56px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+.skill-row { display: flex; align-items: center; justify-content: space-between; }
+.skill-name { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); min-width: 110px; }
+.skill-bar { flex: 1; height: 1px; background: var(--line2); margin: 0 20px; position: relative; }
+.skill-fill { position: absolute; left: 0; top: 0; height: 1px; background: var(--gold); transition: width 1.2s cubic-bezier(.16,1,.3,1); width: 0; }
+.skill-pct { font-family: 'Playfair Display', serif; font-size: 13px; color: var(--muted2); font-style: italic; }
+
 footer {
-  border-top: 1px solid var(--rule);
-  padding: 32px 48px;
-  display: flex; align-items: center; justify-content: space-between;
-  max-width: 1100px; margin: 0 auto;
-  font-size: 12px; color: var(--ink3);
-  flex-wrap: wrap; gap: 12px;
+  padding: 48px 56px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  flex-wrap: wrap; gap: 24px;
 }
-.footer-links { display: flex; gap: 20px; }
-.footer-links a { color: var(--ink3); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--accent); }
+.footer-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 8vw, 96px);
+  font-weight: 400;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line2);
+  letter-spacing: -.04em;
+  line-height: 1;
+  transition: -webkit-text-stroke-color .4s, color .4s;
+}
+.footer-name:hover { color: var(--text); -webkit-text-stroke-color: transparent; }
+.footer-right { text-align: right; }
+.footer-links { display: flex; gap: 24px; justify-content: flex-end; margin-bottom: 8px; }
+.footer-links a {
+  font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--muted); text-decoration: none; transition: color .2s;
+}
+.footer-links a:hover { color: var(--gold); }
+.footer-copy { font-size: 11px; color: var(--muted2); }
 
-/* Animations */
-.fade-up { opacity: 0; transform: translateY(24px); animation: fadeUp 0.6s ease forwards; }
-.fade-up:nth-child(1) { animation-delay: 0.1s; }
-.fade-up:nth-child(2) { animation-delay: 0.2s; }
-.fade-up:nth-child(3) { animation-delay: 0.3s; }
-.fade-up:nth-child(4) { animation-delay: 0.4s; }
-.fade-up:nth-child(5) { animation-delay: 0.5s; }
-.fade-up:nth-child(6) { animation-delay: 0.6s; }
-@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-
-.hero-animate { opacity: 0; animation: fadeUp 0.8s ease forwards; }
-.hero-animate.d1 { animation-delay: 0.05s; }
-.hero-animate.d2 { animation-delay: 0.15s; }
-.hero-animate.d3 { animation-delay: 0.25s; }
-.hero-animate.d4 { animation-delay: 0.35s; }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .topbar { padding: 20px 24px; }
-  .hero { padding: 60px 24px 48px; }
-  .hero-deco { display: none; }
-  .divider { padding: 0 24px; }
-  .projects { padding: 0 24px 60px; }
-  .card-xl, .card-lg, .card-md, .card-sm { grid-column: span 12; }
-  .card-wide { grid-column: span 12; flex-direction: column; }
-  .card-wide .card-visual { width: 100%; min-height: 140px; }
-  .card-wide .card-body { border-left: none; border-top: 1px solid var(--rule); }
-  footer { padding: 24px; }
-  .nav { display: none; }
+@media (max-width: 700px) {
+  nav { padding: 24px; }
+  .hero { padding: 0 24px 56px; }
+  .hero-num { display: none; }
+  .scroll-hint { display: none; }
+  .section-header { padding: 40px 24px 28px; }
+  .proj { grid-template-columns: 48px 1fr; padding: 24px; gap: 0 16px; }
+  .proj-right { display: none; }
+  .about { grid-template-columns: 1fr; }
+  .about-left { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
+  .about-right { padding: 40px 24px; }
+  footer { padding: 32px 24px; }
 }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
+<div id="cur"></div>
 
-<div class="page">
-  <nav class="topbar">
-    <a class="logo" href="#">Anas<span>.</span></a>
-    <ul class="nav">
-      <li><a href="#proyectos">Proyectos</a></li>
-      <li><a href="mailto:tu@email.com">Contacto</a></li>
-    </ul>
-  </nav>
+<nav>
+  <div class="nav-mark"></div>
+  <ul class="nav-links">
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="mailto:tu@email.com">Contacto</a></li>
+  </ul>
+</nav>
 
-  <section class="hero">
-    <div class="hero-eyebrow hero-animate d1">Bienvenido a mi espacio</div>
-    <h1 class="hero-animate d2">
-      Hola,<br>
-      <span class="line2">soy Anas</span>
-      <span class="line3">Bouziani.</span>
-    </h1>
-    <p class="hero-desc hero-animate d3">
-      Aquí reúno mis proyectos, herramientas y experimentos.
-      Cada tarjeta es algo que he creado y que puedes usar.
-    </p>
-    <a href="#proyectos" class="hero-cta hero-animate d4">
-      Ver proyectos <span class="arrow">→</span>
-    </a>
+<section class="hero">
+  <div class="hero-num">AB</div>
+  <div class="hero-eyebrow">Portfolio — 2026</div>
+  <h1>Proyectos<br><em>&amp; cosas</em><br>que creo.</h1>
+  <p class="hero-sub">Una colección de herramientas, experimentos y pequeños proyectos construidos con curiosidad.</p>
+  <div class="scroll-hint">Scroll</div>
+</section>
 
-    <div class="hero-deco"></div>
-  </section>
+<div class="section-header" id="proyectos">
+  <span class="section-title">Proyectos</span>
+  <span class="section-count">01 — 05</span>
+</div>
 
-  <div class="divider" id="proyectos">Proyectos</div>
-
-  <section class="projects">
-    <div class="grid">
-
-      <!-- MORSE — proyecto principal destacado -->
-      <a href="https://anasbouziani.github.io/morse-flashcards/" class="card card-xl theme-morse fade-up">
-        <div class="card-visual">
-          <div class="morse-visual">
-            <div class="morse-row"><div class="m-dot"></div><div class="m-dash"></div><span class="m-letter">A</span></div>
-            <div class="morse-row"><div class="m-dash"></div><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="m-letter">B</span></div>
-            <div class="morse-row"><div class="m-dot"></div><div class="m-dot"></div><div class="m-dot"></div><span class="m-letter">S</span></div>
-            <div class="morse-row"><div class="m-dot"></div><div class="m-dash"></div><div class="m-dash"></div><div class="m-dash"></div><span class="m-letter">J</span></div>
-            <div class="morse-row"><div class="m-dash"></div><div class="m-dash"></div><div class="m-dash"></div><span class="m-letter">O</span></div>
-          </div>
-        </div>
-        <div class="card-body" style="position:relative;padding-bottom:28px">
-          <span class="card-tag">Herramienta de aprendizaje</span>
-          <div class="card-title">Código Morse</div>
-          <p class="card-desc">Aprende el alfabeto morse con tarjetas interactivas, quiz y diagrama completo. Incluye audio real.</p>
-          <div class="card-arrow">→</div>
-        </div>
-      </a>
-
-      <!-- Placeholder 2 -->
-      <div class="card card-lg theme-green fade-up">
-        <div class="card-visual" style="font-size:48px">🧮</div>
-        <div class="card-body" style="position:relative;padding-bottom:28px">
-          <span class="badge-soon">Próximamente</span>
-          <span class="card-tag">Herramienta</span>
-          <div class="card-title">Calculadora</div>
-          <p class="card-desc">Una calculadora científica con historial y modo conversión de unidades.</p>
-          <div class="card-arrow" style="opacity:0.3">→</div>
-        </div>
-      </div>
-
-      <!-- Placeholder 3 -->
-      <div class="card card-md theme-warm fade-up">
-        <div class="card-visual" style="font-size:44px">🎨</div>
-        <div class="card-body">
-          <span class="badge-soon">Próximamente</span>
-          <span class="card-tag">Diseño</span>
-          <div class="card-title">Paletas de color</div>
-          <p class="card-desc">Genera y exporta paletas de color.</p>
-        </div>
-      </div>
-
-      <!-- Placeholder 4 -->
-      <div class="card card-md theme-cool fade-up">
-        <div class="card-visual" style="font-size:44px">📝</div>
-        <div class="card-body">
-          <span class="badge-soon">Próximamente</span>
-          <span class="card-tag">Productividad</span>
-          <div class="card-title">Notas rápidas</div>
-          <p class="card-desc">Bloc de notas minimalista con guardado local.</p>
-        </div>
-      </div>
-
-      <!-- Placeholder 5 -->
-      <div class="card card-md theme-neutral fade-up">
-        <div class="card-visual" style="font-size:44px">⏱️</div>
-        <div class="card-body">
-          <span class="badge-soon">Próximamente</span>
-          <span class="card-tag">Utilidad</span>
-          <div class="card-title">Pomodoro</div>
-          <p class="card-desc">Temporizador Pomodoro con estadísticas de sesión.</p>
-        </div>
-      </div>
-
+<div class="projects">
+  <a href="https://anasbouziani1.github.io/Morse/" target="_blank" class="proj">
+    <div class="proj-num">01</div>
+    <div class="proj-info">
+      <span class="proj-tag">Aprendizaje</span>
+      <div class="proj-name">Código Morse</div>
+      <p class="proj-desc">Tarjetas de memoria interactivas para aprender el alfabeto morse. Con quiz, audio y diagrama completo.</p>
     </div>
-  </section>
+    <div class="proj-right">
+      <div class="proj-arrow">↗</div>
+      <div class="proj-year">2026</div>
+    </div>
+  </a>
 
-  <footer>
-    <span>© 2026 Anas Bouziani — anasbouziani.github.io</span>
+  <div class="proj soon">
+    <div class="proj-num">02</div>
+    <div class="proj-info">
+      <span class="proj-tag">Utilidad</span>
+      <div class="proj-name">Calculadora</div>
+      <p class="proj-desc">Calculadora científica con historial y conversión de unidades.</p>
+      <span class="proj-badge">Próximamente</span>
+    </div>
+    <div class="proj-right">
+      <div class="proj-arrow">↗</div>
+      <div class="proj-year">—</div>
+    </div>
+  </div>
+
+  <div class="proj soon">
+    <div class="proj-num">03</div>
+    <div class="proj-info">
+      <span class="proj-tag">Diseño</span>
+      <div class="proj-name">Paletas de color</div>
+      <p class="proj-desc">Generador y exportador de paletas de color para diseño.</p>
+      <span class="proj-badge">Próximamente</span>
+    </div>
+    <div class="proj-right">
+      <div class="proj-arrow">↗</div>
+      <div class="proj-year">—</div>
+    </div>
+  </div>
+
+  <div class="proj soon">
+    <div class="proj-num">04</div>
+    <div class="proj-info">
+      <span class="proj-tag">Productividad</span>
+      <div class="proj-name">Notas rápidas</div>
+      <p class="proj-desc">Bloc minimalista con guardado local en el navegador.</p>
+      <span class="proj-badge">Próximamente</span>
+    </div>
+    <div class="proj-right">
+      <div class="proj-arrow">↗</div>
+      <div class="proj-year">—</div>
+    </div>
+  </div>
+
+  <div class="proj soon">
+    <div class="proj-num">05</div>
+    <div class="proj-info">
+      <span class="proj-tag">Bienestar</span>
+      <div class="proj-name">Pomodoro</div>
+      <p class="proj-desc">Temporizador con técnica Pomodoro y estadísticas de sesión.</p>
+      <span class="proj-badge">Próximamente</span>
+    </div>
+    <div class="proj-right">
+      <div class="proj-arrow">↗</div>
+      <div class="proj-year">—</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-header" id="sobre-mi">
+  <span class="section-title">Sobre mí</span>
+  <span class="section-count">—</span>
+</div>
+
+<div class="about">
+  <div class="about-left">
+    <p>
+      Me gusta <strong>construir cosas útiles</strong> y aprender haciendo.
+      Este portfolio es mi espacio para compartir proyectos,
+      herramientas y experimentos que van surgiendo con el tiempo.<br><br>
+      Cada proyecto nace de una <strong>curiosidad</strong> o de querer
+      resolver algo concreto de una forma limpia y directa.
+    </p>
+  </div>
+  <div class="about-right" id="skills">
+    <div class="skill-row">
+      <span class="skill-name">HTML / CSS</span>
+      <div class="skill-bar"><div class="skill-fill" data-w="88"></div></div>
+      <span class="skill-pct">88</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">JavaScript</span>
+      <div class="skill-bar"><div class="skill-fill" data-w="74"></div></div>
+      <span class="skill-pct">74</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Diseño UI</span>
+      <div class="skill-bar"><div class="skill-fill" data-w="65"></div></div>
+      <span class="skill-pct">65</span>
+    </div>
+    <div class="skill-row">
+      <span class="skill-name">Git / GitHub</span>
+      <div class="skill-bar"><div class="skill-fill" data-w="70"></div></div>
+      <span class="skill-pct">70</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-name">Anas Bouziani</div>
+  <div class="footer-right">
     <div class="footer-links">
       <a href="https://github.com/anasbouziani" target="_blank">GitHub</a>
       <a href="mailto:tu@email.com">Email</a>
     </div>
-  </footer>
-</div>
+    <div class="footer-copy">© 2026 — Hecho con curiosidad</div>
+  </div>
+</footer>
 
 <script>
-// Custom cursor
-const cursor = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-document.querySelectorAll('a, button, .card').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+const cur = document.getElementById('cur');
+let mx = -100, my = -100;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function loop() {
+  cur.style.left = mx + 'px';
+  cur.style.top = my + 'px';
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a, .proj:not(.soon)').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
 });
 
-// Scroll reveal for cards
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.style.animationPlayState = 'running'; } });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.fade-up').forEach(el => {
-  el.style.animationPlayState = 'paused';
-  observer.observe(el);
-});
+const skillObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w + '%';
+      });
+      skillObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+skillObs.observe(document.getElementById('skills'));
 </script>
 </body>
 </html>
