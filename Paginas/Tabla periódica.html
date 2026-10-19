@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Practica la tabla periódica</title>
+<style>
+:root{--bg:#050b1a;--card:#0a1530e6;--tx:#e8efff;--mu:#8ea2cf;--bd:#2b4a8f;--ac:#4da3ff;--acx:#04122b;--ok:#4ff0a0;--okb:#0c3a2b;--ko:#ff7a7a;--kob:#45151f;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:radial-gradient(900px 520px at 88% -8%,#17358a66,transparent),radial-gradient(700px 520px at -8% 35%,#0d4a7a44,transparent),var(--bg);background-attachment:fixed;color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:0 0 4px}h2{font-size:1rem;margin:20px 0 8px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+p.s{color:var(--mu);margin:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-top:16px}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+button{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:9px 14px;cursor:pointer}
+button.on{background:var(--ac);color:var(--acx);border-color:var(--ac)}
+button.go{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:600;padding:11px 22px}
+button:disabled{opacity:.5;cursor:default}
+.big{font-size:2.4rem;font-weight:700;color:var(--ac)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:16px 0}
+.opts button{padding:14px;font-size:1.05rem}
+input.t{font:inherit;padding:10px 12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);width:100%;max-width:320px;margin:14px 0}
+.bar{height:6px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac)}
+.res{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 12px;padding:8px 10px;border-radius:8px;margin-top:6px;font-size:.95rem}
+.res.ok{background:var(--okb)}.res.ko{background:var(--kob)}.res b{font-weight:600}
+.score{font-size:2rem;font-weight:700}
+.tw{overflow-x:auto;margin-top:12px;padding-bottom:6px}
+.pt{display:grid;grid-template-columns:repeat(18,minmax(40px,1fr));grid-template-rows:repeat(7,auto) 12px auto auto;gap:3px;min-width:760px}
+.c{border:1px solid var(--bd);border-radius:6px;background:var(--card);min-height:46px;padding:2px 3px;text-align:center;font-size:.95rem;font-weight:600;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.c small{font-size:.62rem;color:var(--mu);font-weight:400;line-height:1}
+.c.dim{opacity:.45}.c.ok{background:var(--okb);border-color:var(--ok)}.c.ko{background:var(--kob);border-color:var(--ko)}
+.c input{width:100%;border:0;background:transparent;color:var(--tx);text-align:center;font:inherit;padding:2px 0;outline:0}
+.c:focus-within{border-color:var(--ac)}
+.det{min-height:56px;margin-top:10px;font-size:1.05rem}
+.k-ak{--h:0}.k-ae{--h:28}.k-tm{--h:210}.k-pm{--h:170}.k-md{--h:55}.k-nm{--h:130}.k-ha{--h:290}.k-ng{--h:250}.k-ln{--h:335}.k-ac{--h:310}
+[class*="k-"]{background:hsl(var(--h) 55% 14%);border-color:hsl(var(--h) 90% 58%);color:hsl(var(--h) 100% 88%)}
+.c[class*="k-"]:hover{box-shadow:0 0 12px hsl(var(--h) 95% 55%/.55)}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.mode{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:12px 14px;border-radius:12px}
+.mode small{color:var(--mu);font-size:.8rem;line-height:1.3}.mode.on small{color:#dbe6ff}.mode.on{background:linear-gradient(135deg,#1d4fb8,#5b3fd0);border-color:#8fb8ff;color:#fff}
+.row button{border-radius:999px}button:hover:not(:disabled){border-color:var(--ac)}.card{box-shadow:0 1px 3px #0000000f}
+.kb{display:inline-block;min-width:20px;height:20px;line-height:20px;border-radius:6px;background:var(--bd);color:var(--tx);font-size:.75rem;margin-right:8px}
+.lg{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.lgi{padding:3px 10px;border-radius:999px;font-size:.78rem;border:1px solid var(--bd)}
+.c input{text-transform:capitalize}
+.c.sel{background:var(--ac);color:var(--acx);border-color:var(--ac)}.c.sel small{color:inherit}
+.c.e{border-color:#3d6fd1;background:#0a1530}.c.e.sel{border-color:var(--ac);background:var(--ac)}
+.hd{font-size:.7rem;color:var(--mu);text-align:center;align-self:center}
+@media (max-width:700px){.pt{min-width:620px;grid-template-columns:repeat(18,minmax(32px,1fr))}.c{min-height:38px;font-size:.8rem}.c small{font-size:.55rem}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hero{border:1px solid #2b4a8f;border-radius:20px;padding:34px 28px;background:radial-gradient(600px 220px at 90% 0,#3b5bdb55,transparent),linear-gradient(135deg,#0a1a4a,#0b1230)}
+.hero h1{font-size:2.3rem;margin:0 0 6px;letter-spacing:-.02em;background:linear-gradient(90deg,#8fd3ff,#b9a4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.s{color:#a9bde8;font-size:1.05rem}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+.side{position:sticky;top:calc(12px + env(safe-area-inset-top,0px))}
+.step h2{display:flex;align-items:center;gap:10px;margin:0 0 12px;color:var(--tx);font-size:1.05rem;text-transform:none;letter-spacing:0}
+.num{font:700 .8rem ui-monospace,monospace;color:var(--ac);border:1px solid var(--ac);border-radius:8px;padding:2px 7px}
+.sub{font-size:.78rem;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 8px}
+.sum{font-size:1.25rem;font-weight:700;margin:2px 0}.lbl{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ac)}
+.wide{width:100%;margin-top:10px}.mini{margin:12px 0 4px}.mini .tw{margin:0;padding:0;overflow:visible}
+.mini .pt{min-width:0;gap:2px;grid-template-columns:repeat(18,1fr);grid-template-rows:repeat(7,auto) 6px auto auto}
+.mini .c{min-height:12px;padding:0;border-radius:3px}
+.lgi[class*="k-"]{border-color:hsl(var(--h) 90% 58%)}.card{border-color:#24407f}.big{text-shadow:0 0 24px #4da3ff66}
+.opts button{border-color:#3d6fd1}.c input:focus{box-shadow:none}.c:focus-within{box-shadow:0 0 0 2px #4da3ff66}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.side{position:static}}
+.m0{background:#0e1630;border-color:#33447a;color:var(--mu)}.m1{background:#4a1520;border-color:#ff6b6b;color:#ffc0c0}.m2{background:#4a2c12;border-color:#ff9f43;color:#ffd9b0}.m3{background:#463f10;border-color:#f1d94a;color:#fff2a8}.m4{background:#0f3d2b;border-color:#4ff0a0;color:#b8ffd9}
+</style></head><body><main>
+<header class="hero"><h1>Practica la tabla periódica</h1>
+<p class="s">Símbolos, nombres y estados de oxidación. La corrección llega siempre al final.</p></header>
+<div id="app"></div>
+</main>
+<script>
+const D=`H|Hidrógeno|+1,-1
+He|Helio|0
+Li|Litio|+1
+Be|Berilio|+2
+B|Boro|+3
+C|Carbono|+4,+2,-4
+N|Nitrógeno|-3,+1,+2,+3,+4,+5
+O|Oxígeno|-2,-1
+F|Flúor|-1
+Ne|Neón|0
+Na|Sodio|+1
+Mg|Magnesio|+2
+Al|Aluminio|+3
+Si|Silicio|+4,-4
+P|Fósforo|-3,+3,+5
+S|Azufre|-2,+2,+4,+6
+Cl|Cloro|-1,+1,+3,+5,+7
+Ar|Argón|0
+K|Potasio|+1
+Ca|Calcio|+2
+Sc|Escandio|+3
+Ti|Titanio|+4,+3
+V|Vanadio|+5,+4,+3,+2
+Cr|Cromo|+3,+6,+2
+Mn|Manganeso|+2,+4,+7,+3,+6
+Fe|Hierro|+2,+3
+Co|Cobalto|+2,+3
+Ni|Níquel|+2
+Cu|Cobre|+1,+2
+Zn|Zinc|+2
+Ga|Galio|+3
+Ge|Germanio|+4,+2
+As|Arsénico|-3,+3,+5
+Se|Selenio|-2,+4,+6
+Br|Bromo|-1,+1,+3,+5,+7
+Kr|Kriptón|0,+2
+Rb|Rubidio|+1
+Sr|Estroncio|+2
+Y|Itrio|+3
+Zr|Circonio|+4
+Nb|Niobio|+5,+3
+Mo|Molibdeno|+6,+4,+3
+Tc|Tecnecio|+7,+4
+Ru|Rutenio|+3,+4
+Rh|Rodio|+3
+Pd|Paladio|+2,+4
+Ag|Plata|+1
+Cd|Cadmio|+2
+In|Indio|+3
+Sn|Estaño|+2,+4
+Sb|Antimonio|-3,+3,+5
+Te|Telurio|-2,+4,+6
+I|Yodo|-1,+1,+3,+5,+7
+Xe|Xenón|0,+2,+4,+6
+Cs|Cesio|+1
+Ba|Bario|+2
+La|Lantano|+3
+Ce|Cerio|+3,+4
+Pr|Praseodimio|+3
+Nd|Neodimio|+3
+Pm|Prometio|+3
+Sm|Samario|+3,+2
+Eu|Europio|+3,+2
+Gd|Gadolinio|+3
+Tb|Terbio|+3
+Dy|Disprosio|+3
+Ho|Holmio|+3
+Er|Erbio|+3
+Tm|Tulio|+3
+Yb|Iterbio|+3,+2
+Lu|Lutecio|+3
+Hf|Hafnio|+4
+Ta|Tántalo|+5
+W|Wolframio|+6,+4
+Re|Renio|+7,+4,+6
+Os|Osmio|+4,+8
+Ir|Iridio|+3,+4
+Pt|Platino|+2,+4
+Au|Oro|+1,+3
+Hg|Mercurio|+1,+2
+Tl|Talio|+1,+3
+Pb|Plomo|+2,+4
+Bi|Bismuto|+3,+5
+Po|Polonio|+2,+4
+At|Astato|-1,+1
+Rn|Radón|0
+Fr|Francio|+1
+Ra|Radio|+2
+Ac|Actinio|+3
+Th|Torio|+4
+Pa|Protactinio|+5,+4
+U|Uranio|+6,+4,+3,+5
+Np|Neptunio|+5,+3,+4,+6
+Pu|Plutonio|+4,+3,+5,+6
+Am|Americio|+3
+Cm|Curio|+3
+Bk|Berkelio|+3,+4
+Cf|Californio|+3
+Es|Einstenio|+3
+Fm|Fermio|+3
+Md|Mendelevio|+3
+No|Nobelio|+2
+Lr|Lawrencio|+3
+Rf|Rutherfordio|
+Db|Dubnio|
+Sg|Seaborgio|
+Bh|Bohrio|
+Hs|Hasio|
+Mt|Meitnerio|
+Ds|Darmstatio|
+Rg|Roentgenio|
+Cn|Copernicio|
+Nh|Nihonio|
+Fl|Flerovio|
+Mc|Moscovio|
+Lv|Livermorio|
+Ts|Teneso|
+Og|Oganesón|`;
+function pos(z){if(z==1)return[1,1];if(z==2)return[1,18];if(z<=4)return[2,z-2];if(z<=10)return[2,z+8];if(z<=12)return[3,z-10];if(z<=18)return[3,z];if(z<=36)return[4,z-18];if(z<=54)return[5,z-36];if(z<=56)return[6,z-54];if(z<=71)return[9,z-54];if(z<=86)return[6,z-68];if(z<=88)return[7,z-86];if(z<=103)return[10,z-86];return[7,z-100]}
+const E=D.split("\n").map((l,i)=>{const[s,n,o]=l.split("|");return{z:i+1,s,n,o:o?o.split(","):[],p:pos(i+1)}});
+const CAT={ak:"Alcalino",ae:"Alcalinotérreo",tm:"Metal de transición",pm:"Metal postransicional",md:"Metaloide",nm:"No metal",ha:"Halógeno",ng:"Gas noble",ln:"Lantánido",ac:"Actínido"};
+const cat=e=>{const[r,c]=e.p;if(r==9)return"ln";if(r==10)return"ac";if(c==18)return"ng";if(c==17)return"ha";if([5,14,32,33,51,52].includes(e.z))return"md";if([1,6,7,8,15,16,34].includes(e.z))return"nm";if(c==1)return"ak";if(c==2)return"ae";if(c<=12)return"tm";return"pm"};
+const kc=e=>"k-"+cat(e);
+const legend=()=>`<div class="lg">${Object.entries(CAT).map(([k,v])=>`<span class="lgi k-${k}">${v}</span>`).join("")}</div>`;
+const F={all:["Todos (1–118)",e=>1],t20:["1–20",e=>e.z<=20],t36:["1–36",e=>e.z<=36],t54:["1–54",e=>e.z<=54],
+rep:["Grupos representativos",e=>e.p[0]<=7&&(e.p[1]<=2||e.p[1]>=13)],
+tr:["Metales de transición",e=>e.p[0]<=7&&e.p[1]>=3&&e.p[1]<=12],
+f:["Lantánidos y actínidos",e=>e.p[0]>8],
+alk:["Alcalinos y alcalinotérreos",e=>e.z>1&&e.p[0]<=7&&e.p[1]<=2],
+hal:["Halógenos y gases nobles",e=>e.p[0]<=7&&e.p[1]>=17],custom:["Elegir elementos…",e=>S.sel.has(e.z)],weak:["Mis puntos débiles",e=>P[e.z]&&P[e.z][1]/P[e.z][0]<.7]};
+const M=[["sn","Símbolo → Nombre","","Di el nombre a partir del símbolo"],["ns","Nombre → Símbolo","","Di el símbolo a partir del nombre"],["ox","Estados de oxidación","","Marca los estados de cada elemento"],["pos","Ubicar en la tabla","","Coloca el elemento en una tabla vacía"],["blank","Tabla en blanco","","Rellena los símbolos en la tabla"],["ref","Tabla de referencia","","Explora con colores por familias"],["prog","Mi progreso","","Mapa de dominio de cada elemento"]];
+const S={sel:new Set(),mode:"sn",f:"t20",n:10,type:"opt",showZ:true,qs:[],i:0,pool:[]};
+const app=document.getElementById("app");
+const norm=s=>(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim().toLowerCase();
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const btn=(on,fn,t)=>`<button class="${on?"on":""}" onclick="${fn}">${t}</button>`;
+const sortOx=a=>[...a].sort((x,y)=>x-y);
+
+let P={};
+function saveP(){try{localStorage.setItem("tp1p",JSON.stringify(P))}catch(e){}}
+function rec(z,g){const a=P[z]||(P[z]=[0,0]);a[0]++;a[1]+=g?1:0;saveP()}
+const rate=z=>P[z]?P[z][1]/P[z][0]:1;
+const lvl=z=>{if(!P[z])return 0;const r=rate(z);return r<.5?1:r<.7?2:r<.85?3:4};
+function prog(){
+ const w=E.filter(F.weak[1]),seen=Object.keys(P).length,L=["Sin practicar","Menos del 50%","50–70%","70–85%","Más del 85%"];S.cc=0;
+ app.innerHTML=`<div class="card"><div class="top"><span class="s">Tu dominio de cada elemento</span><button onclick="setup()">Volver</button></div>
+ <p class="s" style="margin:8px 0 0">${seen} de 118 elementos practicados · ${w.length} puntos débiles</p>
+ ${grid(e=>`<button class="c m${lvl(e.z)}" onclick="pdet(${e.z})"><small>${e.z}</small>${e.s}</button>`,true)}
+ <div class="det" id="det">Toca un elemento para ver su historial.</div>
+ <div class="lg">${L.map((t,k)=>`<span class="lgi m${k}">${t}</span>`).join("")}</div>
+ <div class="row" style="margin-top:14px"><button class="go" ${w.length?"":"disabled"} onclick="weakBtn()">Practicar mis puntos débiles</button><button id="cl" onclick="clearP()">Borrar progreso</button></div></div>`;
+}
+function pdet(z){const e=E[z-1],a=P[z];document.getElementById("det").innerHTML=a?`<b>${e.n}</b> (${e.s}): ${a[1]} aciertos de ${a[0]} intentos (${Math.round(a[1]/a[0]*100)}%)`:`<b>${e.n}</b> (${e.s}): aún sin practicar`}
+function clearP(){if(!S.cc){S.cc=1;document.getElementById("cl").textContent="¿Seguro? Pulsa de nuevo";return}P={};saveP();prog()}
+function weakBtn(){S.f="weak";if(!["sn","ns","ox","pos","blank"].includes(S.mode))S.mode="sn";setup()}
+function save(){try{localStorage.setItem("tp1",JSON.stringify({m:S.mode,f:S.f,n:S.n,t:S.type,z:S.showZ,s:[...S.sel]}))}catch(e){}}
+function load(){try{P=JSON.parse(localStorage.getItem("tp1p")||"{}")||{}}catch(e){}try{const d=JSON.parse(localStorage.getItem("tp1")||"null");if(d&&F[d.f]&&M.some(m=>m[0]==d.m)){S.mode=d.m;S.f=d.f;S.n=d.n;S.type=d.t;S.showZ=d.z;S.sel=new Set(d.s)}}catch(e){}}
+document.addEventListener("keydown",ev=>{if(ev.target.tagName=="INPUT"||!document.querySelector("[data-next]"))return;const q=S.qs[S.i];if(!q)return;if(ev.key=="Enter")nxt();else if(q.opts&&/^[1-4]$/.test(ev.key))pick(+ev.key-1)});
+function miniHTML(){const on=new Set(E.filter(F[S.f][1]).map(e=>e.z));return `<div class="mini">${grid(e=>`<div class="c ${kc(e)} ${on.has(e.z)?"":"dim"}"></div>`)}</div>`}
+function setup(){save();
+ const q=S.mode=="sn"||S.mode=="ns",quiz=q||S.mode=="ox"||S.mode=="pos",mm=M.find(m=>m[0]==S.mode),cnt=E.filter(F[S.f][1]).length;
+ const step=(n,t,h)=>`<section class="card step"><h2><span class="num">${n}</span>${t}</h2>${h}</section>`;
+ let o="";
+ if(quiz)o+=`<h3 class="sub" style="margin-top:0">Número de preguntas</h3><div class="row">${[10,20,40,999].map(n=>btn(S.n==n,`S.n=${n};setup()`,n==999?"Todas":n)).join("")}</div>`;
+ if(q)o+=`<h3 class="sub">Tipo de respuesta</h3><div class="row">${btn(S.type=="opt","S.type='opt';setup()","Elegir entre opciones")}${btn(S.type=="txt","S.type='txt';setup()","Escribir")}</div>`;
+ if(S.mode=="blank")o+=`<label><input type="checkbox" ${S.showZ?"checked":""} onchange="S.showZ=this.checked"> Mostrar número atómico en cada casilla</label><p class="s" style="margin-top:6px">Escribe el símbolo en cada casilla vacía. Las casillas atenuadas ya vienen rellenas.</p>`;
+ if(S.mode=="ox")o+=`<p class="s" style="margin-top:12px">Marca todos los estados de oxidación habituales de cada elemento. Los elementos sin datos fiables (Z ≥ 104) se omiten.</p>`;
+ if(S.mode=="pos")o+=`<p class="s" style="margin-top:12px">Verás una tabla vacía con números de grupo y período: toca la casilla donde va cada elemento. Los lantánidos y actínidos van en las dos filas inferiores.</p>`;
+ app.innerHTML=`<div class="layout"><div class="main">
+ ${step("01","Modo de estudio",`<div class="modes">${M.map(m=>`<button class="mode ${S.mode==m[0]?"on":""}" onclick="S.mode='${m[0]}';setup()"><b>${m[1]}</b><small>${m[3]}</small></button>`).join("")}</div>`)}
+ ${S.mode=="prog"?"":step("02","Elementos a estudiar",`<div class="row">${Object.entries(F).map(([k,v])=>btn(S.f==k,`S.f='${k}';setup()`,v[0])).join("")}</div>${S.f=="custom"?selUI():""}`)}
+ ${o?step("03","Ajustes",o):""}</div>
+ <aside class="side"><div class="card"><div class="lbl">Tu práctica</div><div class="sum">${mm[1]}</div><p class="s"><span id="cnt2">${cnt}</span> elementos${quiz?" · "+(S.n==999?"todas las preguntas":S.n+" preguntas"):""}</p><div id="mini">${miniHTML()}</div><button class="go wide" onclick="start()">${S.mode=="prog"?"Ver mi progreso":"Empezar"}</button><button class="wide" onclick="ref(true)">Ver tabla periódica completa</button></div></aside></div>`;
+}
+function start(){if(S.mode=="prog")return prog();
+ S.pool=E.filter(F[S.f][1]);if(!S.pool.length){S.qs=[];return ask()}
+ if(S.mode=="blank")return blank();
+ if(S.mode=="ref")return ref();
+ if(S.mode=="ox")S.pool=S.pool.filter(e=>e.o.length);
+ S.qs=sh((S.f=="weak"?sh(S.pool).sort((a,b)=>rate(a.z)-rate(b.z)):S.pool).slice(0,S.n)).map(build);S.i=0;ask();
+}
+function build(e){
+ const o={e,a:S.mode=="ox"?[]:null};
+ if(S.mode!="ox"&&S.mode!="pos"&&S.type=="opt"){
+  const base=S.pool.length>=4?S.pool:E;
+  o.opts=sh([e,...sh(base.filter(x=>x!=e)).slice(0,3)]).map(x=>S.mode=="sn"?x.n:x.s);
+ }
+ return o;
+}
+const where=e=>{const[r,c]=e.p;return r==9?`serie de los lantánidos, casilla ${c-2} de 15`:r==10?`serie de los actínidos, casilla ${c-2} de 15`:`período ${r}, grupo ${c}`};
+const corr=q=>S.mode=="sn"?q.e.n:S.mode=="ns"?q.e.s:S.mode=="pos"?where(q.e):q.e.o.join(", ");
+const ALT={Zinc:["cinc"],Wolframio:["tungsteno"],Yodo:["iodo"],Kriptón:["criptón"],Circonio:["zirconio"],Cesio:["cesio"]};
+const nameOk=(a,e)=>norm(a)==norm(e.n)||(ALT[e.n]||[]).some(x=>norm(x)==norm(a));
+const ok=q=>S.mode=="pos"?q.a===q.e.z:S.mode=="ox"?sortOx(q.a).join()==sortOx(q.e.o).join():(S.mode=="sn"?nameOk(q.a,q.e):norm(q.a)==norm(q.e.s));
+function ask(){
+ const q=S.qs[S.i],e=q&&q.e,last=S.i==S.qs.length-1;
+ if(!S.qs.length){app.innerHTML=`<div class="card">${S.f=="weak"?"Aún no tienes puntos débiles: practica primero con otros filtros.":"No hay elementos con esos filtros."}<br><br><button onclick="setup()">Volver</button></div>`;return}
+ let body="";
+ if(S.mode=="sn")body=`¿Cómo se llama el elemento con símbolo? <div class="big">${esc(e.s)}</div>`;
+ if(S.mode=="ns")body=`¿Cuál es el símbolo de? <div class="big">${esc(e.n)}</div>`;
+ if(S.mode=="pos")body=`Toca en la tabla la casilla donde va <div class="big">${esc(e.n)} (${esc(e.s)})</div>`;
+ if(S.mode=="ox")body=`Marca los estados de oxidación habituales de <div class="big">${esc(e.n)} (${esc(e.s)})</div>`;
+ let inp="";
+ if(S.mode=="ox")inp=`<div class="row" style="margin:16px 0">${["-4","-3","-2","-1","0","+1","+2","+3","+4","+5","+6","+7","+8"].map(v=>btn(q.a.includes(v),`tog('${v}')`,v)).join("")}</div>`;
+ else if(S.mode=="pos")inp=`<p class="s" style="margin-top:8px">Los números indican grupo (arriba) y período (izquierda).</p>`+grid(x=>`<button class="c e ${q.a===x.z?"sel":""}" onclick="place(${x.z})">&nbsp;</button>`,true);
+ else if(q.opts)inp=`<div class="opts">${q.opts.map((o,k)=>btn(q.a===o,`pick(${k})`,`<span class="kb">${k+1}</span>${esc(o)}`)).join("")}</div>`;
+ else inp=`<input class="t" id="tx" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(q.a||"")}" oninput="S.qs[S.i].a=this.value" onkeydown="if(event.key=='Enter')nxt()" placeholder="Tu respuesta">`;
+ app.innerHTML=`<div class="card"><div class="top"><span class="s">Pregunta ${S.i+1} de ${S.qs.length}</span><button onclick="setup()">Salir</button></div>
+ <div class="bar" style="margin:8px 0 18px"><i style="width:${S.i/S.qs.length*100}%"></i></div>${body}${inp}
+ <button class="go" data-next onclick="nxt()">${last?"Finalizar y corregir":"Siguiente"}</button></div>`;
+ const t=document.getElementById("tx");if(t)t.focus();
+}
+function place(z){S.qs[S.i].a=z;document.querySelectorAll(".pt .c").forEach((b,k)=>b.classList.toggle("sel",k+1==z))}
+function pick(k){S.qs[S.i].a=S.qs[S.i].opts[k];ask()}
+function tog(v){const a=S.qs[S.i].a,k=a.indexOf(v);k<0?a.push(v):a.splice(k,1);ask()}
+function nxt(){if(S.i<S.qs.length-1){S.i++;ask()}else results()}
+function results(){S.qs.forEach(q=>rec(q.e.z,ok(q)));
+ const n=S.qs.length,good=S.qs.filter(ok).length,bad=S.qs.filter(q=>!ok(q));
+ const lab=q=>S.mode=="sn"?q.e.s:S.mode=="ns"?q.e.n:`${q.e.n} (${q.e.s})`;
+ const ans=q=>S.mode=="pos"?(q.a?`${where(E[q.a-1])} (${E[q.a-1].s})`:"—"):S.mode=="ox"?(q.a.length?sortOx(q.a).join(", "):"—"):(q.a||"—");
+ app.innerHTML=`<div class="card"><h2 style="margin-top:0">Corrección</h2><div class="score" style="color:${good/n>=.7?"var(--ok)":good/n>=.5?"var(--tx)":"var(--ko)"}">${good} / ${n}</div><p class="s">${Math.round(good/n*100)}% de aciertos · ${good/n>=.9?"¡Excelente!":good/n>=.7?"¡Muy bien!":good/n>=.5?"Vas por buen camino":"Toca repasar un poco más"}</p>
+ <div class="row" style="margin:14px 0">${bad.length?`<button class="go" onclick="retry()">Repetir los ${bad.length} fallados</button>`:""}<button onclick="start()">Nueva tanda</button><button onclick="setup()">Cambiar modo</button></div>
+ <div class="res" style="font-weight:600;color:var(--mu)"><span>Pregunta</span><span>Tu respuesta</span><span>Correcta</span></div>
+ ${S.qs.map(q=>`<div class="res ${ok(q)?"ok":"ko"}"><b>${esc(lab(q))} <small style="font-weight:400;color:${ok(q)?"var(--ok)":"var(--ko)"}">${ok(q)?"acierto":"fallo"}</small></b><span>${esc(ans(q))}</span><span>${esc(corr(q))}</span></div>`).join("")}</div>`;
+}
+function retry(){S.qs=sh(S.qs.filter(q=>!ok(q)).map(q=>build(q.e)));S.i=0;ask()}
+
+function grid(cell,hdr){
+ const h=hdr?1:0;let x="";
+ if(h){for(let c=1;c<=18;c++)x+=`<span class="hd" style="grid-row:1;grid-column:${c+1}">${c}</span>`;for(let r=1;r<=7;r++)x+=`<span class="hd" style="grid-row:${r+1};grid-column:1">${r}</span>`}
+ const st=h?` style="grid-template-columns:22px repeat(18,minmax(32px,1fr));grid-template-rows:18px repeat(7,auto) 12px auto auto"`:"";
+ return `<div class="tw"><div class="pt"${st}>${x}${E.map(e=>cell(e).replace(/^(<\w+)/,`$1 style="grid-row:${e.p[0]+h};grid-column:${e.p[1]+h}"`)).join("")}</div></div>`;
+}
+function blank(){
+ const inP=new Set(S.pool.map(e=>e.z));
+ app.innerHTML=`<div class="card"><div class="top"><span class="s">Rellena los símbolos de las casillas vacías (${inP.size})</span><button onclick="setup()">Salir</button></div>
+ ${grid(e=>inP.has(e.z)?`<div class="c"><small>${S.showZ?e.z:"&nbsp;"}</small><input data-z="${e.z}" maxlength="3" autocomplete="off" autocapitalize="off" spellcheck="false"></div>`:`<div class="c dim ${kc(e)}"><small>${e.z}</small>${e.s}</div>`,true)}
+ <div class="row" style="margin-top:14px"><button class="go" id="chk" onclick="checkBlank()">Corregir</button></div><div id="sc"></div></div>`;
+ const ins=[...document.querySelectorAll("input[data-z]")];ins.forEach((i,k)=>i.onkeydown=ev=>{if(ev.key=="Enter"){ev.preventDefault();(ins[k+1]||i).focus()}});if(ins[0])ins[0].focus();
+}
+function checkBlank(){
+ let g=0,t=0;
+ document.querySelectorAll("input[data-z]").forEach(i=>{
+  const e=E[i.dataset.z-1],good=norm(i.value)==norm(e.s);t++;g+=good;rec(e.z,good);
+  i.parentNode.classList.add(good?"ok":"ko");i.value=e.s;i.disabled=true;
+ });
+ document.getElementById("chk").disabled=true;
+ document.getElementById("sc").innerHTML=`<div class="score" style="margin-top:14px">${g} / ${t}</div><p class="s">Verde: acertadas. Rojo: fallos o vacías (se muestra el símbolo correcto).</p><div class="row"><button onclick="blank()">Repetir</button><button onclick="setup()">Cambiar modo</button></div>`;
+}
+function ref(full){if(full)S.pool=E;
+ const inP=new Set(S.pool.map(e=>e.z));
+ app.innerHTML=`<div class="card"><div class="top"><span class="s">Toca un elemento para ver su nombre y estados de oxidación</span><button onclick="setup()">Volver</button></div>
+ ${grid(e=>`<button class="c ${kc(e)} ${inP.has(e.z)?"":"dim"}" onclick="det(${e.z})"><small>${e.z}</small>${e.s}</button>`,true)}
+ <div class="det" id="det">Toca un elemento para ver sus datos.</div>${legend()}</div>`;
+}
+function selUI(){return `<div style="margin-top:12px"><p class="s">Toca los elementos que quieres estudiar (<b id="cnt">${S.sel.size}</b> seleccionados).</p><div class="row" style="margin-top:8px"><button onclick="selAll(1)">Todos</button><button onclick="selAll(0)">Ninguno</button>${Object.entries(F).filter(([k])=>!["all","custom"].includes(k)).map(([k,v])=>`<button onclick="addP('${k}')">+ ${v[0]}</button>`).join("")}</div>${grid(e=>`<button class="c ${kc(e)} ${S.sel.has(e.z)?"sel":""}" data-z="${e.z}" onclick="tsel(${e.z})"><small>${e.z}</small>${e.s}</button>`,true)}</div>`}
+function selRef(){document.querySelectorAll(".c[data-z]").forEach(b=>b.classList.toggle("sel",S.sel.has(+b.dataset.z)));document.getElementById("cnt").textContent=S.sel.size;document.getElementById("mini").innerHTML=miniHTML();document.getElementById("cnt2").textContent=S.sel.size}
+function tsel(z){S.sel.has(z)?S.sel.delete(z):S.sel.add(z);selRef()}
+function selAll(v){S.sel=new Set(v?E.map(e=>e.z):[]);selRef()}
+function addP(k){E.filter(F[k][1]).forEach(e=>S.sel.add(e.z));selRef()}
+function det(z){const e=E[z-1];document.getElementById("det").innerHTML=`<b>${e.n}</b> (${e.s}) · Z = ${e.z} · ${where(e)} · ${CAT[cat(e)]}<br>Estados de oxidación: ${e.o.length?e.o.join(", "):"sin datos fiables"}`}
+load();setup();
+</script></body></html>

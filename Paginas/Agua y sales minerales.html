@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>L’aigua i les sals minerals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #050b1c;
+            --fg: #eaf1ff;
+            --mut: #93aad6;
+            --bd: #27427e;
+            --card: #0b1736;
+            --ac: #60a5fa;
+            --tl: #22d3ee;
+            --ok: #22d3ee;
+            --ko: #ff6b9a;
+            --pos: #ff6b9a;
+            --neg: #60a5fa;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            color-scheme: dark
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px)
+        }
+
+        body {
+            margin: 0;
+            color: var(--fg);
+            font: 16px/1.65 Sora, system-ui, -apple-system, "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            background-image: linear-gradient(rgba(59, 130, 246, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, .045) 1px, transparent 1px);
+            background-size: 48px 48px;
+            background-attachment: fixed;
+            overflow-x: hidden
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(700px 520px at 100% 0, rgba(59, 130, 246, .3), transparent 65%);
+            pointer-events: none;
+            z-index: -1
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0 0 auto;
+            height: env(safe-area-inset-top, 0px);
+            background: rgba(5, 11, 28, .9);
+            z-index: 30
+        }
+
+        header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 20;
+            background: rgba(5, 11, 28, .6);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(39, 66, 126, .6)
+        }
+
+        .hw {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 1100px;
+            margin: auto;
+            padding: 8px 14px
+        }
+
+        .brand {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            text-decoration: none;
+            color: var(--fg);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            white-space: nowrap
+        }
+
+        .brand i {
+            color: var(--tl);
+            font-style: normal
+        }
+
+        nav {
+            flex: 1;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            position: relative;
+            scrollbar-width: none
+        }
+
+        nav::-webkit-scrollbar {
+            display: none
+        }
+
+        nav a {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            white-space: nowrap;
+            text-decoration: none;
+            color: var(--mut);
+            padding: 7px 14px;
+            border-radius: 99px;
+            font-size: 14px;
+            border: 1px solid transparent;
+            transition: .2s
+        }
+
+        nav a em {
+            display: inline-flex
+        }
+
+        nav a em svg {
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round
+        }
+
+        nav a:hover {
+            color: var(--fg);
+            background: rgba(59, 130, 246, .1)
+        }
+
+        nav a.on {
+            color: #dbeafe;
+            background: rgba(59, 130, 246, .22);
+            border-color: #3b82f6;
+            box-shadow: 0 0 14px rgba(59, 130, 246, .35)
+        }
+
+        .ring {
+            display: none
+        }
+
+        #bar {
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, #3b82f6, #22d3ee);
+            box-shadow: 0 0 10px #3b82f6
+        }
+
+        main {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 16px 70px;
+            counter-reset: s
+        }
+
+        section {
+            padding: 50px 0 10px
+        }
+
+        h1 {
+            font-size: clamp(36px, 7vw, 64px);
+            line-height: 1.05;
+            letter-spacing: -.04em;
+            font-weight: 800;
+            margin: 0 0 10px;
+            background-image: linear-gradient(90deg, #fff, #60a5fa 55%, #22d3ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent
+        }
+
+        h2 {
+            display: block;
+            font-size: clamp(26px, 4vw, 38px);
+            letter-spacing: -.03em;
+            margin: 0 0 4px;
+            line-height: 1.1
+        }
+
+        h2::before {
+            counter-increment: s;
+            content: counter(s, decimal-leading-zero);
+            display: block;
+            font-size: clamp(56px, 10vw, 96px);
+            font-weight: 800;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 1.5px #3b82f6;
+            letter-spacing: -.05em
+        }
+
+        h3 {
+            color: #bfdbfe;
+            letter-spacing: -.01em;
+            margin: 22px 0 8px
+        }
+
+        .card h3 {
+            margin-top: 0
+        }
+
+        .si {
+            color: var(--mut);
+            margin: 6px 0 20px;
+            max-width: 700px
+        }
+
+        .mut {
+            color: var(--mut)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px
+        }
+
+        .card {
+            background: linear-gradient(160deg, rgba(59, 130, 246, .16), rgba(59, 130, 246, .04));
+            border: 1px solid var(--bd);
+            border-radius: 20px;
+            padding: 18px 20px;
+            margin: 14px 0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+            transition: transform .25s, border-color .25s, box-shadow .25s, opacity .7s
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #60a5fa;
+            box-shadow: 0 0 22px rgba(59, 130, 246, .3), 0 12px 32px rgba(0, 0, 0, .4)
+        }
+
+        .rv:not(.in) {
+            opacity: 0;
+            transform: translateY(22px)
+        }
+
+        .key {
+            background: rgba(255, 107, 154, .08);
+            border: 1px solid rgba(255, 107, 154, .35);
+            border-left: 4px solid #ff6b9a;
+            padding: 10px 14px;
+            border-radius: 12px;
+            margin: 14px 0
+        }
+
+        button,
+        a.go {
+            font: inherit;
+            cursor: pointer;
+            border: 1px solid var(--bd);
+            background: rgba(59, 130, 246, .1);
+            color: var(--fg);
+            border-radius: 99px;
+            padding: 8px 18px;
+            transition: .2s;
+            text-decoration: none;
+            display: inline-block
+        }
+
+        button:hover,
+        a.go:hover {
+            border-color: #60a5fa;
+            box-shadow: 0 0 14px rgba(59, 130, 246, .4)
+        }
+
+        button.on {
+            background: linear-gradient(135deg, #3b82f6, #22d3ee);
+            color: #031026;
+            border-color: transparent;
+            font-weight: 700;
+            box-shadow: 0 0 18px rgba(59, 130, 246, .55)
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .chip {
+            display: inline-block;
+            margin: 3px 6px 3px 0;
+            padding: 4px 13px;
+            border-radius: 99px;
+            background: rgba(96, 165, 250, .16);
+            border: 1px solid rgba(96, 165, 250, .45);
+            color: #dbeafe;
+            font-size: 14px
+        }
+
+        .bars div.r {
+            display: grid;
+            grid-template-columns: 150px 1fr 56px;
+            gap: 8px;
+            align-items: center;
+            margin: 6px 0;
+            font-size: 14px
+        }
+
+        .bars .t {
+            background: rgba(59, 130, 246, .12);
+            border: 1px solid var(--bd);
+            border-radius: 99px;
+            height: 14px;
+            overflow: hidden
+        }
+
+        .bars .f {
+            background: linear-gradient(90deg, #3b82f6, #22d3ee);
+            height: 100%;
+            width: 0;
+            transition: width 1s
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 15px
+        }
+
+        td,
+        th {
+            border-bottom: 1px solid var(--bd);
+            padding: 8px;
+            text-align: left
+        }
+
+        th {
+            color: #60a5fa
+        }
+
+        .flip {
+            cursor: pointer
+        }
+
+        .flip .b {
+            display: none
+        }
+
+        .flip.open .b {
+            display: block
+        }
+
+        .flip .h {
+            font-weight: 700
+        }
+
+        svg text {
+            fill: var(--fg);
+            font: 14px Sora, system-ui
+        }
+
+        .scene {
+            background: #0a1430;
+            border: 1px solid var(--bd);
+            border-radius: 16px;
+            margin: 10px 0;
+            padding: 8px
+        }
+
+        .scene svg {
+            width: 100%;
+            max-width: 460px;
+            display: block;
+            margin: auto
+        }
+
+        .scene svg text {
+            font-size: 13px
+        }
+
+        .q-opt,
+        .m {
+            display: block;
+            width: 100%;
+            text-align: left;
+            margin: 7px 0;
+            border-radius: 14px
+        }
+
+        .q-opt.ok {
+            background: #22d3ee;
+            color: #031026;
+            border-color: #22d3ee
+        }
+
+        .q-opt.ko {
+            background: #ff6b9a;
+            color: #2a0614;
+            border-color: #ff6b9a
+        }
+
+        .m.sel {
+            border-color: #60a5fa;
+            background: rgba(59, 130, 246, .3)
+        }
+
+        .m.done {
+            background: #22d3ee;
+            color: #031026;
+            border-color: #22d3ee;
+            pointer-events: none
+        }
+
+        .m.bad {
+            background: #ff6b9a;
+            color: #2a0614;
+            animation: sh .4s
+        }
+
+        @keyframes sh {
+            25% {
+                transform: translateX(-6px)
+            }
+
+            75% {
+                transform: translateX(6px)
+            }
+        }
+
+        .qb {
+            height: 6px;
+            background: rgba(59, 130, 246, .15);
+            border-radius: 9px;
+            margin: 8px 0;
+            overflow: hidden
+        }
+
+        .qb i {
+            display: block;
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #22d3ee);
+            transition: width .4s
+        }
+
+        input[type=search] {
+            width: 100%;
+            font: inherit;
+            padding: 12px 18px;
+            border-radius: 99px;
+            border: 1px solid var(--bd);
+            background: rgba(59, 130, 246, .08);
+            color: var(--fg)
+        }
+
+        input[type=search]:focus {
+            outline: none;
+            border-color: #60a5fa;
+            box-shadow: 0 0 14px rgba(59, 130, 246, .4)
+        }
+
+        input[type=checkbox] {
+            accent-color: #3b82f6;
+            margin-right: 8px
+        }
+
+        .chk label {
+            display: block;
+            padding: 3px 0
+        }
+
+        .gg {
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            margin-top: 14px
+        }
+
+        .gc {
+            margin: 0
+        }
+
+        .gc b {
+            color: #60a5fa;
+            font-size: 17px
+        }
+
+        .gc p {
+            margin: 6px 0 0;
+            color: var(--mut);
+            font-size: 15px
+        }
+
+        .ib {
+            flex: none;
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 22px;
+            color: #031026;
+            background: radial-gradient(circle at 30% 30%, #bfdbfe, #3b82f6);
+            box-shadow: 0 0 24px rgba(59, 130, 246, .5)
+        }
+
+        .hero {
+            position: relative;
+            padding: 50px 0 10px
+        }
+
+        #bub {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden
+        }
+
+        #bub span {
+            position: absolute;
+            bottom: -30px;
+            border-radius: 50%;
+            border: 1.5px solid rgba(96, 165, 250, .4);
+            background: rgba(96, 165, 250, .07);
+            animation: rise linear infinite
+        }
+
+        @keyframes rise {
+            to {
+                transform: translateY(-480px);
+                opacity: 0
+            }
+        }
+
+        .hero>*:not(#bub) {
+            position: relative
+        }
+
+        #top .hm {
+            position: absolute;
+            right: 0;
+            top: 26px;
+            width: min(32%, 230px);
+            animation: fl 5s ease-in-out infinite
+        }
+
+        .pu {
+            transform-box: fill-box;
+            transform-origin: center;
+            animation: pu 3s ease-out infinite
+        }
+
+        @keyframes pu {
+            to {
+                transform: scale(2.4);
+                opacity: 0
+            }
+        }
+
+        @media(min-width:701px) {
+            #top h1 {
+                max-width: 66%
+            }
+        }
+
+        @media(max-width:700px) {
+            #top .hm {
+                opacity: .2;
+                width: 60%
+            }
+
+            .brand b {
+                display: none
+            }
+
+            nav a {
+                padding: 7px 11px
+            }
+        }
+
+        .chain {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin: 16px 0
+        }
+
+        .chain span {
+            background: rgba(59, 130, 246, .14);
+            border: 1px solid var(--bd);
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-size: 14px
+        }
+
+        .chain i {
+            color: var(--mut);
+            font-style: normal
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 14px
+        }
+
+        .stats div {
+            background: rgba(59, 130, 246, .1);
+            border: 1px solid var(--bd);
+            border-radius: 20px;
+            padding: 14px;
+            text-align: center
+        }
+
+        .stats b {
+            display: block;
+            font-size: 34px;
+            color: #60a5fa;
+            font-family: ui-monospace, Menlo, monospace
+        }
+
+        .stats small {
+            color: var(--mut)
+        }
+
+        @keyframes fl {
+            50% {
+                transform: translateY(-8px)
+            }
+        }
+
+        .fl {
+            animation: fl 3s ease-in-out infinite
+        }
+
+        @keyframes st {
+            from {
+                transform: translateY(0);
+                opacity: .9
+            }
+
+            to {
+                transform: translateY(-38px);
+                opacity: 0
+            }
+        }
+
+        .st {
+            animation: st 2.4s linear infinite
+        }
+
+        .ar {
+            animation: pl 1.4s ease-in-out infinite
+        }
+
+        @keyframes pl {
+            50% {
+                opacity: .3
+            }
+        }
+
+        .cn rect {
+            fill: rgba(59, 130, 246, .18);
+            stroke: #3b82f6;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .cn:hover rect,
+        .cn.on rect {
+            fill: #3b82f6
+        }
+
+        .cn text {
+            pointer-events: none;
+            font-size: 12.5px;
+            text-anchor: middle
+        }
+
+        .fc {
+            perspective: 900px;
+            height: 200px;
+            max-width: 460px;
+            margin: auto;
+            cursor: pointer
+        }
+
+        .fc>div {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform .6s;
+            transform-style: preserve-3d
+        }
+
+        .fc.f>div {
+            transform: rotateY(180deg)
+        }
+
+        .fc .s {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #3b82f6;
+            background: linear-gradient(160deg, rgba(59, 130, 246, .3), #07102a)
+        }
+
+        .fc .bk {
+            transform: rotateY(180deg)
+        }
+
+        @media(max-width:560px) {
+            .bars div.r {
+                grid-template-columns: 100px 1fr 48px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+
+            html {
+                scroll-behavior: auto
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="hw"><a class="brand" href="#top"><span><svg viewBox='0 0 24 24' width='26' height='26'>
+                        <path d='M12 2l8.7 5v10L12 22l-8.7-5V7z' fill='none' stroke='#60a5fa' stroke-width='2' />
+                        <circle cx='12' cy='12' r='3' fill='#22d3ee' />
+                    </svg></span><b>Aigua <i>&amp;</i> Sals</b></a>
+            <nav id="nav">
+                <a href="#intro"><em><svg viewBox='0 0 24 24'>
+                            <circle cx='12' cy='12' r='2' />
+                            <ellipse cx='12' cy='12' rx='10' ry='4' />
+                            <ellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(60 12 12)' />
+                            <ellipse cx='12' cy='12' rx='10' ry='4' transform='rotate(120 12 12)' />
+                        </svg></em>Introducció</a><a href="#aigua"><em><svg viewBox='0 0 24 24'>
+                            <path d='M12 3S5 11 5 15a7 7 0 0014 0C19 11 12 3 12 3z' />
+                        </svg></em>L’aigua</a><a href="#prop"><em><svg viewBox='0 0 24 24'>
+                            <path d='M9 3h6M10 3v6l-5 9a2 2 0 002 3h10a2 2 0 002-3l-5-9V3' />
+                        </svg></em>Propietats</a><a href="#sals"><em><svg viewBox='0 0 24 24'>
+                            <path d='M12 2l9 5v10l-9 5-9-5V7z' />
+                            <path d='M12 12l9-5M12 12v10M12 12L3 7' />
+                        </svg></em>Sals minerals</a><a href="#homeo"><em><svg viewBox='0 0 24 24'>
+                            <path d='M12 3v18M6 21h12M3 7h18M6 7l-3 7h6zM18 7l-3 7h6z' />
+                        </svg></em>Homeòstasi</a><a href="#practica"><em><svg viewBox='0 0 24 24'>
+                            <circle cx='12' cy='12' r='9' />
+                            <circle cx='12' cy='12' r='5' />
+                            <circle cx='12' cy='12' r='1.5' />
+                        </svg></em>Pràctica</a><a href="#glossari"><em><svg viewBox='0 0 24 24'>
+                            <path d='M4 5a2 2 0 012-2h5v17H6a2 2 0 00-2 2zM20 5a2 2 0 00-2-2h-5v17h5a2 2 0 012 2z' />
+                        </svg></em>Glossari</a>
+            </nav>
+            <svg class="ring" viewBox="0 0 40 40">
+                <circle cx="20" cy="20" r="16" fill="none" stroke="#243049" stroke-width="4" />
+                <circle id="rg" cx="20" cy="20" r="16" fill="none" stroke="var(--nc,#22d3ee)" stroke-width="4"
+                    stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="100.5"
+                    transform="rotate(-90 20 20)" /><text id="rt" x="20" y="24" text-anchor="middle">0%</text>
+            </svg>
+        </div>
+        <div id="bar"></div>
+    </header>
+    <main>
+        <div class="hero" id="top">
+            <div id="bub"></div><svg class="hm" viewBox="0 0 200 160">
+                <defs>
+                    <radialGradient id="gO">
+                        <stop offset="0" stop-color="#ff6b9a" />
+                        <stop offset="1" stop-color="#ff6b9a" stop-opacity="0" />
+                    </radialGradient>
+                    <radialGradient id="gH">
+                        <stop offset="0" stop-color="#60a5fa" />
+                        <stop offset="1" stop-color="#60a5fa" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+                <circle cx="100" cy="55" r="58" fill="url(#gO)" />
+                <circle class="pu" cx="100" cy="55" r="30" fill="none" stroke="#22d3ee" stroke-width="2" />
+                <circle cx="45" cy="115" r="38" fill="url(#gH)" />
+                <circle cx="155" cy="115" r="38" fill="url(#gH)" />
+                <line x1="100" y1="55" x2="48" y2="112" stroke="#94a3b8" stroke-width="7" />
+                <line x1="100" y1="55" x2="152" y2="112" stroke="#94a3b8" stroke-width="7" />
+                <circle cx="100" cy="55" r="26" fill="#ff6b9a" />
+                <circle cx="48" cy="115" r="16" fill="#e2e8f0" />
+                <circle cx="152" cy="115" r="16" fill="#e2e8f0" /><text x="93" y="61"
+                    style="fill:#fff;font-weight:700">O</text><text x="10" y="152" style="fill:#93c5fd">δ+</text><text
+                    x="165" y="152" style="fill:#93c5fd">δ+</text><text x="96" y="16" style="fill:#fda4af">δ−</text>
+            </svg>
+            <h1>L’aigua i les sals minerals</h1>
+            <p class="mut" style="font-size:18px;max-width:640px">Relació entre les seves característiques químiques i
+                les funcions biològiques</p>
+            <div class="chain"><span> Estructura química</span><i>→</i><span> Propietats</span><i>→</i><span> Funcions
+                    biològiques</span></div>
+            <div class="stats">
+                <div><b data-n="3">0</b><small>àtoms per molècula</small></div>
+                <div><b data-n="104.5">0</b><small>graus d’angle</small></div>
+                <div><b data-n="4">0</b><small>ponts d’H màxim</small></div>
+                <div><b data-n="63">0</b><small>% d’aigua en humans</small></div>
+            </div>
+        </div>
+
+        <section id="intro">
+            <h2>Les biomolècules inorgàniques</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top:0">Inorgàniques</h3><span class="chip">Aigua</span><span class="chip">Sals
+                        minerals</span><span class="chip">Gasos: O₂, CO₂</span>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Orgàniques</h3><span class="chip">Glúcids</span><span
+                        class="chip">Lípids</span><span class="chip">Proteïnes</span><span class="chip">Àcids
+                        nucleics</span>
+                </div>
+            </div>
+            <div class="card"><b>Mapa conceptual</b> <span class="mut">toca un node</span><svg id="cm"
+                    viewBox="0 0 640 300" style="width:100%;display:block"></svg>
+                <div id="ct" style="min-height:70px"></div>
+            </div>
+            <div class="key"><b>Pregunta inicial:</b> per què l’aigua és imprescindible per a la vida? <button
+                    id="hintBtn" style="margin-left:6px">Pista</button>
+                <div id="hint" class="b" style="display:none;margin-top:8px">És la biomolècula més abundant, i la seva
+                    estructura química (polar + ponts d’hidrogen) explica les seves funcions. Segueix la cadena:
+                    <b>estructura química → propietats fisicoquímiques → funcions biològiques</b>.</div>
+            </div>
+        </section>
+
+        <section id="aigua">
+            <h2>La molècula d’aigua</h2>
+            <p>Biomolècula <b>més abundant</b> de tots els éssers vius. El <b>percentatge d’aigua</b> no és el mateix en
+                totes les espècies (humans 63% del pes, algues 94%…). També varia en funció de l’<u>edat</u> de
+                l’organisme (embrió humà 94%, infant 78%…). La variació més important està, però, en funció de
+                l’<u>activitat biològica</u> que desenvolupen els teixits (cervell 86%, ossos 22%, llavors 20%). <span
+                    class="mut">Toca una barra.</span></p>
+            <div class="card bars" id="bars"></div>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top:0">H₂O i geometria angular</h3>
+                    <p>2 àtoms d’hidrogen + 1 àtom d’oxigen. L’angle és d’uns 104,5°.</p>
+                    <svg viewBox="0 0 260 170" width="100%" style="max-width:300px">
+                        <line x1="130" y1="50" x2="70" y2="125" stroke="var(--mut)" stroke-width="6" />
+                        <line x1="130" y1="50" x2="190" y2="125" stroke="var(--mut)" stroke-width="6" />
+                        <circle cx="130" cy="50" r="30" fill="#e0533d" />
+                        <circle cx="70" cy="125" r="20" fill="#9a9a9a" />
+                        <circle cx="190" cy="125" r="20" fill="#9a9a9a" />
+                        <text x="124" y="56" fill="#fff" style="fill:#fff">O</text><text x="64" y="131"
+                            style="fill:#fff">H</text><text x="184" y="131" style="fill:#fff">H</text>
+                        <g id="ch" style="display:none"><text x="165" y="40" style="fill:var(--neg)">δ−</text><text
+                                x="30" y="125" style="fill:var(--pos)">δ+</text><text x="218" y="125"
+                                style="fill:var(--pos)">δ+</text></g>
+                        <text x="105" y="118" class="mut" style="font-size:12px">104,5°</text>
+                    </svg>
+                    <div><button id="chBtn">Mostra les càrregues parcials</button></div>
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">És una molècula polar</h3>
+                    <p>Distribució desigual de la càrrega elèctrica, per dues raons:</p>
+                    <ol>
+                        <li><b>Diferència d’electronegativitat:</b> l’oxigen atrau més els electrons compartits (δ−);
+                            els hidrògens queden δ+.</li>
+                        <li><b>Geometria asimètrica:</b> si fos simètrica, les atraccions s’anul·larien.</li>
+                    </ol>
+                </div>
+            </div>
+            <h3>Els ponts d’hidrogen</h3>
+            <p>El pol positiu (H, δ+) d’una molècula és atret pel pol negatiu (O, δ−) d’una altra. Són unions febles,
+                però en conjunt formen una <b>xarxa</b> contínuament formant-se i trencant-se. Cada molècula pot formar
+                fins a <b>4 ponts</b>:</p>
+            <div class="grid">
+                <div class="card"><b>2 com a donant</b><br>Els 2 hidrògens (δ+) atrauen un parell d’electrons d’una
+                    molècula veïna.</div>
+                <div class="card"><b>2 com a acceptor</b><br>L’oxigen té <b>dos parells d’electrons no compartits</b>
+                    (δ−) que atrauen un H d’una altra molècula.</div>
+            </div>
+            <div class="key">Els ponts d’hidrogen expliquen moltes de les propietats extraordinàries de l’aigua.</div>
+            <div class="card"><b> Els 4 ponts d’hidrogen d’una molècula</b><svg viewBox="0 0 300 170"
+                    style="width:100%;max-width:440px;display:block;margin:auto">
+                    <g stroke-width="3" stroke-dasharray="6 5" fill="none">
+                        <line x1="130" y1="92" x2="85" y2="142" stroke="#e2e8f0" />
+                        <line x1="170" y1="92" x2="215" y2="142" stroke="#e2e8f0" />
+                        <line x1="140" y1="68" x2="95" y2="34" stroke="#22d3ee" />
+                        <line x1="160" y1="68" x2="205" y2="34" stroke="#22d3ee" />
+                    </g>
+                    <g class="fl">
+                        <circle cx="85" cy="150" r="12" fill="#ff6b9a" />
+                        <circle cx="215" cy="150" r="12" fill="#ff6b9a" />
+                        <circle cx="90" cy="28" r="7" fill="#e2e8f0" />
+                        <circle cx="210" cy="28" r="7" fill="#e2e8f0" />
+                    </g>
+                    <line x1="150" y1="80" x2="130" y2="98" stroke="#94a3b8" stroke-width="5" />
+                    <line x1="150" y1="80" x2="170" y2="98" stroke="#94a3b8" stroke-width="5" />
+                    <circle cx="150" cy="78" r="18" fill="#ff6b9a" />
+                    <circle cx="128" cy="98" r="10" fill="#e2e8f0" />
+                    <circle cx="172" cy="98" r="10" fill="#e2e8f0" /><text x="140" y="84"
+                        style="fill:#fff;font-weight:700">O</text><text x="20" y="110" style="fill:#e2e8f0">donant
+                        ×2</text><text x="225" y="110" style="fill:#e2e8f0">(els H)</text><text x="20" y="14"
+                        style="fill:#22d3ee">acceptor ×2</text><text x="215" y="14" style="fill:#22d3ee">(parells
+                        lliures de l’O)</text>
+                </svg></div>
+            <h3> Laboratori: ponts d’hidrogen i temperatura</h3>
+            <div class="card">
+                <p style="margin-top:0">Mou el control de temperatura i observa com canvia la xarxa de ponts d’hidrogen
+                    (línies blaves).</p><canvas id="sim"
+                    style="width:100%;max-width:560px;border-radius:12px;background:#0a1430;display:block"></canvas><input
+                    type="range" id="tr" min="-20" max="120" value="-10"
+                    style="width:100%;max-width:560px;accent-color:var(--ac)">
+                <div id="tro"></div>
+            </div>
+        </section>
+
+        <section id="prop">
+            <h2>Propietats i funcions biològiques</h2>
+            <p>Fes clic a cada propietat per veure la relació <i>característica → propietat → funció</i>.</p>
+            <div class="tabs" id="ptabs"></div>
+            <div class="card" id="pbody"></div>
+            <h3>Resum</h3>
+            <div class="card">
+                <table id="ptab">
+                    <tr>
+                        <th>Propietat</th>
+                        <th>Funció biològica</th>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <section id="sals">
+            <h2>Les sals minerals</h2>
+            <p>Substàncies inorgàniques presents en els éssers vius. <span class="mut">Toca cada targeta.</span></p>
+            <div class="grid">
+                <div class="card flip">
+                    <div class="h">1. Precipitades ▾</div>
+                    <div class="b">
+                        <p>Estructures sòlides amb funció de <b>suport i protecció</b>.</p>
+                        <ul>
+                            <li><b>Carbonat de calci (CaCO₃):</b> closques, petxines, estructures esquelètiques.</li>
+                            <li><b>Fosfat de calci:</b> ossos i dents.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card flip">
+                    <div class="h">2. Dissoltes ▾</div>
+                    <div class="b">
+                        <p>Es troben en forma d’<b>ions</b>: regulen l’equilibri osmòtic, el pH, l’impuls nerviós, la
+                            contracció muscular…</p>
+                    </div>
+                </div>
+                <div class="card flip">
+                    <div class="h">3. Associades a molècules orgàniques ▾</div>
+                    <div class="b">
+                        <p>Participen en estructures o processos: <b>Fe</b> en l’hemoglobina (transport d’O₂), <b>Mg</b>
+                            en la clorofil·la (fotosíntesi), <b>Zn/Mn</b> com a cofactors d’enzims.</p>
+                    </div>
+                </div>
+            </div>
+            <h3>L’os: duresa + flexibilitat</h3>
+            <p>Els ossos combinen <b>sals de calci</b> (hidroxiapatita: duresa i rigidesa) amb <b>col·lagen</b>
+                (flexibilitat i resistència). Només mineral = trencadís; només col·lagen = tou i es deforma.</p>
+            <div class="card" id="bone">
+                <div class="tabs"><button onclick="bone(0)">Només mineral</button><button onclick="bone(1)">Os
+                        normal</button><button onclick="bone(2)">Només col·lagen</button></div><svg
+                    viewBox="0 0 300 110" style="width:100%;max-width:440px;display:block;margin:auto">
+                    <g id="bn"></g>
+                </svg>
+                <div id="bt"></div>
+            </div>
+            <h3>Sals dissoltes: els ions</h3>
+            <p>Una <b>dissolució</b> és una mescla homogènia; el <b>dissolvent</b> és el component majoritari (aigua) i
+                el <b>solut</b> els altres (sal). Clica un ió:</p>
+            <div class="card"><b> Així es dissol el NaCl</b>
+                <p class="mut" style="margin:4px 0">Les molècules d’aigua envolten els ions: l’O (δ−) cap als Na⁺ i els
+                    H (δ+) cap als Cl⁻.</p><svg id="salt" viewBox="0 0 400 170" width="100%"
+                    style="max-width:480px;display:block"></svg><button id="sb">Afegeix aigua</button>
+            </div>
+            <div class="tabs" id="itabs"></div>
+            <div class="card" id="ibody"></div>
+            <div class="card"><b>Mapa dels ions al cos</b> <span class="mut">toca un punt o un botó</span>
+                <div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;margin-top:8px"><svg id="bm"
+                        viewBox="0 0 300 330" style="width:100%;max-width:230px"></svg>
+                    <div id="bi" style="flex:1;min-width:210px"></div>
+                </div>
+            </div>
+            <h3>Funcions dels ions minerals</h3>
+            <div class="grid">
+                <div class="card"><b>Regulació osmòtica</b><br>Controlen el moviment d’aigua.</div>
+                <div class="card"><b>Regulació del pH</b><br>Mantenen estable l’acidesa.</div>
+                <div class="card"><b>Impuls nerviós</b><br>Els gradients de Na⁺ i K⁺ generen canvis elèctrics.</div>
+                <div class="card"><b>Contracció muscular</b><br>El Ca²⁺ intervé en la interacció de les proteïnes
+                    musculars.</div>
+                <div class="card"><b>Activació enzimàtica</b><br>Actuen com a cofactors.</div>
+            </div>
+            <h3>Simulador d’osmosi</h3>
+            <p>Les membranes cel·lulars són semipermeables. La <b>pressió osmòtica (π)</b> és més alta com més
+                concentrada és la dissolució. Tria el medi on posem un glòbul vermell:</p>
+            <p>Si comparem dues dissolucions: <b>isotòniques</b> (tenen igual π), <b>hipertònica</b> (té una π superior
+                respecte a l’altra) i <b>hipotònica</b> (té una π inferior).</p>
+            <div class="tabs" id="otabs"></div>
+            <div class="card" style="display:flex;gap:18px;align-items:center;flex-wrap:wrap"><svg viewBox="0 0 240 200"
+                    width="240" height="200" style="max-width:100%">
+                    <defs>
+                        <marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5"
+                            orient="auto">
+                            <path d="M0 0L10 5L0 10z" fill="#93c5fd" />
+                        </marker>
+                    </defs>
+                    <rect id="med" width="240" height="200" rx="14" fill="#22d3ee" opacity=".2"
+                        style="transition:opacity .6s" />
+                    <g id="od"></g>
+                    <circle id="cell" cx="120" cy="100" r="50" fill="#ff6b9a" stroke="#b4325e" stroke-width="3"
+                        style="transition:all .6s" />
+                    <g id="oa"></g>
+                </svg>
+                <div id="obody" style="flex:1;min-width:220px"></div>
+            </div>
+        </section>
+
+        <section id="homeo">
+            <h2>Homeòstasi i treball conjunt</h2>
+            <p><b>Homeòstasi:</b> capacitat dels organismes de mantenir relativament constants les condicions internes.
+                L’aigua i les sals minerals són fonamentals per al <b>volum cel·lular, la concentració de soluts, el pH,
+                    la temperatura i l’equilibri hídric</b>.</p>
+            <div class="grid">
+                <div class="card">
+                    <h3 style="margin-top:0">Regulació del pH</h3>El pH indica la concentració d’ions H⁺. Els
+                    <b>sistemes tampó</b> redueixen les variacions brusques de pH. Exemple: el sistema
+                    <b>bicarbonat</b>.
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Aigua + ions</h3><b>Aigua:</b> dissol, permet reaccions, transporta.
+                    <b>Ions:</b> gradients electroquímics, regulen processos, equilibri osmòtic. Treballen conjuntament.
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Impuls nerviós</h3>Les neurones mantenen diferents concentracions de <b>Na⁺
+                        i K⁺</b> a banda i banda de la membrana. Sense ions dissolts no hi hauria transmissió.
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">Contracció muscular</h3>Ca²⁺ → regulació molecular → contracció → moviment.
+                </div>
+                <div class="card">
+                    <h3 style="margin-top:0">La sang</h3>Gran proporció d’aigua + ions dissolts + molècules orgàniques +
+                    cèl·lules. L’aigua actua com a <b>medi de transport</b>.
+                </div>
+            </div>
+            <div class="key"><b>Connexió entre aigua i sals minerals:</b> les sals minerals dissoltes depenen de l’aigua
+                per poder dispersar-se, transportar-se, participar en reaccions i travessar determinats medis biològics.
+            </div>
+            <h3>Idees clau finals</h3>
+            <div class="grid chk">
+                <div class="card"><b>L’aigua</b><label><input type="checkbox"> És una molècula
+                        polar</label><label><input type="checkbox"> Forma ponts d’hidrogen</label><label><input
+                            type="checkbox"> És un excel·lent dissolvent</label><label><input type="checkbox"> Regula la
+                        temperatura</label><label><input type="checkbox"> Facilita el transport</label><label><input
+                            type="checkbox"> Participa en el metabolisme</label></div>
+                <div class="card"><b>Les sals minerals</b><label><input type="checkbox"> Poden tenir funció
+                        estructural</label><label><input type="checkbox"> Es troben dissoltes en forma
+                        d’ions</label><label><input type="checkbox"> Regulen l’equilibri osmòtic</label><label><input
+                            type="checkbox"> Participen en processos fisiològics</label><label><input type="checkbox">
+                        Són essencials per a l’homeòstasi</label></div>
+            </div>
+        </section>
+
+        <section id="practica">
+            <h2>Pràctica</h2>
+            <h3>Joc de classificar</h3>
+            <div class="card" id="cls"></div>
+            <h3>Relaciona propietat i funció</h3>
+            <div class="card" id="match"></div>
+            <h3>Targetes de memòria</h3>
+            <div class="card" id="fl"></div>
+            <h3>Test de repàs</h3>
+            <div class="card" id="quiz"></div>
+        </section>
+
+        <section id="glossari">
+            <h2>Glossari</h2><input type="search" id="gs" placeholder="Cerca un terme…">
+            <div class="grid gg" id="gl"></div>
+        </section>
+    </main>
+    <script>
+        const $ = s => document.querySelector(s);
+        // percentatges
+        const P = [["Medusa", 98], ["Algues, enciam", 95], ["Poma, bolets", 90], ["Sang humana", 90], ["Cervell humà", 85], ["Bacteri, nadó", 80], ["Cos humà adult", 65], ["Ossos humans", 25], ["Ametlla", 5]];
+        $("#bars").innerHTML = P.map(p => `<div class="r"><span>${p[0]}</span><div class="t"><div class="f" data-w="${p[1]}"></div></div><b>${p[1]}%</b></div>`).join("");
+        new IntersectionObserver((e, o) => e.forEach(x => { if (x.isIntersecting) { document.querySelectorAll(".f").forEach(f => f.style.width = f.dataset.w + "%"); o.disconnect() } })).observe($("#bars"));
+        $("#hintBtn").onclick = () => { const h = $("#hint"); h.style.display = h.style.display == "none" ? "block" : "none" };
+        $("#chBtn").onclick = () => { const g = $("#ch"); const s = g.style.display == "none"; g.style.display = s ? "block" : "none"; $("#chBtn").textContent = s ? "Amaga les càrregues" : "Mostra les càrregues parcials" };
+        // propietats
+        const PR = [
+            ["Gran poder dissolvent", "Medi de reaccions i transport", "Per la polaritat, l’aigua envolta ions i molècules polars. Ex.: NaCl → Na⁺ + Cl⁻; les molècules d’aigua envolten els ions i els mantenen dispersos. <br><b>Funció:</b> les reaccions metabòliques tenen lloc en dissolució aquosa; l’aigua dissol reactius, facilita el contacte entre molècules i transporta substàncies."],
+            ["Cohesió", "Moviment de l’aigua", "Atracció entre molècules d’aigua, gràcies als ponts d’hidrogen. Relacionada amb la tensió superficial."],
+            ["Adhesió", "Capil·laritat", "Atracció entre l’aigua i altres superfícies. Cohesió + adhesió permeten el moviment per conductes estrets. <br><b>Exemple:</b> aigua i sals minerals pugen de l’arrel a les fulles pel <b>xilema</b>."],
+            ["Alta capacitat calorífica", "Regulació tèrmica", "L’aigua ha d’absorbir molta energia abans que pugi la temperatura, perquè part de l’energia es gasta en modificar els ponts d’hidrogen. <br><b>Funció termoreguladora:</b> evita canvis bruscos, manté estable la temperatura interna i protegeix les cèl·lules. Els organismes amb una elevada proporció d’aigua poden resistir millor canvis moderats de temperatura. També els grans ecosistemes aquàtics presenten una temperatura més estable que l’ambient terrestre."],
+            ["Alta calor de vaporització", "Refrigeració", "Passar de líquid a vapor requereix molta energia (per trencar els ponts). En evaporar-se, l’aigua <b>absorbeix calor</b>. <br><b>Exemples:</b> la suor refreda el cos; la transpiració de les plantes. <br><i>Calor de vaporització alta → evaporació → eliminació de calor → termoregulació.</i>"],
+            ["Densitat anòmala", "Protecció d’ecosistemes aquàtics", "El gel és menys dens que l’aigua líquida (flota), perquè els ponts d’hidrogen formen una estructura més oberta. En llacs, el gel superficial és una capa aïllant i l’aigua de sota roman líquida: els organismes aquàtics sobreviuen."],
+            ["Participació química", "Metabolisme", "L’aigua també és <b>reactiu</b>. <b>Hidròlisi</b> (hidro = aigua, lisi = trencar): l’aigua trenca una molècula en dues parts; és el contrari de la síntesi per condensació. Proteïnes → aminoàcids; almidó → glucosa; greixos → àcids grassos + glicerol. <br><b>Exemple:</b> quan t’empasses un tros de pa, els enzims de la saliva i l’estómac utilitzen aigua per trencar les cadenes llargues de sucre en glucoses simples. <br>També participa en la <b>fotosíntesi</b>: l’aigua participa en les reaccions que permeten obtenir matèria orgànica."]];
+        const SC = [`<svg viewBox='0 0 300 130'><path d='M110 15v85q0 15 15 15h50q15 0 15-15V15' fill='none' stroke='#93c5fd' stroke-width='3'/><path d='M112 50h76v50q0 12-14 12h-48q-14 0-14-12z' fill='#60a5fa' opacity='.35'/><g class='fl'><circle cx='130' cy='75' r='5' fill='#22d3ee'/><circle cx='165' cy='85' r='5' fill='#94a3b8'/><circle cx='150' cy='65' r='5' fill='#22d3ee'/></g><g class='fl' style='animation-delay:-1.5s'><circle cx='140' cy='95' r='5' fill='#94a3b8'/><circle cx='175' cy='70' r='5' fill='#22d3ee'/><circle cx='122' cy='88' r='5' fill='#94a3b8'/></g><text x='205' y='70'>ions dispersos</text></svg>`,
+            `<svg viewBox='0 0 300 130'><rect y='70' width='300' height='60' fill='#60a5fa' opacity='.3'/><line x1='0' y1='70' x2='300' y2='70' stroke='#93c5fd' stroke-width='3'/><g class='fl'><rect x='120' y='62' width='60' height='6' rx='3' fill='#cbd5e1'/></g><text x='128' y='52'>clip metàl·lic</text><text x='190' y='62'>flota!</text><text x='10' y='105'>Ponts d’H entre les molècules de la superfície</text></svg>`,
+            `<svg viewBox='0 0 300 140'><rect y='122' width='300' height='18' fill='#60a5fa' opacity='.4'/><rect id='tw' x='142' y='77' width='16' height='45' fill='#60a5fa'/><rect id='tb' x='140' y='15' width='20' height='125' fill='none' stroke='#cbd5e1' stroke-width='3'/><text x='185' y='60'>Tub més estret</text><text x='185' y='78'>→ l’aigua puja més</text></svg><input type='range' min='8' max='44' value='20' oninput='cap(this.value)' style='width:100%;accent-color:var(--ac)'>`,
+            `<svg viewBox='0 0 300 140'><rect x='60' y='20' width='30' height='96' rx='6' fill='none' stroke='#cbd5e1' stroke-width='2'/><rect id='hw' x='64' y='20' width='22' height='96' fill='#60a5fa' style='transform-box:fill-box;transform-origin:bottom;transform:scaleY(.02);transition:transform 3s'/><text x='52' y='134'>Aigua</text><rect x='210' y='20' width='30' height='96' rx='6' fill='none' stroke='#cbd5e1' stroke-width='2'/><rect id='hs' x='214' y='20' width='22' height='96' fill='#94a3b8' style='transform-box:fill-box;transform-origin:bottom;transform:scaleY(.02);transition:transform 3s'/><text x='204' y='134'>Sorra</text><text x='105' y='70'> mateixa calor</text></svg><button onclick='heat()'>Escalfa  / refreda</button>`,
+            `<svg viewBox='0 0 300 130'><rect y='100' width='300' height='30' fill='#93aad6' opacity='.55'/><g fill='#93c5fd'><circle cx='60' cy='102' r='5'/><circle cx='140' cy='102' r='5'/><circle cx='220' cy='102' r='5'/></g><g fill='none' stroke='#cbd5e1' stroke-width='3' stroke-linecap='round'><path class='st' d='M60 95q8-10 0-20t0-20'/><path class='st' style='animation-delay:-.8s' d='M140 95q8-10 0-20t0-20'/><path class='st' style='animation-delay:-1.6s' d='M220 95q8-10 0-20t0-20'/></g><text x='10' y='20'>La suor s’evapora → s’emporta calor </text></svg>`,
+            `<svg viewBox='0 0 300 140'><rect y='40' width='300' height='100' fill='#1e3a8a' opacity='.55'/><rect y='22' width='300' height='20' rx='4' fill='#e0f2fe'/><text x='8' y='37' style='fill:#0c4a6e;font-size:12px'> Gel 0 °C: aïllant, flota</text><g class='fl'><ellipse cx='55' cy='98' rx='14' ry='7' fill='#67e8f9'/><path d='M69 98l12-8v16z' fill='#67e8f9'/><circle cx='47' cy='96' r='1.8' fill='#0c4a6e'/></g><g class='fl' style='animation-delay:-1.4s'><ellipse cx='225' cy='110' rx='14' ry='7' fill='#67e8f9'/><path d='M239 110l12-8v16z' fill='#67e8f9'/><circle cx='217' cy='108' r='1.8' fill='#0c4a6e'/></g><text x='8' y='134' style='font-size:12px'>Aigua líquida ~4 °C: la vida sobreviu</text><text x='215' y='14' style='font-size:12px'> −20 °C</text></svg>`,
+            `<svg viewBox='0 0 300 130'><g fill='#94a3b8'><circle cx='20' cy='60' r='12'/><circle cx='44' cy='60' r='12'/><circle cx='68' cy='60' r='12'/><circle cx='92' cy='60' r='12'/></g><text x='104' y='66'>+</text><path d='M128 50q-10 13-10 20a10 10 0 0020 0q0-7-10-20z' fill='#60a5fa'/><text x='150' y='66'>→</text><g fill='#22d3ee' class='fl'><circle cx='195' cy='45' r='12'/><circle cx='219' cy='45' r='12'/></g><g fill='#22d3ee' class='fl' style='animation-delay:-1.5s'><circle cx='230' cy='88' r='12'/><circle cx='254' cy='88' r='12'/></g><text x='10' y='115' style='font-size:12px'>Polímer + aigua → monòmers (proteïnes → aminoàcids…)</text></svg>`];
+        let pi = 0;
+        function showP(i) { pi = i; document.querySelectorAll("#ptabs button").forEach((b, j) => b.classList.toggle("on", i == j)); const p = PR[i]; $("#pbody").innerHTML = `<h3 style="margin-top:0">${p[0]} → ${p[1]}</h3><div class="scene">${SC[i]}</div><p>${p[2]}</p>` }
+        $("#ptabs").innerHTML = PR.map((p, i) => `<button onclick="showP(${i})">${p[0]}</button>`).join(""); showP(0);
+        PR.forEach(p => $("#ptab").insertAdjacentHTML("beforeend", `<tr><td>${p[0]}</td><td>${p[1]}</td></tr>`));
+        // flip cards
+        document.querySelectorAll(".flip").forEach(c => c.onclick = () => c.classList.toggle("open"));
+        // ions
+        const IO = [["Na⁺", "sodi", "Impuls nerviós (canals iònics), equilibri hídric i pressió osmòtica, ritme cardíac."], ["K⁺", "potassi", "Funció nerviosa, ritme cardíac, equilibri hídric."], ["Ca²⁺", "calci", "Formació d’ossos i dents, contracció muscular, coagulació de la sang, senyalització cel·lular."], ["Mg²⁺", "magnesi", "Cofactor enzimàtic, impulsos nerviosos, contracció muscular."], ["Cl⁻", "clorur", "Equilibri hídric i electrolític; producció d’àcid clorhídric (HCl) a la digestió."], ["HCO₃⁻", "bicarbonat", "Regulació del pH (amortidor sanguini) i transport de CO₂ al plasma."], ["PO₄³⁻", "fosfat", "Component d’ossos i dents (hidroxiapatita), ATP (energia cel·lular), àcids nucleics (DNA, RNA)."]];
+        $("#itabs").innerHTML = IO.map((p, i) => `<button onclick="showI(${i})">${p[0]}</button>`).join("");
+        function showI(i) { document.querySelectorAll("#itabs button").forEach((b, j) => b.classList.toggle("on", i == j)); const p = IO[i]; $("#ibody").innerHTML = `<div style="display:flex;gap:14px;align-items:center"><span class="ib">${p[0]}</span><div><b>${p[0]} — ${p[1]}</b><br>${p[2]}</div></div>` } showI(0);
+        // osmosi
+        const OS = [["Hipertònic", 34, "Medi més concentrat (π superior a la cèl·lula): l’aigua <b>surt</b> de la cèl·lula i aquesta s’arruga (es contreu).", "#e0507f"], ["Isotònic", 48, "Mateixa π dins i fora: l’entrada i sortida d’aigua s’equilibren. La cèl·lula manté el seu volum.", "#ff6b9a"], ["Hipotònic", 66, "Medi menys concentrat (π inferior): l’aigua <b>entra</b> a la cèl·lula i aquesta s’infla i pot arribar a esclatar.", "#ff8fb3"]];
+        $("#otabs").innerHTML = OS.map((p, i) => `<button onclick="showO(${i})">${p[0]}</button>`).join("");
+        function showO(i) { document.querySelectorAll("#otabs button").forEach((b, j) => b.classList.toggle("on", i == j)); const p = OS[i]; const c = $("#cell"); c.setAttribute("r", p[1]); c.setAttribute("fill", p[3]); osm(i); $("#obody").innerHTML = `<b>Medi ${p[0].toLowerCase()}</b><p>${p[2]}</p>` } showO(1);
+        // quiz
+        const Q = [
+            ["Quin d’aquests NO és una biomolècula inorgànica?", ["Aigua", "Sals minerals", "Proteïnes", "Diòxid de carboni"], 2, "Les proteïnes són biomolècules orgàniques (com glúcids, lípids i àcids nucleics)."],
+            ["Quin teixit humà conté un percentatge d’aigua més baix?", ["Cervell", "Sang", "Ossos", "Cap: tots tenen el mateix percentatge"], 2, "Ossos 22%, enfront del cervell (86%). El percentatge depèn de l’activitat biològica del teixit."],
+            ["Per què l’aigua és una molècula polar?", ["Perquè té 3 àtoms", "Per la diferència d’electronegativitat i la geometria angular", "Perquè és líquida", "Perquè té càrrega neta positiva"], 1, "L’oxigen atrau més els electrons (δ−) i la forma angular impedeix que les càrregues s’anul·lin."],
+            ["Quants ponts d’hidrogen pot formar una molècula d’aigua?", ["1", "2", "3", "4"], 3, "2 com a donant (els hidrògens) i 2 com a acceptor (els parells d’electrons no compartits de l’oxigen)."],
+            ["Què explica que l’aigua dissolgui la sal comuna (NaCl)?", ["La seva baixa densitat", "Les molècules d’aigua envolten els ions Na⁺ i Cl⁻", "L’aigua reacciona i destrueix el NaCl", "La seva alta calor de vaporització"], 1, "La polaritat de l’aigua li permet envoltar els ions i mantenir-los dispersos."],
+            ["Com es diu la reacció on l’aigua trenca una molècula en dues parts?", ["Condensació", "Fotosíntesi", "Hidròlisi", "Osmosi"], 2, "Hidro = aigua, lisi = trencar. És la reacció contrària a la síntesi per condensació."],
+            ["Quina combinació de propietats explica l’ascens de l’aigua pel xilema?", ["Cohesió i adhesió", "Densitat anòmala i calor de vaporització", "Capacitat calorífica i polaritat", "Només la gravetat"], 0, "Cohesió entre molècules + adhesió a les parets dels vasos → capil·laritat."],
+            ["Per què la suor refreda el cos?", ["Perquè l’aigua és freda", "Perquè en evaporar-se absorbeix calor (alta calor de vaporització)", "Perquè té una alta densitat", "Perquè conté sals"], 1, "Evaporació → absorció de calor → refredament."],
+            ["Què passa amb el gel en un llac?", ["S’enfonsa i congela tot el llac", "Flota i fa d’aïllant tèrmic", "Es dissol", "Augmenta la densitat de l’aigua"], 1, "El gel és menys dens (estructura oberta amb ponts d’hidrogen); flota i protegeix l’aigua líquida de sota."],
+            ["Quina sal mineral precipitada trobem a ossos i dents?", ["Carbonat de calci", "Clorur de sodi", "Fosfat de calci", "Bicarbonat"], 2, "El fosfat de calci (hidroxiapatita) dona duresa; el carbonat de calci és típic de closques i petxines."],
+            ["Quin ió participa especialment en la contracció muscular?", ["Ca²⁺", "Cl⁻", "HCO₃⁻", "Fe²⁺"], 0, "El calci intervé en la interacció de les proteïnes musculars."],
+            ["Un glòbul vermell es posa en un medi hipotònic. Què li passa?", ["S’arruga", "No canvia", "S’infla perquè hi entra aigua", "Perd tots els ions"], 2, "El medi hipotònic té menys soluts: l’aigua entra per osmosi."],
+            ["Quin sistema ajuda a mantenir estable el pH de la sang?", ["El sistema tampó bicarbonat", "El col·lagen", "L’hemoglobina només", "L’hidroxiapatita"], 0, "Els sistemes tampó redueixen les variacions brusques de pH; el bicarbonat n’és un exemple."],
+            ["Quin ió és clau, juntament amb el K⁺, en l’impuls nerviós?", ["Mg²⁺", "Na⁺", "PO₄³⁻", "Ca²⁺ exclusivament"], 1, "Les neurones mantenen gradients de Na⁺ i K⁺ a banda i banda de la membrana."]];
+        let QP = [], qi = 0, sc = 0, wr = [], cur = [], dn = false;
+        function qs(l) { QP = l; qi = 0; sc = 0; wr = []; qr() }
+        function qr() {
+            const z = $("#quiz"); if (qi >= QP.length) { const n = QP.length, p = sc / n; z.innerHTML = `<div style="text-align:center"><svg viewBox="0 0 120 120" width="150" height="150"><circle cx="60" cy="60" r="50" fill="none" stroke="#1b2f63" stroke-width="10"/><circle cx="60" cy="60" r="50" fill="none" stroke="${p >= .7 ? "#22d3ee" : "#ff6b9a"}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${314 * p} 314" transform="rotate(-90 60 60)"/><text x="60" y="68" text-anchor="middle" style="font-size:26px;font-weight:700">${sc}/${n}</text></svg><p>${p >= .8 ? "Excel·lent!" : p >= .5 ? "Bé, però repassa alguns apartats." : "Repassa el contingut i torna-ho a provar."}</p><button onclick="qs(Q.map((_,i)=>i))">Repetir tot el test</button> ${wr.length ? `<button class="on" onclick="qs(wr.slice())">Repetir només les fallades (${wr.length})</button>` : ""}</div>`; return }
+            const q = Q[QP[qi]]; cur = q[1].map((t, k) => [t, k]).sort(() => Math.random() - .5); dn = false;
+            z.innerHTML = `<div class="mut">Pregunta ${qi + 1} de ${QP.length}</div><div class="qb"><i style="width:${qi / QP.length * 100}%"></i></div><h3>${q[0]}</h3>${cur.map((o, j) => `<button class="q-opt" onclick="qa(${j})">${o[0]}</button>`).join("")}<div id="fb"></div>`
+        }
+        function qa(j) { if (dn) return; dn = true; const i = QP[qi], q = Q[i], ok = cur[j][1] == q[2]; if (ok) sc++; else wr.push(i); document.querySelectorAll(".q-opt").forEach((b, k) => { if (cur[k][1] == q[2]) b.classList.add("ok"); else if (k == j) b.classList.add("ko") }); $("#fb").innerHTML = `<div class="key"><b>${ok ? "Correcte!" : "No exactament."}</b> ${q[3]}</div><button class="on" onclick="qi++;qr()">${qi == QP.length - 1 ? "Veure resultat" : "Següent"}</button>` }
+        qs(Q.map((_, i) => i));
+        // glossari
+        const G = [["Adhesió", "Atracció entre les molècules d’aigua i altres superfícies."], ["Capacitat calorífica", "Energia que cal absorbir per augmentar la temperatura; a l’aigua és alta pels ponts d’hidrogen."], ["Capil·laritat", "Moviment de l’aigua per conductes estrets gràcies a la cohesió i l’adhesió."], ["Calor de vaporització", "Energia necessària per passar de líquid a vapor; a l’aigua és alta."], ["Cohesió", "Atracció entre molècules d’aigua, deguda als ponts d’hidrogen."], ["Dissolució", "Mescla homogènia de dues o més substàncies que no reaccionen entre si."], ["Dissolvent", "Component majoritari d’una dissolució (p. ex. l’aigua)."], ["Electronegativitat", "Capacitat d’un àtom per atreure els electrons compartits."], ["Hidròlisi", "Reacció en què l’aigua trenca una molècula en dues parts."], ["Hipertònic", "Medi amb pressió osmòtica superior a l’altre."], ["Hipotònic", "Medi amb pressió osmòtica inferior a l’altre."], ["Homeòstasi", "Capacitat dels organismes de mantenir relativament constants les condicions internes."], ["Ió", "Àtom o grup d’àtoms amb càrrega elèctrica (Na⁺, Cl⁻…)."], ["Isotònic", "Dissolucions amb la mateixa pressió osmòtica."], ["Osmosi", "Pas d’aigua a través d’una membrana semipermeable segons la concentració de soluts."], ["Polar (molècula)", "Molècula amb distribució desigual de la càrrega: un pol δ− i un pol δ+."], ["Pont d’hidrogen", "Unió feble entre el H (δ+) d’una molècula i l’O (δ−) d’una altra."], ["Pressió osmòtica (π)", "Pressió exercida per les partícules de solut sobre la membrana."], ["Sal mineral", "Substància inorgànica present en els éssers vius: precipitada, dissolta o associada a molècules orgàniques."], ["Sistema tampó", "Sistema que redueix les variacions brusques de pH (p. ex. bicarbonat)."], ["Solut", "Component minoritari d’una dissolució (p. ex. la sal)."], ["Termoregulació", "Regulació de la temperatura; l’aigua hi participa per la capacitat calorífica i la calor de vaporització."], ["Xilema", "Conducte de les plantes pel qual puja l’aigua amb sals minerals des de l’arrel fins a les fulles."], ["Densitat anòmala", "Propietat de l’aigua: el gel és menys dens que el líquid i flota."]];
+        function gr(f = "") { f = f.toLowerCase(); $("#gl").innerHTML = G.filter(g => (g[0] + g[1]).toLowerCase().includes(f)).sort((a, b) => a[0].localeCompare(b[0], "ca")).map(g => `<div class="card gc"><b>${g[0]}</b><p>${g[1]}</p></div>`).join("") || "<p class=mut>Cap resultat.</p>" }
+        gr(); $("#gs").oninput = e => gr(e.target.value);
+        function cap(v) { v = +v; const h = Math.min(105, 900 / v); $("#tb").setAttribute("x", 150 - v / 2); $("#tb").setAttribute("width", v); $("#tw").setAttribute("x", 152 - v / 2); $("#tw").setAttribute("width", v - 4); $("#tw").setAttribute("y", 122 - h); $("#tw").setAttribute("height", h) }
+        function heat() { const h = $("#hw"), on = h.dataset.o != "1"; h.dataset.o = on ? 1 : 0; h.style.transform = `scaleY(${on ? .3 : .02})`; $("#hs").style.transform = `scaleY(${on ? .95 : .02})` }
+        function bone(k) { document.querySelectorAll("#bone button").forEach((b, i) => b.classList.toggle("on", i == k)); $("#bn").innerHTML = [`<rect x='40' y='50' width='110' height='24' rx='4' fill='#e2e8f0' transform='rotate(-8 150 62)'/><rect x='160' y='56' width='100' height='24' rx='4' fill='#e2e8f0' transform='rotate(10 160 68)'/><path d='M148 28l-9 14 13 5-9 15' stroke='#ff6b9a' fill='none' stroke-width='3' stroke-linejoin='round'/>`, `<rect x='40' y='48' width='220' height='26' rx='13' fill='#e2e8f0'/><g stroke='#22d3ee' stroke-width='3'><line x1='55' y1='56' x2='245' y2='56'/><line x1='55' y1='66' x2='245' y2='66'/></g>`, `<path d='M40 85Q150 15 260 85' stroke='#22d3ee' stroke-width='22' fill='none' stroke-linecap='round'/>`][k]; $("#bt").innerHTML = ["<b>Només mineral:</b> dur però trencadís.", "<b>Mineral + col·lagen:</b> os resistent i flexible.", "<b>Només col·lagen:</b> flexible però tou i es deforma."][k] }
+        bone(1);
+        function osm(i) { const r = OS[i][1], n = [20, 10, 3][i]; $("#med").setAttribute("opacity", [.38, .18, .05][i]); let d = ""; for (let k = 0; k < n; k++) { let x, y; do { x = 12 + Math.random() * 216; y = 12 + Math.random() * 176 } while (Math.hypot(x - 120, y - 100) < r + 18); d += `<circle cx="${x | 0}" cy="${y | 0}" r="4" fill="#cbd5e1"/>` } $("#od").innerHTML = d; let a = "";[45, 135, 225, 315].forEach(g => { const c = Math.cos(g * Math.PI / 180), s = Math.sin(g * Math.PI / 180), L = (a1, a2) => `<line class="ar" x1="${120 + c * a1}" y1="${100 + s * a1}" x2="${120 + c * a2}" y2="${100 + s * a2}" stroke="#93c5fd" stroke-width="3" marker-end="url(#ah)"/>`, out = L(r - 4, r + 22), inn = L(r + 26, r + 4); a += i == 0 ? out : i == 2 ? inn : (g == 45 || g == 225 ? out : inn) }); $("#oa").innerHTML = a }
+        const BP = [[150, 38, "Cervell i nervis", "Na⁺ i K⁺: els gradients a banda i banda de la membrana generen l’impuls nerviós.", "#818cf8"], [138, 112, "Cor", "K⁺ i Na⁺: ritme cardíac.", "#ff6b9a"], [160, 150, "Estómac", "Cl⁻: forma l’àcid clorhídric (HCl) de la digestió.", "#60a5fa"], [77, 130, "Múscul", "Ca²⁺ (i Mg²⁺): contracció muscular.", "#22d3ee"], [129, 262, "Ossos i dents", "Ca²⁺ i PO₄³⁻: hidroxiapatita, duresa i suport.", "#e2e8f0"], [178, 100, "Sang", "HCO₃⁻: tampó del pH i transport de CO₂. Ca²⁺: coagulació.", "#60a5fa"]];
+        $("#bm").innerHTML = `<g fill="#0f1a2e" stroke="#3b4a6b" stroke-width="3"><circle cx="150" cy="40" r="28"/><rect x="108" y="76" width="84" height="130" rx="30"/><rect x="62" y="82" width="30" height="110" rx="15"/><rect x="208" y="82" width="30" height="110" rx="15"/><rect x="112" y="200" width="34" height="120" rx="16"/><rect x="154" y="200" width="34" height="120" rx="16"/></g>` + BP.map((b, i) => `<g style="cursor:pointer" onclick="bp(${i})"><circle class="ar" cx="${b[0]}" cy="${b[1]}" r="14" fill="#22d3ee" opacity=".4"/><circle cx="${b[0]}" cy="${b[1]}" r="7" fill="#22d3ee"/></g>`).join("");
+        function bp(k) { const b = BP[k]; $("#bi").innerHTML = `<h3 style="margin-top:0;color:#22d3ee">${b[2]}</h3><p>${b[3]}</p><div class="tabs">${BP.map((x, i) => `<button class="${i == k ? "on" : ""}" onclick="bp(${i})">${x[2]}</button>`).join("")}</div>` }
+        bp(0);
+        const SI = ["Dos grans tipus de biomolècules formen els éssers vius.", "De la composició i l’estructura de la molècula a la xarxa de ponts d’hidrogen.", "Estructura química → propietats fisicoquímiques → funcions biològiques.", "Precipitades, dissoltes o associades a molècules orgàniques.", "L’aigua i les sals minerals treballen conjuntament.", "Classifica, relaciona, memoritza i posa’t a prova.", "Cerca qualsevol terme de la unitat."];
+        document.querySelectorAll("section").forEach((e, i) => e.querySelector("h2").insertAdjacentHTML("afterend", `<p class="si">${SI[i]}</p>`));
+        const CN = [["Biomolècules inorgàniques", 320, 32, "intro", "Aigua, sals minerals i alguns gasos, com l’oxigen (O₂) i el diòxid de carboni (CO₂)."], ["Aigua", 140, 100, "aigua", "Biomolècula més abundant de tots els éssers vius. Fórmula H₂O: 2 àtoms d’hidrogen i 1 d’oxigen, amb geometria angular."], ["Sals minerals", 500, 100, "sals", "Substàncies inorgàniques presents en els éssers vius. Poden ser precipitades, dissoltes o associades a molècules orgàniques."], ["Molècula polar", 65, 170, "aigua", "L’oxigen atrau amb més força els electrons compartits: càrrega parcial negativa (δ−) a l’oxigen i positiva (δ+) als hidrògens."], ["Ponts d’hidrogen", 190, 215, "aigua", "El pol positiu d’una molècula d’aigua és atret pel pol negatiu d’una altra. Cada molècula pot formar fins a 4 ponts d’hidrogen."], ["Propietats i funcions", 130, 272, "prop", "Gran poder dissolvent, cohesió, adhesió, alta capacitat calorífica, elevada calor de vaporització i densitat anòmala."], ["Precipitades", 380, 170, "sals", "Estructures sòlides amb funció de suport i protecció: carbonat de calci (closques, petxines) i fosfat de calci (ossos, dents)."], ["Dissoltes (ions)", 520, 225, "sals", "Es troben en forma d’ions (Na⁺, K⁺, Ca²⁺, Mg²⁺, Cl⁻, HCO₃⁻, PO₄³⁻): regulació osmòtica, pH, impuls nerviós, contracció muscular i activació enzimàtica."], ["Associades", 580, 160, "sals", "Associades a molècules orgàniques: participen en estructures o processos biològics (hemoglobina, clorofil·la, enzims)."], ["Homeòstasi", 350, 265, "homeo", "Capacitat dels organismes de mantenir relativament constants les condicions internes. L’aigua i les sals minerals són fonamentals."]];
+        const CE = [[0, 1], [0, 2], [1, 3], [3, 4], [4, 5], [2, 6], [2, 7], [2, 8], [5, 9], [7, 9]];
+        $("#cm").innerHTML = CE.map(e => `<line x1="${CN[e[0]][1]}" y1="${CN[e[0]][2]}" x2="${CN[e[1]][1]}" y2="${CN[e[1]][2]}" stroke="#27427e" stroke-width="2"/>`).join("") + CN.map((n, i) => { const w = n[0].length * 7.4 + 24; return `<g class="cn" onclick="cm(${i})"><rect x="${n[1] - w / 2}" y="${n[2] - 15}" width="${w}" height="30" rx="15"/><text x="${n[1]}" y="${n[2] + 4}">${n[0]}</text></g>` }).join("");
+        function cm(i) { document.querySelectorAll(".cn").forEach((g, k) => g.classList.toggle("on", k == i)); const n = CN[i]; $("#ct").innerHTML = `<h3 style="margin:10px 0 4px">${n[0]}</h3><p style="margin:0 0 8px">${n[4]}</p><a class="go" href="#${n[3]}">Veure l’apartat</a>` } cm(0);
+        const SETS = [{ n: "Sals minerals", c: ["Precipitades", "Dissoltes", "Associades a molècules orgàniques"], i: [["Carbonat de calci (closques)", 0], ["Fosfat de calci (ossos i dents)", 0], ["Na⁺", 1], ["K⁺", 1], ["Ca²⁺ en la contracció muscular", 1], ["HCO₃⁻", 1], ["Ferro en l’hemoglobina", 2], ["Magnesi en la clorofil·la", 2], ["Zinc o manganès en un enzim", 2]] }, { n: "Biomolècules", c: ["Inorgàniques", "Orgàniques"], i: [["Aigua", 0], ["Sals minerals", 0], ["Oxigen (O₂)", 0], ["Diòxid de carboni (CO₂)", 0], ["Glúcids", 1], ["Lípids", 1], ["Proteïnes", 1], ["Àcids nucleics", 1]] }];
+        let cs = 0, ci = null, cok = 0;
+        function cr(k) { cs = k; ci = null; cok = 0; const S = SETS[k]; $("#cls").innerHTML = `<div class="tabs">${SETS.map((x, i) => `<button class="${i == k ? "on" : ""}" onclick="cr(${i})">${x.n}</button>`).join("")}</div><p class="mut" style="margin-top:0">Toca un element i després la seva categoria.</p><div class="grid"><div>${S.i.map((x, j) => [x, j]).sort(() => Math.random() - .5).map(a => `<button class="m" data-j="${a[1]}">${a[0][0]}</button>`).join("")}</div><div>${S.c.map((c, j) => `<button class="m" data-c="${j}">${c}</button>`).join("")}</div></div><div id="cst" style="margin-top:8px"></div>` }
+        $("#cls").onclick = e => { const b = e.target.closest(".m"); if (!b) return; const S = SETS[cs]; if (b.dataset.j != null) { document.querySelectorAll("#cls .m.sel").forEach(x => x.classList.remove("sel")); ci = b; b.classList.add("sel") } else if (ci) { if (S.i[ci.dataset.j][1] == b.dataset.c) { ci.classList.remove("sel"); ci.classList.add("done"); ci = null; cok++; $("#cst").innerHTML = cok == S.i.length ? "<b>Perfecte!</b> Has classificat tots els elements." : `Encerts: ${cok} / ${S.i.length}` } else { const t = ci; t.classList.add("bad"); setTimeout(() => t.classList.remove("bad"), 450) } } }; cr(0);
+        let fi = 0; function fr() { const g = G[fi]; $("#fl").innerHTML = `<div class="fc" onclick="this.classList.toggle('f')"><div><div class="s"><b style="font-size:22px">${g[0]}</b></div><div class="s bk"><span>${g[1]}</span></div></div></div><div style="text-align:center;margin-top:14px"><button onclick="fn(-1)">Anterior</button> <span class="mut">${fi + 1} / ${G.length}</span> <button onclick="fn(1)">Següent</button> <button onclick="G.sort(()=>Math.random()-.5);fi=0;fr()">Barreja</button></div>` }
+        function fn(d) { fi = (fi + G.length + d) % G.length; fr() } fr();
+        // bombolles i comptadors
+        $("#bub").innerHTML = Array.from({ length: 14 }, (_, i) => { const s = 8 + Math.random() * 18; return `<span style="left:${i * 7 + Math.random() * 5}%;width:${s}px;height:${s}px;animation-delay:${-Math.random() * 10}s;animation-duration:${8 + Math.random() * 8}s"></span>` }).join("");
+        const co = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { o.unobserve(e.target); const n = +e.target.dataset.n, t0 = performance.now(), d = n % 1; (function f(t) { const k = Math.min((t - t0) / 1400, 1); e.target.textContent = (n * k).toFixed(d ? 1 : 0).replace(".", ","); if (k < 1) requestAnimationFrame(f) })(t0) } }));
+        document.querySelectorAll("[data-n]").forEach(e => co.observe(e));
+        // laboratori
+        const cv = $("#sim"), cx = cv.getContext("2d"), W = cv.width = 560, H = cv.height = 260;
+        const ps = Array.from({ length: 30 }, (_, i) => ({ hx: i % 6, hy: (i / 6) | 0, x: Math.random() * W, y: Math.random() * H, vx: Math.random() * 4 - 2, vy: Math.random() * 4 - 2, ph: Math.random() * 6 }));
+        let T = -10;
+        function info() { $("#tro").innerHTML = `<b style="font-size:20px">${T} °C</b> · ` + (T <= 0 ? " Gel: xarxa oberta i rígida, ponts fixos (fins a 4 per molècula). Densitat ≈ 0,92 g/mL: flota!" : T >= 100 ? " Vapor: molècules lliures, cap pont d’hidrogen (cal absorbir molta calor)." : T <= 4 ? " Líquid fred: a 4 °C l’aigua té la densitat màxima (1,00 g/mL)." : " Líquid: els ponts es formen i es trenquen contínuament.") }
+        $("#tr").oninput = e => { T = +e.target.value; info() };
+        function loop(t) {
+            const gas = T >= 100, ice = T <= 0, sp = ice ? 50 : 38, ox = (W - 5 * sp) / 2, oy = (H - 4 * sp * .87) / 2, a = ice ? 1 : 3 + T / 14; cx.clearRect(0, 0, W, H);
+            ps.forEach(p => { if (gas) { p.x += p.vx * 1.6; p.y += p.vy * 1.6; if (p.x < 12 || p.x > W - 12) p.vx *= -1; if (p.y < 12 || p.y > H - 12) p.vy *= -1 } else { const tx = ox + p.hx * sp + (p.hy % 2) * sp / 2 + Math.sin(t / 260 + p.ph) * a, ty = oy + p.hy * sp * .87 + Math.cos(t / 300 + p.ph) * a; p.x += (tx - p.x) * .08; p.y += (ty - p.y) * .08 } });
+            if (!gas) { cx.lineWidth = 2; cx.setLineDash(ice ? [] : [4, 4]); ps.forEach((p, i) => ps.forEach((q, j) => { if (j > i && Math.hypot(p.x - q.x, p.y - q.y) < sp * 1.2 && (ice || (i * 7 + j * 3 + (t / 350 | 0)) % 3)) { cx.strokeStyle = ice ? "#93c5fd" : "rgba(125,211,252,.55)"; cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(q.x, q.y); cx.stroke() } })) }
+            ps.forEach(p => { cx.fillStyle = "#fff";[-1, 1].forEach(s => { cx.beginPath(); cx.arc(p.x + s * 9, p.y + 8, 4.5, 0, 7); cx.fill() }); cx.fillStyle = "#ff6b9a"; cx.beginPath(); cx.arc(p.x, p.y, 8, 0, 7); cx.fill() }); requestAnimationFrame(loop)
+        }
+        requestAnimationFrame(loop); info();
+        // sal
+        const sv = $("#salt"), ions = [];[110, 150, 190, 230].forEach((x, c) => [60, 100].forEach((y, r) => ions.push({ x, y, na: (c + r) % 2 == 0 })));
+        const TG = [[40, 30], [110, 140], [180, 25], [260, 145], [350, 35], [60, 95], [340, 105], [250, 80]]; let open = 0;
+        sv.innerHTML = ions.map(o => `<g class="io" style="transition:transform 1.5s cubic-bezier(.3,.8,.3,1)"><circle cx="${o.x}" cy="${o.y}" r="16" fill="${o.na ? "#22d3ee" : "#94a3b8"}"/><text x="${o.x}" y="${o.y + 5}" text-anchor="middle" style="fill:#06101a;font-weight:700">${o.na ? "Na⁺" : "Cl⁻"}</text><text class="dl" x="${o.x}" y="${o.y - 22}" text-anchor="middle" style="font-size:11px;fill:${o.na ? "#cbd5e1" : "#cbd5e1"};opacity:0;transition:opacity 1s 1s">${o.na ? "δ− O" : "δ+ H"}</text></g>`).join("");
+        $("#sb").onclick = () => { open = !open; sv.querySelectorAll(".io").forEach((g, i) => { const o = ions[i], t = TG[i]; g.style.transform = open ? `translate(${t[0] - o.x}px,${t[1] - o.y}px)` : "none"; g.querySelector(".dl").style.opacity = open ? 1 : 0 }); $("#sb").textContent = open ? "Torna a cristal·litzar" : "Afegeix aigua" };
+        // joc de relacionar
+        let sel = null, mc = 0;
+        function mr() { sel = null; mc = 0; const R = PR.map((p, i) => [i, p[1]]).sort(() => Math.random() - .5); $("#match").innerHTML = `<p class="mut" style="margin-top:0">Toca una propietat i després la seva funció biològica.</p><div class="grid"><div>${PR.map((p, i) => `<button class="m" data-s="l" data-i="${i}">${p[0]}</button>`).join("")}</div><div>${R.map(r => `<button class="m" data-s="r" data-i="${r[0]}">${r[1]}</button>`).join("")}</div></div><div id="mst" style="margin-top:8px"></div>` }
+        $("#match").onclick = e => { const b = e.target.closest(".m"); if (!b) return; if (b.dataset.s == "l") { document.querySelectorAll(".m.sel").forEach(x => x.classList.remove("sel")); sel = b; b.classList.add("sel") } else if (sel) { if (sel.dataset.i == b.dataset.i) { sel.classList.remove("sel"); sel.classList.add("done"); b.classList.add("done"); sel = null; mc++; $("#mst").innerHTML = mc == PR.length ? " <b>Perfecte!</b> <button onclick=\"mr()\">Torna-ho a provar</button>" : `Encerts: ${mc} / ${PR.length}` } else { b.classList.add("bad"); setTimeout(() => b.classList.remove("bad"), 450) } } };
+        mr();
+        // aparició progressiva
+        const rvo = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); rvo.unobserve(e.target) } }), { threshold: .08 });
+        document.querySelectorAll(".card").forEach(c => { c.classList.add("rv"); rvo.observe(c) });
+        // progrés + nav
+        const secs = [...document.querySelectorAll("section")], links = [...document.querySelectorAll("nav a")];
+        let lc = -2; function sc2() { const h = document.documentElement, p = h.scrollTop / (h.scrollHeight - h.clientHeight); $("#bar").style.width = p * 100 + "%"; $("#rg").setAttribute("stroke-dashoffset", 100.5 * (1 - p)); $("#rt").textContent = Math.round(p * 100) + "%"; let c = -1; secs.forEach((s, i) => { if (s.getBoundingClientRect().top < 140) c = i }); links.forEach((a, i) => a.classList.toggle("on", i == c)); if (c >= 0 && c != lc) { lc = c; document.body.style.setProperty("--nc", links[c].style.getPropertyValue("--c")); const n = $("#nav"), a = links[c]; n.scrollTo({ left: a.offsetLeft - (n.clientWidth - a.offsetWidth) / 2, behavior: "smooth" }) } }
+        addEventListener("scroll", sc2); sc2();
+    </script>
+</body>
+
+</html>

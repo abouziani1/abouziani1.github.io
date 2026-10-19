@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Tabla periódica interactiva: propiedades periódicas</title>
+    <style>
+        :root {
+            --bg: #f6f7fb;
+            --card: #fff;
+            --tx: #1b2433;
+            --mu: #5a6578;
+            --ac: #2a5bd7;
+            --bd: #d8dce6;
+            --ok: #c0392b;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme=light]) {
+                --bg: #10141d;
+                --card: #1a2030;
+                --tx: #e8ecf4;
+                --mu: #9aa6bb;
+                --ac: #7aa2ff;
+                --bd: #2d3650
+            }
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-padding-top: 56px;
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--tx);
+            font: 16px/1.55 system-ui, -apple-system, Segoe UI, Roboto, sans-serif
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 9;
+            background: var(--card);
+            border-bottom: 1px solid var(--bd);
+            padding: 6px 12px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            overflow-x: auto;
+            white-space: nowrap
+        }
+
+        header b {
+            margin-right: 6px
+        }
+
+        header a {
+            color: var(--ac);
+            text-decoration: none;
+            font-size: 14px;
+            padding: 4px 8px;
+            border-radius: 8px
+        }
+
+        header a:hover {
+            background: var(--bd)
+        }
+
+        section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 22px 14px
+        }
+
+        h2 {
+            margin: .2em 0 .4em
+        }
+
+        h3 {
+            margin: .2em 0
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--bd);
+            border-radius: 14px;
+            padding: 14px;
+            margin: 10px 0
+        }
+
+        .grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr))
+        }
+
+        .mu {
+            color: var(--mu);
+            font-size: 14px
+        }
+
+        .f {
+            font-family: Georgia, serif;
+            font-size: 1.15em;
+            background: var(--bg);
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: inline-block
+        }
+
+        select,
+        input,
+        button {
+            font: inherit;
+            padding: 6px 10px;
+            border: 1px solid var(--bd);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--tx)
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        button:hover {
+            border-color: var(--ac)
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin: 8px 0
+        }
+
+        .tw {
+            overflow-x: auto;
+            padding-bottom: 6px
+        }
+
+        #tbl,
+        .mini {
+            display: grid;
+            grid-template-columns: repeat(18, minmax(42px, 1fr));
+            gap: 2px;
+            min-width: 800px
+        }
+
+        .el {
+            aspect-ratio: 1;
+            border: 0;
+            border-radius: 5px;
+            padding: 1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+            font-size: 14px;
+            color: #111;
+            transition: transform .15s, opacity .2s
+        }
+
+        .el small {
+            font-size: 9px;
+            opacity: .8
+        }
+
+        .el b {
+            font-size: 15px
+        }
+
+        .el:hover {
+            transform: scale(1.12);
+            z-index: 2
+        }
+
+        .el.dim {
+            opacity: .18
+        }
+
+        .el.sel {
+            outline: 3px solid var(--ac)
+        }
+
+        .el.exc {
+            outline: 3px dashed var(--ok)
+        }
+
+        .el.nd {
+            background: repeating-linear-gradient(45deg, #cfd3dc, #cfd3dc 4px, #e6e8ee 4px, #e6e8ee 8px)
+        }
+
+        .ph {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--mu)
+        }
+
+        .leg {
+            height: 14px;
+            border-radius: 7px;
+            background: linear-gradient(90deg, #440154, #31688e, #35b779, #fde725);
+            min-width: 200px;
+            flex: 1
+        }
+
+        @keyframes gr {
+            from {
+                width: 0
+            }
+        }
+
+        .bar {
+            height: 14px;
+            border-radius: 7px;
+            background: var(--ac);
+            transition: width .6s;
+            animation: gr .9s ease-out
+        }
+
+        .el:focus-visible,
+        button:focus-visible,
+        select:focus-visible,
+        input:focus-visible {
+            outline: 3px solid var(--ac);
+            outline-offset: 2px
+        }
+
+        .eg {
+            display: grid;
+            grid-template-columns: 90px 1fr 60px;
+            gap: 6px;
+            align-items: center;
+            font-size: 14px;
+            margin: 4px 0
+        }
+
+        svg text {
+            fill: var(--tx);
+            font-family: inherit
+        }
+
+        .mapw {
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            gap: 4px
+        }
+
+        .arr {
+            font-size: 26px;
+            color: var(--ac);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            min-height: 30px
+        }
+
+        .arr span {
+            background: var(--bg);
+            padding: 0 2px
+        }
+
+        .mini {
+            min-width: 700px
+        }
+
+        .mini .el {
+            font-size: 11px
+        }
+
+        .mini .el b {
+            font-size: 11px
+        }
+
+        footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 18px 14px 40px;
+            font-size: 13px;
+            color: var(--mu)
+        }
+
+        details {
+            margin: 6px 0
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--ac)
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-weight: 600;
+            color: #fff
+        }
+
+        @keyframes orb {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .orb {
+            transform-origin: 150px 100px;
+            animation: orb 3s linear infinite
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            .orb {
+                animation: none
+            }
+
+            * {
+                transition: none !important
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <style>
+        :root {
+            --bg: #f4f6fb;
+            --card: #fff;
+            --tx: #172033;
+            --mu: #586480;
+            --ac: #2f5fe3;
+            --ac2: #14a3a0;
+            --bd: #dfe3ee;
+            --sh: 0 1px 2px rgba(20, 30, 60, .06), 0 6px 20px rgba(20, 30, 60, .06);
+            --r: 16px
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme=light]) {
+                --bg: #0e121b;
+                --card: #171d2b;
+                --tx: #e9edf6;
+                --mu: #9aa7c0;
+                --ac: #7ea4ff;
+                --ac2: #4fd1c5;
+                --bd: #27304a;
+                --sh: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .35)
+            }
+        }
+
+        :root[data-theme=dark] {
+            --bg: #0e121b;
+            --card: #171d2b;
+            --tx: #e9edf6;
+            --mu: #9aa7c0;
+            --ac: #7ea4ff;
+            --ac2: #4fd1c5;
+            --bd: #27304a;
+            --sh: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px rgba(0, 0, 0, .35)
+        }
+
+        body {
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif
+        }
+
+        html {
+            scroll-padding-top: 72px
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            overflow: visible;
+            background: color-mix(in srgb, var(--card) 95%, transparent);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px)
+        }
+
+        .brand {
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--tx);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+            padding: 4px 8px 4px 2px;
+            font-size: 16px
+        }
+
+        .brand:hover {
+            background: none
+        }
+
+        #nav {
+            position: relative;
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 22px), transparent);
+            mask-image: linear-gradient(90deg, transparent 0, #000 6px, #000 calc(100% - 22px), transparent)
+        }
+
+        #nav::-webkit-scrollbar {
+            display: none
+        }
+
+        #nav a {
+            flex: none;
+            padding: 6px 12px;
+            border-radius: 99px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--mu);
+            transition: background .2s, color .2s
+        }
+
+        #nav a:hover {
+            background: var(--bd);
+            color: var(--tx)
+        }
+
+        #nav a.on {
+            background: var(--ac);
+            color: #fff
+        }
+
+        #th {
+            flex: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            padding: 0;
+            font-size: 18px;
+            line-height: 1;
+            display: grid;
+            place-items: center
+        }
+
+        #pb {
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--ac), var(--ac2));
+            border-radius: 0 3px 3px 0
+        }
+
+        @media(max-width:600px) {
+            .brand span {
+                display: none
+            }
+        }
+
+        section {
+            padding: 30px 16px
+        }
+
+        h2 {
+            font-size: clamp(22px, 3vw, 30px);
+            letter-spacing: -.01em;
+            margin: 0 0 .5em;
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        h2::before {
+            content: '';
+            width: 6px;
+            height: 1.1em;
+            border-radius: 3px;
+            background: linear-gradient(var(--ac), var(--ac2));
+            flex: none
+        }
+
+        .card {
+            border-radius: var(--r);
+            box-shadow: var(--sh)
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 34px 16px 4px
+        }
+
+        .hero h1 {
+            font-size: clamp(30px, 5vw, 48px);
+            line-height: 1.1;
+            margin: 0 0 10px;
+            letter-spacing: -.02em;
+            background: linear-gradient(90deg, var(--ac), var(--ac2));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .hero p {
+            max-width: 62ch;
+            color: var(--mu);
+            font-size: 17px;
+            margin: 0 0 12px
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0 14px
+        }
+
+        .chips span {
+            background: var(--card);
+            border: 1px solid var(--bd);
+            border-radius: 99px;
+            padding: 3px 12px;
+            font-size: 13px;
+            box-shadow: var(--sh)
+        }
+
+        .cta {
+            display: inline-block;
+            background: var(--ac);
+            color: #fff;
+            padding: 9px 18px;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 4px 6px 4px 0
+        }
+
+        .cta.o {
+            background: transparent;
+            color: var(--ac);
+            border: 1.5px solid var(--ac)
+        }
+
+        .cta:hover {
+            filter: brightness(1.1)
+        }
+
+        button,
+        select,
+        input {
+            border-radius: 10px;
+            transition: border-color .15s, box-shadow .15s, background .15s
+        }
+
+        button:hover {
+            background: var(--bg)
+        }
+
+        select:focus,
+        input:focus {
+            outline: none;
+            border-color: var(--ac);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 25%, transparent)
+        }
+
+        .el {
+            border-radius: 7px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, .18)
+        }
+
+        .el:hover {
+            box-shadow: 0 5px 14px rgba(0, 0, 0, .3)
+        }
+
+        .leg {
+            height: 12px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .12)
+        }
+
+        .f {
+            background: color-mix(in srgb, var(--ac) 10%, var(--card));
+            border-left: 4px solid var(--ac);
+            border-radius: 8px
+        }
+
+        summary:hover {
+            text-decoration: underline
+        }
+
+        footer {
+            border-top: 1px solid var(--bd);
+            margin-top: 20px
+        }
+
+        #q {
+            width: min(100%, 360px)
+        }
+
+        #ficha {
+            position: fixed;
+            z-index: 20;
+            top: 58px;
+            right: 0;
+            bottom: 0;
+            width: min(400px, 100%);
+            margin: 0;
+            overflow: auto;
+            visibility: hidden;
+            transform: translateX(105%);
+            transition: transform .28s ease, visibility .28s;
+            border-radius: var(--r) 0 0 0;
+            box-shadow: -8px 0 30px rgba(0, 0, 0, .25)
+        }
+
+        #ficha.open {
+            transform: none;
+            visibility: visible
+        }
+
+        @media(max-width:700px) {
+            #ficha {
+                top: auto;
+                left: 0;
+                width: auto;
+                max-height: 56vh;
+                transform: translateY(105%);
+                border-radius: var(--r) var(--r) 0 0;
+                box-shadow: 0 -8px 30px rgba(0, 0, 0, .25);
+                padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px))
+            }
+
+            #ficha.open {
+                transform: none
+            }
+        }
+
+        .pq button.on {
+            background: var(--ac);
+            color: #fff;
+            border-color: var(--ac)
+        }
+
+        @media(min-width:701px) {
+            body.fo #tabla .tw {
+                padding-right: 410px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header><a class="brand" href="#tabla">⚛<span> Tabla periódica</span></a>
+        <nav id="nav"><a href="#tabla">Tabla</a><a href="#predice">Predice</a><a href="#zeff">Z* y σ</a><a
+                href="#ra">Rₐ</a><a href="#ri">Rᵢ</a><a href="#ei">Eᵢ</a><a href="#ea">Eₐ</a><a href="#en">EN</a><a
+                href="#comparar">Comparar</a><a href="#mapa">Tendencias</a><a href="#grafica">Gráfica</a><a
+                href="#ejer">Ejercicios</a><a href="#test">Test</a><a href="#glos">Glosario</a></nav><button id="th"
+            aria-label="Cambiar entre tema claro y oscuro" title="Tema claro/oscuro">◐</button>
+        <div id="pb"></div>
+    </header>
+    <main>
+        <div class="hero">
+            <h1>Tabla periódica interactiva</h1>
+            <p>Explora la tabla, descubre por qué cambian las propiedades y comprueba lo aprendido. Todo gira alrededor
+                de una idea: la carga nuclear efectiva.</p>
+            <div class="chips"><span>Z* carga nuclear efectiva</span><span>σ apantallamiento</span><span>Rₐ radio
+                    atómico</span><span>Rᵢ radio iónico</span><span>Eᵢ energía de ionización</span><span>Eₐ afinidad
+                    electrónica</span><span>EN electronegatividad</span></div><a class="cta" href="#tbl">Explorar la
+                tabla</a><a class="cta o" href="#zeff">Entender Z* y σ</a><a class="cta o" href="#test">Ponerme a
+                prueba</a>
+        </div>
+        <section id="tabla">
+            <h2>La tabla periódica</h2>
+            <p class="mu">Elige una propiedad para colorear la tabla con sus valores reales (las casillas rayadas no
+                tienen dato fiable). Pulsa un elemento para ver su ficha.</p>
+            <div class="row"><select id="sel" aria-label="Propiedad"></select><input id="q"
+                    placeholder="Buscar: nombre, símbolo o nº atómico" size="30" aria-label="Buscar"><select id="ric"
+                    hidden aria-label="Carga del ion"></select></div>
+            <div class="row"><span id="lmin" class="mu"></span>
+                <div class="leg"></div><span id="lmax" class="mu"></span>
+            </div>
+            <p id="lnote" class="mu"></p>
+            <div class="tw">
+                <div id="tbl"></div>
+            </div>
+            <div id="ficha" class="card" role="dialog" aria-label="Ficha del elemento"></div>
+        </section>
+
+        <section id="predice">
+            <h2>Predice antes de ver</h2>
+            <p class="mu">Antes de colorear la tabla, intenta adivinar la tendencia general. Después se comprueba con
+                los datos reales de esta página.</p>
+            <div class="card">
+                <div class="row"><select id="pk" aria-label="Propiedad"></select><button id="pn">Propiedad al
+                        azar</button></div>
+                <p><b>1.</b> Al descender por un grupo, ¿qué ocurre con <span id="pn1"></span>?</p>
+                <div class="row pq" id="pq1"><button data-v="1">Aumenta al bajar ↓</button><button data-v="0">Disminuye
+                        al bajar ↓</button></div>
+                <p><b>2.</b> Al avanzar hacia la derecha por un período, ¿qué ocurre con <span id="pn2"></span>?</p>
+                <div class="row pq" id="pq2"><button data-v="1">Aumenta hacia la derecha →</button><button
+                        data-v="0">Disminuye hacia la derecha →</button></div>
+                <div class="row"><button id="pc" class="cta" style="border:0;cursor:pointer">Comprobar</button><span
+                        id="ps" class="mu"></span></div>
+                <div id="pres"></div>
+                <div class="tw">
+                    <div class="mini" id="pmini"></div>
+                </div>
+            </div>
+        </section>
+        <section id="zeff">
+            <h2>Carga nuclear efectiva (Z*) y apantallamiento (σ)</h2>
+            <div class="card">
+                <p>Un electrón externo no siente toda la carga del núcleo: los electrones internos se interponen y la
+                    reducen. La atracción neta que experimenta es la <b>carga nuclear efectiva, Z*</b>. Modelo
+                    simplificado:</p>
+                <p class="f">Z* = Z − σ</p>
+                <p class="mu">Z: número atómico (protones). σ: apantallamiento de los demás electrones. Z*: carga
+                    nuclear efectiva aproximada. Es un modelo simplificado: σ real depende del electrón considerado (un
+                    electrón s penetra más que uno p o d) y de toda la estructura electrónica. Aquí σ se estima con las
+                    reglas de Slater, una aproximación empírica.</p>
+            </div>
+            <div class="card">
+                <h3>Simulador cualitativo</h3>
+                <div class="row"><label>Protones Z: <input type="range" id="zp" min="1" max="36" value="11"> <b
+                            id="zpv">11</b></label><label>Capas: <input type="range" id="zs" min="1" max="4" value="3">
+                        <b id="zsv">3</b></label></div>
+                <svg id="atom" viewBox="0 0 360 360" style="width:100%;max-width:420px;display:block;margin:auto"
+                    role="img" aria-label="Átomo con núcleo, capas y flechas de atracción"></svg>
+                <p id="atxt" class="mu"></p>
+                <p class="mu">Lectura cualitativa: la flecha rosa ancha es la atracción si no hubiera apantallamiento
+                    (proporcional a Z); la flecha roja, la atracción neta (proporcional a Z*); la zona gris, la nube de
+                    electrones internos que apantalla. No es un cálculo físico exacto. Para valores por elemento usa la
+                    comparación.</p>
+            </div>
+            <div class="card">
+                <h3>Z* (Slater) a lo largo de los períodos 2 y 3</h3>
+                <div id="zbars"></div>
+                <p class="mu">Dentro de un período Z* crece de forma casi lineal (≈ +0,65 por elemento): por eso Rₐ
+                    disminuye y Eᵢ y EN aumentan. Z* es una estimación de Slater, no un valor exacto; Rₐ es el radio
+                    covalente de Cordero.</p>
+            </div>
+            <div class="card"><b>Por qué importa:</b> Z* explica Rₐ (más Z* → átomo más compacto), Eᵢ (más Z* → cuesta
+                más arrancar un electrón), Eₐ y EN (más Z* → más atracción sobre electrones ajenos). <a
+                    href="#comparar">Ir a la comparación de elementos →</a></div>
+        </section>
+
+        <div id="props"></div>
+
+        <section id="comparar">
+            <h2>Comparación de elementos</h2>
+            <div class="row"><select id="ca"></select><select id="cb"></select>
+                <button data-p="3,11">Li–Na (grupo)</button><button data-p="9,17">F–Cl (grupo)</button><button
+                    data-p="11,17">Na–Cl (período)</button><button data-p="3,9">Li–F (período)</button>
+            </div>
+            <div id="cmp"></div>
+        </section>
+
+        <section id="mapa">
+            <h2>Mapa de tendencias periódicas</h2>
+            <p class="mu">Son tendencias <b>generales</b>, no leyes: los valores experimentales concretos pueden
+                desviarse.</p>
+            <div class="row"><select id="msel"></select><label><input type="checkbox" id="marr" checked> Mostrar
+                    flechas</label><label><input type="checkbox" id="mexc"> Resaltar excepciones</label></div>
+            <div class="mapw">
+                <div></div>
+                <div class="arr" id="ah"></div>
+                <div class="arr" id="av"></div>
+                <div class="tw">
+                    <div class="mini" id="mini"></div>
+                </div>
+            </div>
+            <div class="card" id="mtxt"></div>
+        </section>
+        <section id="grafica">
+            <h2>Gráfica periódica</h2>
+            <p class="mu">Valor de la propiedad frente al número atómico (Z = 1–86). Pasa el cursor o pulsa un punto
+                para leer el valor. Las líneas discontinuas marcan los gases nobles: cada período forma un «diente de
+                sierra». Color = período.</p>
+            <div class="row"><select id="gsel" aria-label="Propiedad"></select></div>
+            <div class="tw"><svg id="gsv" viewBox="0 0 900 310" style="width:100%;min-width:640px" role="img"
+                    aria-label="Gráfica de la propiedad frente al número atómico"></svg></div>
+            <p id="gro" class="mu"></p>
+        </section>
+        <section id="ejer">
+            <h2>Ejercicios resueltos</h2>
+            <div class="card">
+                <h3>Calculadora de Z* paso a paso (reglas de Slater)</h3>
+                <div class="row"><select id="ssel" aria-label="Elemento"></select></div>
+                <div id="sout"></div>
+            </div>
+            <div id="exs"></div>
+        </section>
+        <section id="test">
+            <h2>Autoevaluación</h2>
+            <p class="mu">Pulsa una respuesta para ver la explicación.</p>
+            <div id="qz"></div>
+            <p id="qs"><b></b></p>
+        </section>
+        <section id="glos">
+            <h2>Glosario</h2><input id="gq" placeholder="Buscar término" size="30" aria-label="Buscar en el glosario">
+            <div id="gl" class="grid" style="margin-top:10px"></div>
+        </section>
+    </main>
+    <footer><b>Fuentes y convenciones.</b> Rₐ: radio covalente de Cordero et al., <i>Dalton Trans.</i> 2008 (Z ≤ 96; Mn,
+        Fe, Co en bajo espín; C sp³). Rᵢ: Shannon, <i>Acta Cryst.</i> A32 (1976), coordinación 6 salvo indicación. Eᵢ:
+        primera energía de ionización, NIST Atomic Spectra Database (eV). Eₐ: Hotop y Lineberger (1985) y CRC Handbook
+        of Chemistry and Physics (kJ/mol; convención: energía liberada, positiva si se libera). EN: escala de Pauling
+        (CRC Handbook). Z*: reglas de Slater (1930). Casillas sin dato: no hay valor fiable, o el anión no es estable
+        (Eₐ). Los valores se han transcrito a mano: contrástalos con las fuentes antes de usarlos en trabajos. Esta
+        página no puede verificar citas bibliográficas.</footer>
+
+    <script id="data">
+        const E = n => Array(n).fill(null), P = s => { let a = s.split(',').flatMap(t => t[0] == 'E' ? E(+t.slice(1)) : [t === '' ? null : +t]); while (a.length < 118) a.push(null); return a };
+        const SY = "H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr Rb Sr Y Zr Nb Mo Tc Ru Rh Pd Ag Cd In Sn Sb Te I Xe Cs Ba La Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr Rf Db Sg Bh Hs Mt Ds Rg Cn Nh Fl Mc Lv Ts Og".split(' ');
+        const NM = "Hidrógeno,Helio,Litio,Berilio,Boro,Carbono,Nitrógeno,Oxígeno,Flúor,Neón,Sodio,Magnesio,Aluminio,Silicio,Fósforo,Azufre,Cloro,Argón,Potasio,Calcio,Escandio,Titanio,Vanadio,Cromo,Manganeso,Hierro,Cobalto,Níquel,Cobre,Cinc,Galio,Germanio,Arsénico,Selenio,Bromo,Kriptón,Rubidio,Estroncio,Itrio,Circonio,Niobio,Molibdeno,Tecnecio,Rutenio,Rodio,Paladio,Plata,Cadmio,Indio,Estaño,Antimonio,Teluro,Yodo,Xenón,Cesio,Bario,Lantano,Cerio,Praseodimio,Neodimio,Prometio,Samario,Europio,Gadolinio,Terbio,Disprosio,Holmio,Erbio,Tulio,Iterbio,Lutecio,Hafnio,Tántalo,Wolframio,Renio,Osmio,Iridio,Platino,Oro,Mercurio,Talio,Plomo,Bismuto,Polonio,Astato,Radón,Francio,Radio,Actinio,Torio,Protactinio,Uranio,Neptunio,Plutonio,Americio,Curio,Berkelio,Californio,Einstenio,Fermio,Mendelevio,Nobelio,Laurencio,Rutherfordio,Dubnio,Seaborgio,Bohrio,Hasio,Meitnerio,Darmstadtio,Roentgenio,Copernicio,Nihonio,Flerovio,Moscovio,Livermorio,Teneso,Oganesón".split(',');
+        const RA = P("31,28,128,96,84,76,71,66,57,58,166,141,121,111,107,105,102,106,203,176,170,160,153,139,139,132,126,124,132,122,122,120,119,120,120,116,220,195,190,175,164,154,147,146,142,139,145,144,142,139,139,138,139,140,244,215,207,204,203,201,199,198,198,196,194,192,192,189,190,187,187,175,170,162,151,144,141,136,136,132,145,146,148,140,150,150,260,221,215,206,200,196,190,187,180,169");
+        const EI = P("13.598,24.587,5.392,9.323,8.298,11.260,14.534,13.618,17.423,21.565,5.139,7.646,5.986,8.152,10.487,10.360,12.968,15.760,4.341,6.113,6.561,6.828,6.746,6.767,7.434,7.902,7.881,7.640,7.726,9.394,5.999,7.899,9.789,9.752,11.814,14.000,4.177,5.695,6.217,6.634,6.759,7.092,7.28,7.361,7.459,8.337,7.576,8.994,5.786,7.344,8.608,9.010,10.451,12.130,3.894,5.212,5.577,5.539,5.473,5.525,5.582,5.644,5.670,6.150,5.864,5.939,6.022,6.108,6.184,6.254,5.426,6.825,7.550,7.864,7.834,8.438,8.967,8.959,9.226,10.438,6.108,7.417,7.286,8.414,,10.749,4.073,5.278,5.17,6.307,5.89,6.194,6.266,6.026,5.974,5.991,6.198,6.282,6.42,6.50,6.58,6.65,4.96");
+        const EA = P("72.8,,59.6,,27.0,121.8,,141.0,328.2,,52.8,,42.5,134.1,72.0,200.4,349.0,,48.4,2.4,18.1,7.6,50.6,64.3,,14.6,63.9,111.6,119.2,,41,119,78,195,324.6,,46.9,5.0,29.6,41.1,86.1,71.9,53,101.3,109.7,53.7,125.6,,37.4,107.3,101,190.2,295.2,,45.5,14.0,E16,31,78.8,5.8,104,150.9,205.0,222.8,,36.4,35.1,91.2,136,233");
+        const EN = P("2.20,,.98,1.57,2.04,2.55,3.04,3.44,3.98,,.93,1.31,1.61,1.90,2.19,2.58,3.16,,.82,1.00,1.36,1.54,1.63,1.66,1.55,1.83,1.88,1.91,1.90,1.65,1.81,2.01,2.18,2.55,2.96,3.00,.82,.95,1.22,1.33,1.6,2.16,1.9,2.2,2.28,2.20,1.93,1.69,1.78,1.96,2.05,2.1,2.66,2.6,.79,.89,1.10,1.12,1.13,1.14,,1.17,,1.20,,1.22,1.23,1.24,1.25,,1.27,1.3,1.5,2.36,1.9,2.2,2.20,2.28,2.54,2.00,1.62,2.33,2.02,2.0,2.2,,,.9,1.1,1.3,1.5,1.38,1.36,1.28");
+        // Iones: [carga, Rᵢ en pm, nota]. Shannon (1976), CN 6 salvo nota.
+        const ION = { Li: [[1, 76]], Be: [[2, 45]], N: [[-3, 146, "CN 4"]], O: [[-2, 140]], F: [[-1, 133]], Na: [[1, 102]], Mg: [[2, 72]], Al: [[3, 53.5]], S: [[-2, 184]], Cl: [[-1, 181]], K: [[1, 138]], Ca: [[2, 100]], Fe: [[2, 78, "alto espín"], [3, 64.5, "alto espín"]], Cu: [[1, 77], [2, 73]], Zn: [[2, 74]], Ga: [[3, 62]], Br: [[-1, 196]], Rb: [[1, 152]], Sr: [[2, 118]], Ag: [[1, 115]], I: [[-1, 220]], Cs: [[1, 167]], Ba: [[2, 135]] };
+        Object.assign(ION, { Sc: [[3, 74.5]], Ti: [[4, 60.5]], Cr: [[3, 61.5]], Mn: [[2, 83, 'alto espín']], Co: [[2, 74.5, 'alto espín']], Ni: [[2, 69]], Cd: [[2, 95]], Hg: [[2, 102]], Pb: [[2, 119]], Sn: [[4, 69]], Se: [[-2, 198]], Te: [[-2, 221]], Tl: [[1, 150]], In: [[3, 80]], Y: [[3, 90]], La: [[3, 103.2]] }); const RI = SY.map(s => ION[s] ? ION[s][0][1] : null);
+        const PR = {
+            ra: { n: 'Rₐ', nm: 'Radio atómico', u: 'pm', d: RA, note: 'Rₐ = radio covalente (Cordero 2008). Otras definiciones (van der Waals, metálico, calculado) dan valores distintos.' },
+            ri: { n: 'Rᵢ', nm: 'Radio iónico', u: 'pm', d: RI, note: 'Rᵢ del ion representativo (Shannon, CN 6); la carga se indica en la ficha. Un elemento puede tener varios iones y radios.' },
+            ei: { n: 'Eᵢ', nm: 'Energía de ionización (1.ª)', u: 'eV', d: EI, note: 'Primera energía de ionización (NIST). 1 eV = 96,485 kJ/mol.' },
+            ea: { n: 'Eₐ', nm: 'Afinidad electrónica', u: 'kJ/mol', d: EA, note: 'Eₐ = energía liberada al captar un e⁻ (positiva si se libera; Eₐ = −ΔE). Sin dato: anión no estable o sin valor fiable.' },
+            en: { n: 'EN', nm: 'Electronegatividad', u: '(Pauling)', d: EN, note: 'Escala de Pauling, adimensional. Otras escalas (Mulliken, Allen) dan valores distintos.' }
+        };
+    </script>
+    <script id="txt">
+        const T = {
+            ra: { def: 'Tamaño de un átomo. La nube electrónica no tiene frontera nítida, así que se define por convenio (por ejemplo, la mitad de la distancia entre dos núcleos enlazados: radio covalente).', tend: 'Aumenta al descender por un grupo y disminuye, en general, de izquierda a derecha en un período.', causa: 'Al bajar un grupo se ocupan niveles n mayores, más alejados del núcleo, y Z* aumenta mucho menos que Z. En un período los electrones se añaden al mismo nivel, σ crece poco (≈0,35 por electrón) y Z* aumenta: el núcleo comprime la nube.', ej: 'Li (Z* ≈ 1,30, n = 2) y Na (Z* ≈ 2,20, n = 3): Z* es mayor en Na, pero el nivel extra domina: Rₐ(Na) = 166 pm > Rₐ(Li) = 128 pm. Na→Cl: Z* sube de 2,20 a 6,10 y Rₐ baja de 166 a 102 pm.', exc: 'Los metales de transición apenas varían a lo largo del período (los e⁻ d se añaden a un nivel interno y apantallan). Tras los lantánidos, Hf es casi tan grande como Zr (contracción lantánida). Los gases nobles dependen mucho de la definición usada.', res: '↑ al bajar grupo (más niveles). ↓ al avanzar período (más Z*). Depende de la definición.' },
+            ri: { def: 'Radio efectivo de un ion en un cristal. Un mismo elemento forma iones distintos (Fe²⁺, Fe³⁺…), así que debe indicarse carga y coordinación; aquí, Shannon con CN 6.', tend: 'Los cationes son menores que su átomo; los aniones, mayores. En iones de igual carga, Rᵢ aumenta al bajar un grupo.', causa: 'Un catión pierde electrones (a menudo todo el nivel externo): menos repulsión y mismo núcleo, así que se contrae. Un anión gana electrones: más repulsión mutua con la misma carga nuclear, así que se expande. En isoelectrónicos, más protones atraen con más fuerza la misma nube.', ej: 'Serie de 10 e⁻: O²⁻ 140, F⁻ 133, Na⁺ 102, Mg²⁺ 72, Al³⁺ 53,5 pm. Todos tienen la misma configuración 1s²2s²2p⁶; solo cambia Z (8→13).', exc: 'El Rᵢ depende de la coordinación, del espín (Fe²⁺ alto espín 78 pm, bajo espín menor) y del entorno cristalino. Los radios de aniones muy cargados (N³⁻, P³⁻) son poco fiables.', res: 'Catión < átomo < anión. Isoelectrónicos: más Z → menor Rᵢ. Siempre indicar carga y CN.' },
+            ei: { def: 'Energía mínima para arrancar el electrón más débilmente ligado de un átomo gaseoso aislado en su estado fundamental: X(g) → X⁺(g) + e⁻. La 2.ª y siguientes (Eᵢ₂, Eᵢ₃…) arrancan electrones de iones cada vez más positivos y son siempre mayores.', tend: 'Aumenta hacia arriba en un grupo y hacia la derecha en un período.', causa: 'Menor Rₐ y mayor Z* significan que el electrón externo está más cerca y más atraído. Al bajar un grupo el electrón está más lejos y más apantallado, por lo que se arranca con menos energía.', ej: 'Na: 5,14 eV; K: 4,34 eV (más lejos, menos Eᵢ). Na (5,14) → Ar (15,76): Z* sube y Eᵢ crece.', exc: 'Be (9,32) > B (8,30): el e⁻ de B está en 2p, algo más alto y mejor apantallado por 2s². N (14,53) > O (13,62): en O hay un par apareado en 2p y la repulsión facilita perder un e⁻. Igual con Mg > Al y P > S.', res: '↑ arriba y a la derecha. Excepciones: 2→13 (s²→p¹) y 15→16 (p³→p⁴, apareamiento).' },
+            ea: { def: 'Energía que se libera cuando un átomo gaseoso neutro capta un electrón: X(g) + e⁻ → X⁻(g). Convención usada aquí: Eₐ positiva si se libera energía, es decir Eₐ = −ΔE. Algunas fuentes dan directamente ΔE (signo contrario).', tend: 'En general aumenta hacia la derecha en un período (excepto gases nobles) y disminuye, con irregularidades, al descender.', causa: 'Más Z* y menor tamaño: el e⁻ entrante se acerca más al núcleo y se libera más energía. En átomos muy pequeños (F, O) la repulsión con los electrones ya presentes reduce el efecto.', ej: 'Cl: Eₐ = 349 kJ/mol (libera energía, anión estable). Be: sin anión estable (ΔE ≥ 0: habría que aportar energía).', exc: 'Grupo 2 y gases nobles (grupo 18): subniveles llenos, el e⁻ entra en un orbital nuevo de mayor energía; sin anión estable. Grupo 15: N (p³, semillenos) no capta e⁻ con facilidad y P es menor que Si. Grupo 17: Cl (349) > F (328) por la fuerte repulsión en el pequeño 2p de F.', res: 'Eₐ > 0: se libera energía. Tendencia irregular. Cl > F; grupos 2, 15 y 18 son anómalos.' },
+            en: { def: 'Capacidad relativa de un átomo enlazado para atraer hacia sí los electrones del enlace. No se mide directamente: se define en escalas (Pauling, Mulliken, Allen) y depende del contexto químico.', tend: 'Aumenta hacia arriba y hacia la derecha. El flúor es el más electronegativo (EN = 3,98, Pauling).', causa: 'Más Z* y menor tamaño: el par de enlace queda más cerca de un núcleo más atrayente. No es igual a Eᵢ ni a Eₐ: EN describe un átomo dentro de un enlace, mientras que Eᵢ y Eₐ describen átomos aislados en fase gas.', ej: 'H–Cl: EN(Cl) = 3,16 y EN(H) = 2,20; ΔEN = 0,96. La densidad electrónica se desplaza hacia Cl (δ⁻) y H queda δ⁺: enlace covalente polar.', exc: 'Los gases nobles ligeros no tienen valor de Pauling por falta de compuestos. En metales de transición y del bloque f la variación es pequeña. El valor de un elemento cambia algo con su estado de oxidación.', res: 'EN ↑ arriba y derecha; F máximo. Escala relativa, no es Eᵢ ni Eₐ.' }
+        };
+        const MAP = {
+            ra: { h: '←', v: '↓', t: 'Rₐ aumenta hacia abajo (más niveles) y hacia la izquierda (menor Z*).', z: 'Z* sube a lo largo del período, y comprime el átomo; al bajar, el nivel extra pesa más.', e: [24, 29, 46, 72, 10, 18] },
+            ri: { h: '←', v: '↓', t: 'Rᵢ (a igual carga) aumenta al bajar; en cada serie isoelectrónica disminuye con Z.', z: 'Más protones sobre los mismos electrones: Z* mayor, menor radio.', e: [7, 8, 26] },
+            ei: { h: '→', v: '↑', t: 'Eᵢ aumenta hacia la derecha y hacia arriba.', z: 'Mayor Z* y menor Rₐ: electrón más atraído y más cercano.', e: [4, 5, 7, 8, 12, 13, 15, 16] },
+            ea: { h: '→', v: '↑', t: 'Eₐ tiende a aumentar hacia la derecha y hacia arriba, de forma irregular.', z: 'Mayor Z* atrae al e⁻ entrante; en F la repulsión del 2p pequeño rompe la tendencia.', e: [4, 7, 9, 12, 15, 17, 2, 10, 18] },
+            en: { h: '→', v: '↑', t: 'EN aumenta hacia la derecha y hacia arriba (máximo en F).', z: 'Mayor Z* y menor Rₐ: el par de enlace queda más atraído.', e: [2, 10, 18] }
+        };
+    </script>
+    <script>
+        const $ = s => document.querySelector(s), KEYS = ['ra', 'ri', 'ei', 'ea', 'en'];
+        function pos(z) {
+            if (z == 1) return [1, 1]; if (z == 2) return [1, 18]; const S = [[87, 7], [55, 6], [37, 5], [19, 4], [11, 3], [3, 2]]; const [s, p] = S.find(x => z >= x[0]), n = z - s;
+            if (p <= 3) return [p, n < 2 ? n + 1 : n + 11]; if (p <= 5) return [p, n + 1]; if (n < 2) return [p, n + 1]; if (n < 17) return [p + 3, n + 1]; return [p, n - 13]
+        }
+        const ORB = "1s 2s 2p 3s 3p 4s 3d 4p 5s 4d 5p 6s 4f 5d 6p 7s 5f 6d 7p".split(' '), CAP = { s: 2, p: 6, d: 10, f: 14 };
+        const MV = { 24: 1, 29: 1, 41: 1, 42: 1, 44: 1, 45: 1, 47: 1, 46: 2, 78: 1, 79: 1, 57: 1, 58: 1, 64: 1, 89: 1, 90: 2, 91: 1, 92: 1, 93: 1, 96: 1 };
+        const MVF = { 24: ['4s', '3d'], 29: ['4s', '3d'], 41: ['5s', '4d'], 42: ['5s', '4d'], 44: ['5s', '4d'], 45: ['5s', '4d'], 47: ['5s', '4d'], 46: ['5s', '4d'], 78: ['6s', '5d'], 79: ['6s', '5d'], 57: ['4f', '5d'], 58: ['4f', '5d'], 64: ['4f', '5d'], 89: ['5f', '6d'], 90: ['5f', '6d'], 91: ['5f', '6d'], 92: ['5f', '6d'], 93: ['5f', '6d'], 96: ['5f', '6d'] };
+        function occ(z) { let r = z, o = {}; ORB.forEach(k => { const c = Math.min(r, CAP[k[1]]); if (c > 0) o[k] = c; r -= c }); if (MVF[z]) for (let i = 0; i < MV[z]; i++) { const [a, b] = MVF[z]; o[a]--; o[b] = (o[b] || 0) + 1; if (!o[a]) delete o[a] } return o }
+        function cfg(z) { const o = occ(z), L = 'spdf'; return Object.keys(o).sort((a, b) => a[0] - b[0] || L.indexOf(a[1]) - L.indexOf(b[1])).map(k => k + '<sup>' + o[k] + '</sup>').join(' ') }
+        function slater(z) { const o = occ(z), ks = Object.keys(o), ns = Math.max(...ks.filter(k => 'sp'.includes(k[1])).map(k => +k[0])), same = (o[ns + 's'] || 0) + (o[ns + 'p'] || 0); let s = (same - 1) * (ns == 1 ? .30 : .35); ks.forEach(k => { if (+k[0] == ns - 1) s += o[k] * .85; else if (+k[0] < ns - 1) s += o[k] }); return { n: ns, s, zs: z - s } }
+        const n2 = (v, m = 2) => (+v).toLocaleString('es', { maximumFractionDigits: m }); const fmt = (v, u) => v == null ? 'sin dato' : n2(v, 3) + ' ' + u;
+        function color(t) { const S = [[68, 1, 84], [49, 104, 142], [53, 183, 121], [253, 231, 37]], x = Math.min(.999, Math.max(0, t)) * 3, i = Math.floor(x), f = x - i, c = S[i].map((v, j) => Math.round(v + (S[i + 1][j] - v) * f)); return { bg: `rgb(${c})`, fg: (.3 * c[0] + .59 * c[1] + .11 * c[2]) < 140 ? '#fff' : '#111' } }
+        function grp(z) { const [p, c] = pos(z); return p >= 8 || (p == 9 || p == 10) ? 'f (sin grupo asignado)' : c }
+        function per(z) { const [r] = pos(z); return r == 9 ? 6 : r == 10 ? 7 : r }
+        let cur = 'ra', selZ = null, cells = [], riC = 1; const riD = c => SY.map(s => { const i = ION[s] && ION[s].find(x => x[0] == c); return i ? i[1] : null }); const riS = () => { PR.ri.d = riD(riC); PR.ri.note = 'Rᵢ de los iones de carga ' + (riC > 0 ? '+' + riC : '−' + (-riC)) + ' (Shannon, CN 6; ver ficha para otras cargas y condiciones). Solo hay datos para algunos elementos: no existe un único Rᵢ por elemento.' }; riS();
+        function build(box, mini, key) {
+            box.innerHTML = ''; const out = []; for (let z = 1; z <= 118; z++) {
+                const [r, c] = pos(z), b = document.createElement(mini ? 'div' : 'button'); b.className = 'el'; b.style.gridRow = r; if (r == 9) b.style.marginTop = '14px'; b.style.gridColumn = c; b.dataset.z = z;
+                if (!mini) b.setAttribute('aria-label', NM[z - 1] + ', número atómico ' + z); b.innerHTML = `<b>${SY[z - 1]}</b><small>${z}</small>`; if (!mini) b.onclick = () => show(z); box.append(b); out.push(b)
+            }
+            [[6, 3, '57–71'], [7, 3, '89–103']].forEach(([r, c, t]) => { const d = document.createElement('div'); d.className = 'ph'; d.style.gridRow = r; d.style.gridColumn = c; d.textContent = t; box.append(d) }); return out
+        }
+        function paint(list, key) { const d = PR[key].d, v = d.filter(x => x != null), mn = Math.min(...v), mx = Math.max(...v); list.forEach((b, i) => { const x = d[i]; b.classList.toggle('nd', x == null); const ic = ION[SY[i]], cg = riC; b.title = NM[i] + (x == null ? ': sin dato' : ': ' + PR[key].n + ' = ' + n2(x, 3) + ' ' + PR[key].u + (key == 'ri' && ic ? ' (ion ' + SY[i] + ({ 2: '²', 3: '³' }[Math.abs(cg)] || '') + (cg > 0 ? '⁺' : '⁻') + ', CN 6)' : '')); if (x == null) { b.style.background = ''; b.style.color = '#444' } else { const c = color((x - mn) / (mx - mn)); b.style.background = c.bg; b.style.color = c.fg } }); return [mn, mx] }
+        function repaint() { $('#ric').hidden = cur != 'ri'; const [mn, mx] = paint(cells, cur), p = PR[cur]; $('#lmin').textContent = 'menor: ' + n2(mn, 3) + ' ' + p.u; $('#lmax').textContent = 'mayor: ' + n2(mx, 3) + ' ' + p.u; $('#lnote').textContent = p.n + ' — ' + p.nm + '. ' + p.note; if (selZ) show(selZ, 1) }
+        function show(z, keep) {
+            selZ = z; cells.forEach((b, i) => b.classList.toggle('sel', i == z - 1)); const sl = slater(z), s = SY[z - 1], io = ION[s];
+            let h = `<div class="row" style="justify-content:space-between"><span><button id="fp" aria-label="Elemento anterior">◀</button> <button id="fn" aria-label="Elemento siguiente">▶</button></span><button id="fx" aria-label="Cerrar ficha">✕ Cerrar</button></div><h3>${NM[z - 1]} (${s}) — Z = ${z}</h3><p>Grupo: <b>${grp(z)}</b> · Período: <b>${per(z)}</b><br>Configuración: ${cfg(z)}<br><span class="mu">Modelo de Slater, e⁻ s/p más externo: σ ≈ ${n2(sl.s)}; Z* = Z − σ ≈ ${n2(sl.zs)}${z > 103 ? ' (configuración prevista)' : ''}</span></p><div class="grid">`;
+            KEYS.forEach(k => { const p = PR[k]; let v = p.d[z - 1], x = fmt(v, p.u); if (k == 'ri' && io) x = io.map(i => `${s}${{ 2: '²', 3: '³' }[Math.abs(i[0])] || ''}${i[0] > 0 ? '⁺' : '⁻'}: ${n2(i[1], 1)} pm${i[2] ? ' (' + i[2] + ')' : ''}`).join('; ') + ' (CN 6 salvo nota)'; if (k == 'ri' && !io) x = 'sin dato en esta tabla (depende de la carga y la coordinación)'; if (k == 'ea' && v == null && z < 87) x += ' (anión no estable o sin valor fiable)'; h += `<div style="${k == cur ? 'font-weight:700' : ''}"><span class="mu">${p.n}</span> ${x}</div>` });
+            h += `</div><div class="row"><label>Comparar con: <select id="fc"><option value="">—</option>${SY.map((t, i) => `<option value="${i + 1}">${t} ${NM[i]}</option>`).join('')}</select></label><span id="fcr"></span></div>`; $('#ficha').innerHTML = h; $('#ficha').classList.add('open'); document.body.classList.add('fo'); { const tw = $('#tbl').parentElement, rc = cells[z - 1].getBoundingClientRect(); if (innerWidth > 700) { if (rc.right > innerWidth - 420) tw.scrollLeft += rc.right - (innerWidth - 430) } else { const top = innerHeight - $('#ficha').offsetHeight; if (rc.bottom > top - 6) scrollBy({ top: rc.bottom - top + 14, behavior: 'instant' }) } } $('#fx').onclick = closeF; $('#fp').onclick = () => show(z > 1 ? z - 1 : 118); $('#fn').onclick = () => show(z < 118 ? z + 1 : 1);
+            $('#fc').onchange = e => { const w = +e.target.value; if (!w) { $('#fcr').textContent = ''; return } const a = PR[cur].d[z - 1], b = PR[cur].d[w - 1]; $('#fcr').innerHTML = a == null || b == null ? 'Falta un dato para comparar ' + PR[cur].n : `${PR[cur].n}: ${SY[z - 1]} = ${n2(a, 3)}, ${SY[w - 1]} = ${n2(b, 3)} (diferencia ${n2(a - b, 3)} ${PR[cur].u})` };
+        }
+        // Buscador
+        $('#q').oninput = e => { const nz = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(), q = nz(e.target.value.trim()), m = []; cells.forEach((b, i) => { const ok = !q || SY[i].toLowerCase() == q || nz(NM[i]).includes(q) || String(i + 1) == q; b.classList.toggle('dim', !ok); if (ok && q) m.push(i + 1) }); $('#q').dataset.f = m[0] || '' };
+        $('#q').onkeydown = e => { if (e.key == 'Enter' && $('#q').dataset.f) show(+$('#q').dataset.f) };
+        // Selectores
+        KEYS.forEach(k => { [$('#sel'), $('#msel')].forEach(s => s.add(new Option(PR[k].n + ' — ' + PR[k].nm, k))) });
+        [1, 2, 3, 4, -1, -2].forEach(c => $('#ric').add(new Option('Ion de carga ' + (c > 0 ? '+' + c : '−' + (-c)), c))); $('#ric').onchange = e => { riC = +e.target.value; riS(); repaint(); map(); gr() }; $('#sel').onchange = e => { cur = e.target.value; repaint() };
+        cells = build($('#tbl')); repaint();
+        // Simulador Z*
+        function atom() {
+            const Z = +$('#zp').value, n = +$('#zs').value; $('#zpv').textContent = Z; $('#zsv').textContent = n; const caps = [2, 8, 8, 18]; let sv = '', inner = 0, sig = 0, left = Z - 1;
+            for (let i = 1; i <= n; i++)sv += `<circle cx="180" cy="180" r="${28 + i * 36}" fill="none" stroke="#8aa" stroke-dasharray="4 4"/>`;
+            const pts = []; for (let i = 1; i < n; i++) { const c = Math.min(caps[i - 1], Math.max(0, left)); left -= c; for (let k = 0; k < c; k++) { const a = 2 * Math.PI * k / c + i, r = 28 + i * 36; pts.push([180 + r * Math.cos(a), 180 + r * Math.sin(a), i]) } inner += c; sig += c * (i == n - 1 ? .85 : 1) }
+            const R = 28 + n * 36, ox = 180 + R, oy = 180, zs = Math.max(0, Z - sig), w = Math.max(1.5, Math.min(14, zs * .45 + 1));
+            pts.forEach(p => { sv += `<line x1="180" y1="180" x2="${p[0]}" y2="${p[1]}" stroke="#999" stroke-width="1" opacity=".35"/><circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#2a5bd7"/>` });
+            let pr = ''; for (let k = 0; k < Z; k++) { const a = k * 2.4, rr = 3.1 * Math.sqrt(k + .5); pr += `<circle cx="${180 + rr * Math.cos(a)}" cy="${180 + rr * Math.sin(a)}" r="2.4" fill="#ffd0c8" stroke="#a93226" stroke-width=".6"/>` } const nr = 3.1 * Math.sqrt(Z + .5) + 5, wf = Math.min(14, Z * .45 + 1); sv += `<circle cx="180" cy="180" r="${28 + (n - 1) * 36 + 10}" fill="#8896ab" opacity=".13"/><defs><marker id="m" markerUnits="userSpaceOnUse" markerWidth="16" markerHeight="16" refX="12" refY="8" orient="auto"><path d="M0 0L16 8L0 16z" fill="#c0392b"/></marker></defs><line x1="${180 + nr}" y1="${oy}" x2="${ox - 12}" y2="${oy}" stroke="#e59d95" stroke-width="${wf}" opacity=".5"/><line x1="${180 + nr + 2}" y1="${oy}" x2="${ox - 16}" y2="${oy}" stroke="#c0392b" stroke-width="${w}" marker-end="url(#m)" opacity=".9"/><circle cx="${ox}" cy="${oy}" r="8" fill="#27ae60"/><circle cx="180" cy="180" r="${nr}" fill="#e74c3c"/>${pr}<text x="180" y="${180 + nr + 15}" text-anchor="middle" font-size="12">núcleo: ${Z} p⁺</text>`;
+            $('#atom').innerHTML = sv; $('#atxt').innerHTML = `Z = ${Z} · electrones internos mostrados: ${inner} · σ ≈ ${n2(sig, 1)} · Z* ≈ ${n2(zs, 1)} (cualitativo). ${Z - 1 < caps.slice(0, n - 1).reduce((a, b) => a + b, 0) ? '<b>Aviso:</b> con tan pocos protones el átomo neutro no tendría llenas esas capas internas: combinación poco realista. ' : ''}${n == 1 ? 'Sin electrones internos: el electrón siente todo el núcleo.' : 'Más electrones internos o más capas reducen la flecha roja; más protones la aumentan.'}`
+        }
+        $('#zp').oninput = $('#zs').oninput = atom; atom(); $('#zbars').innerHTML = [[3, 10], [11, 18]].map(([a, b]) => { let h = ''; for (let z = a; z <= b; z++) { const s = slater(z); h += `<div class="eg" style="grid-template-columns:50px 1fr 150px"><span>${SY[z - 1]}</span><div><div class="bar" style="width:${s.zs / 7 * 100}%"></div></div><span>Z*≈${n2(s.zs)} · Rₐ ${RA[z - 1]} pm</span></div>` } return h + '<hr>' }).join('');
+        // Secciones de propiedades
+        const mv = (el, to, ms = 900) => { if (matchMedia('(prefers-reduced-motion:reduce)').matches) ms = 1; const f = {}; for (const k in to) f[k] = +el.getAttribute(k); const t0 = performance.now(); (function s(t) { const p = Math.min(1, (t - t0) / ms), e = p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2; for (const k in to) el.setAttribute(k, f[k] + (to[k] - f[k]) * e); if (p < 1) requestAnimationFrame(s) })(t0) }; const VIS = {};
+        function bars(id, k, a, b) { let h = ''; for (let z = a; z <= b; z++) { const v = PR[k].d[z - 1], mx = Math.max(...PR[k].d.slice(a - 1, b).filter(x => x != null)); h += `<div class="eg"><span>${SY[z - 1]}</span><div><div class="bar" style="width:${v == null ? 0 : v / mx * 100}%"></div></div><span>${v == null ? '—' : n2(v, 3)}</span></div>` } return `<div class="card"><b>${PR[k].n} de ${SY[a - 1]} a ${SY[b - 1]} (${PR[k].u})</b>${h}</div>` }
+        VIS.ra = b => { b.innerHTML = `<div class="row"><button data-s="3,11,19,37,55">Grupo 1</button><button data-s="11,12,13,14,15,16,17">Período 3</button></div><div class="tw"><svg id="rv" viewBox="0 0 620 170" style="min-width:560px;width:100%"></svg></div><p class="mu">Círculos con diámetro proporcional a Rₐ (radio covalente, misma escala).</p>`; const d = l => { const zs = l.split(',').map(Number), w = 620 / zs.length; $('#rv').innerHTML = zs.map((z, i) => `<circle cx="${w * i + w / 2}" cy="80" r="${RA[z - 1] / 4.2}" fill="#2a5bd7" opacity=".6"/><text x="${w * i + w / 2}" y="85" text-anchor="middle" font-weight="700">${SY[z - 1]}</text><text x="${w * i + w / 2}" y="165" text-anchor="middle" font-size="12">${RA[z - 1]} pm</text>`).join('') }; b.querySelectorAll('button').forEach(x => x.onclick = () => d(x.dataset.s)); d("3,11,19,37,55") };
+        VIS.ri = b => {
+            b.innerHTML = `<div class="row"><button id="rna">Na → Na⁺</button><button id="rcl">Cl → Cl⁻</button></div><svg viewBox="0 0 360 150" style="width:100%;max-width:420px"><g id="ra1"></g></svg><p id="rtx" class="mu"></p>
+<div class="card"><b>Serie isoelectrónica (10 e⁻) a escala, Shannon CN 6</b><div class="tw"><svg viewBox="0 0 620 150" style="width:100%;min-width:520px">${[['O²⁻', 140], ['F⁻', 133], ['Na⁺', 102], ['Mg²⁺', 72], ['Al³⁺', 53.5]].map((x, i) => `<circle cx="${62 + i * 124}" cy="65" r="${x[1] / 2.4}" fill="#e67e22" opacity=".6"/><text x="${62 + i * 124}" y="70" text-anchor="middle" font-weight="700">${x[0]}</text><text x="${62 + i * 124}" y="140" text-anchor="middle" font-size="12">${n2(x[1], 1)} pm · Z=${[8, 9, 11, 12, 13][i]}</text>`).join('')}</svg></div></div><p class="mu">Esquema Na/Cl: no a escala (Rₐ covalente y Rᵢ de Shannon no son comparables directamente).</p>`;
+            const at = (x, R, sh) => { let s = `<circle cx="${x}" cy="70" r="${R}" fill="#2a5bd7" opacity=".13" stroke="#2a5bd7"/>`; sh.forEach((c, k) => { const r = R * (k + 1) / sh.length; s += `<circle cx="${x}" cy="70" r="${r}" fill="none" stroke="#8aa" stroke-dasharray="3 3"/>`; for (let j = 0; j < c; j++) { const a = 2 * Math.PI * j / c + k; s += `<circle cx="${x + r * Math.cos(a)}" cy="${70 + r * Math.sin(a)}" r="2.5" fill="#2a5bd7"/>` } }); return s + `<circle cx="${x}" cy="70" r="5" fill="#e74c3c"/>` }; const dr = (a, i, t, sa, si) => { const g = $('#ra1'), lab = `<text x="90" y="140" text-anchor="middle">${t[0]}</text><text x="270" y="140" text-anchor="middle">${t[1]}</text><text x="180" y="75" text-anchor="middle">→</text>`, t0 = performance.now(), ms = matchMedia('(prefers-reduced-motion:reduce)').matches ? 1 : 900; (function f(now) { const p = Math.max(0, Math.min(1, (now - t0) / ms)); g.innerHTML = at(90, a, sa) + at(270, a + (i - a) * p, si) + lab; if (p < 1) requestAnimationFrame(f) })(t0) };
+            $('#rna').onclick = () => { dr(55, 34, ['Na (11 p⁺, 11 e⁻)', 'Na⁺ (11 p⁺, 10 e⁻)'], [2, 8, 1], [2, 8]); $('#rtx').textContent = 'Na pierde el e⁻ 3s: queda con 2 niveles, 11 protones atraen 10 electrones y el ion es mucho menor.' };
+            $('#rcl').onclick = () => { dr(40, 55, ['Cl (17 p⁺, 17 e⁻)', 'Cl⁻ (17 p⁺, 18 e⁻)'], [2, 8, 7], [2, 8, 8]); $('#rtx').textContent = 'Cl gana un e⁻: más repulsión entre electrones con la misma carga nuclear, y la nube se expande.' }; $('#rna').click()
+        };
+        VIS.ei = b => { b.innerHTML = `<div class="row"><select id="esel">${[3, 11, 19, 12, 17, 18].map(z => `<option value="${z}">${SY[z - 1]} ${NM[z - 1]}</option>`).join('')}</select><button id="ex">Extraer el electrón</button></div><svg viewBox="0 0 360 200" style="width:100%;max-width:420px;display:block"><circle cx="150" cy="100" r="14" fill="#e74c3c"/><circle cx="150" cy="100" r="50" fill="none" stroke="#8aa" stroke-dasharray="4 4"/><g id="el"><circle cx="150" cy="50" r="8" fill="#27ae60" style="transition:all 1.2s"/></g><rect id="eb2" x="10" y="172" width="0" height="12" rx="6" fill="#c0392b"/><text id="en2" x="10" y="165" font-size="13"></text></svg><p id="et" class="mu">Aporta energía igual a Eᵢ para llevar el electrón al infinito.</p>` + bars('', 'ei', 3, 18); let o = 0; $('#esel').onchange = () => { if (o) $('#ex').click() }; $('#ex').onclick = () => { o = !o; const c = $('#el circle'), z = +$('#esel').value, v = EI[z - 1]; mv(c, { cx: o ? 330 : 150, cy: o ? 30 : 50 }, 1400); mv($('#eb2'), { width: o ? v * 12 : 0 }, 1400); $('#en2').textContent = o ? `${SY[z - 1]}: Eᵢ = ${n2(v, 3)} eV ≈ ${n2(v * 96.485, 0)} kJ/mol` : ''; $('#ex').textContent = o ? 'Restablecer' : 'Extraer el electrón' } };
+        VIS.ea = b => { b.innerHTML = `<div class="row"><select id="es">${[9, 17, 8, 6, 7, 4, 10, 3].map(z => `<option value="${z}">${SY[z - 1]} ${NM[z - 1]}</option>`).join('')}</select><button id="eb">Acercar e⁻</button></div><svg viewBox="0 0 360 120" style="width:100%;max-width:420px"><circle cx="220" cy="60" r="26" fill="#2a5bd7" opacity=".5"/><circle id="ee" cx="30" cy="60" r="8" fill="#27ae60" style="transition:cx 1.2s"/></svg><p id="eo"></p><p class="mu">Convención: Eₐ = −ΔE; Eₐ > 0 significa que se libera energía.</p>` + bars('', 'ea', 3, 17); const f = () => { const z = +$('#es').value, v = EA[z - 1]; $('#ee').setAttribute('cx', 30); $('#eo').innerHTML = v == null ? `<span class="badge" style="background:#7f8c8d">Requiere energía / anión no estable</span> para ${SY[z - 1]}` : `<span class="badge" style="background:#16a085">Libera energía: Eₐ = ${n2(v, 1)} kJ/mol</span>` }; $('#es').onchange = f; $('#eb').onclick = () => { f(); const v = EA[+$('#es').value - 1], e = $('#ee'); mv(e, { cx: v == null ? 150 : 190 }); if (v == null) setTimeout(() => mv(e, { cx: 30 }), 1000) }; f() };
+        VIS.en = b => {
+            b.innerHTML = `<select id="ep">${[['H', 'Cl'], ['H', 'F'], ['H', 'Br'], ['Cl', 'Cl'], ['Na', 'Cl']].map((p, i) => `<option value="${i}">${p.join('–')}</option>`).join('')}</select><svg viewBox="0 0 360 160" style="width:100%;max-width:420px"><defs><radialGradient id="g"><stop offset="0" stop-color="#f1c40f"/><stop offset="1" stop-color="#f1c40f" stop-opacity="0"/></radialGradient></defs><ellipse id="cl" cx="180" cy="80" rx="90" ry="45" fill="url(#g)" style="transition:all .8s"/><circle id="a1" cx="110" cy="80" r="26" fill="#2a5bd7" opacity=".6"/><circle id="a2" cx="250" cy="80" r="26" fill="#2a5bd7" opacity=".6"/><text id="t1" x="110" y="85" text-anchor="middle" font-weight="700"></text><text id="t2" x="250" y="85" text-anchor="middle" font-weight="700"></text><text id="d1" x="110" y="130" text-anchor="middle"></text><text id="d2" x="250" y="130" text-anchor="middle"></text></svg><p id="enx"></p>`;
+            const L = [['H', 'Cl'], ['H', 'F'], ['H', 'Br'], ['Cl', 'Cl'], ['Na', 'Cl']], f = () => { const [a, c] = L[$('#ep').value], x = EN[SY.indexOf(a)], y = EN[SY.indexOf(c)], d = y - x, sh = Math.max(-70, Math.min(70, d * 50)); mv($('#cl'), { cx: 180 + sh }); $('#t1').textContent = a; $('#t2').textContent = c; $('#d1').textContent = Math.abs(d) < .05 ? '' : d > 0 ? 'δ⁺' : 'δ⁻'; $('#d2').textContent = Math.abs(d) < .05 ? '' : d > 0 ? 'δ⁻' : 'δ⁺'; $('#enx').innerHTML = `EN(${a}) = ${n2(x)}, EN(${c}) = ${n2(y)}; ΔEN = ${n2(Math.abs(d))}. ${Math.abs(d) < .05 ? 'Reparto igual: enlace apolar.' : Math.abs(d) > 1.7 ? 'ΔEN grande: carácter muy iónico (el límite es orientativo).' : 'La densidad electrónica se desplaza hacia el más electronegativo.'}` }; $('#ep').onchange = f; f()
+        };
+        const IDS = { ra: 'Radio atómico (Rₐ)', ri: 'Radio iónico (Rᵢ)', ei: 'Energía de ionización (Eᵢ)', ea: 'Afinidad electrónica (Eₐ)', en: 'Electronegatividad (EN)' };
+        KEYS.forEach(k => { const t = T[k], s = document.createElement('section'); s.id = k; s.innerHTML = `<h2>${IDS[k]}</h2><div class="grid"><div class="card"><h3>Definición</h3>${t.def}</div><div class="card"><h3>Tendencia en la tabla</h3>${t.tend}</div><div class="card"><h3>Causa (Z*, σ, niveles)</h3>${t.causa}</div></div><div class="card"><h3>Diagrama interactivo</h3><div id="v${k}"></div></div><div class="grid"><div class="card"><h3>Ejemplo resuelto</h3>${t.ej}</div><div class="card"><h3>Excepciones importantes</h3>${t.exc}</div><div class="card"><h3>Resumen para estudiar</h3>${t.res}</div></div>`; $('#props').append(s); VIS[k]($('#v' + k)) });
+        // Comparación
+        [$('#ca'), $('#cb')].forEach(s => SY.forEach((t, i) => { if (i < 86) s.add(new Option(t + ' — ' + NM[i], i + 1)) }));
+        function cmp() {
+            const a = +$('#ca').value, b = +$('#cb').value, A = slater(a), B = slater(b); const pa = pos(a), pb = pos(b), g = pa[1] == pb[1] && a < 57, p = per(a) == per(b);
+            const card = (z, S) => `<div class="card"><h3>${NM[z - 1]} (${SY[z - 1]})</h3>${cfg(z)}<br>Z = ${z} · n = ${S.n}<br>Rₐ ${fmt(RA[z - 1], 'pm')} · Eᵢ ${fmt(EI[z - 1], 'eV')} · EN ${EN[z - 1] == null ? 'sin dato' : n2(EN[z - 1])}</div>`;
+            const mx = Math.max(a, b); const row = (l, x, y, m) => `<div class="eg" style="grid-template-columns:50px 1fr 50px"><span>${l} ${SY[a - 1]}</span><div><div class="bar" style="width:${x / m * 100}%"></div></div><span>${n2(x)}</span></div><div class="eg" style="grid-template-columns:50px 1fr 50px"><span>${l} ${SY[b - 1]}</span><div><div class="bar" style="background:#e67e22;width:${y / m * 100}%"></div></div><span>${n2(y)}</span></div>`;
+            const m = Math.max(a, b); let ex = g ? '<b>Mismo grupo:</b> al descender, Z aumenta mucho y σ crece casi igual (los electrones internos pantallan), así que Z* aumenta mucho menos que Z (grupo 1, Slater: Li 1,30; Na 2,20; K 2,20). El electrón de valencia ocupa un nivel n mayor, más lejano: Rₐ aumenta y Eᵢ y EN tienden a disminuir.' : p && pa[0] < 9 && pb[0] < 9 && pa[1] > 2 && pa[1] < 13 && pb[1] > 2 && pb[1] < 13 ? '<b>Mismo período (metales de transición):</b> los electrones nuevos entran en el subnivel d interno, que apantalla casi tanto como lo que gana Z: Z* y Rₐ casi no cambian a lo largo de la serie.' : p ? '<b>Mismo período:</b> cada paso añade un protón (Z+1) pero el nuevo electrón está en el mismo nivel y solo apantalla ≈0,35: Z* aumenta ≈0,65 por paso. El átomo se contrae (Rₐ↓), y Eᵢ y EN aumentan.' : 'Los elementos no comparten grupo ni período: compara Z, σ y Z* y observa cuál efecto domina (más niveles o más Z*).';
+            const ring = (z, S) => { let c = ''; const o = occ(z), cn = k => Object.keys(o).filter(x => +x[0] == k).reduce((s, x) => s + o[x], 0); for (let i = 1; i <= S.n; i++) { c += `<circle cx="90" cy="80" r="${12 + i * 11}" fill="none" stroke="#8aa" stroke-dasharray="3 3"/>`; const m = cn(i); for (let j = (i == S.n ? 1 : 0); j < m; j++) { const a = 2 * Math.PI * j / m; c += `<circle cx="${90 + (12 + i * 11) * Math.cos(a)}" cy="${80 + (12 + i * 11) * Math.sin(a)}" r="2.4" fill="#2a5bd7"/>` } } const R = 12 + S.n * 11; return `<svg viewBox="0 0 180 165" style="width:100%;max-width:220px" role="img" aria-label="${NM[z - 1]}: ${S.n} niveles">${c}<circle cx="90" cy="80" r="9" fill="#e74c3c"/><circle cx="${90 + R}" cy="80" r="6" fill="#27ae60"/><line x1="102" y1="80" x2="${90 + R - 9}" y2="80" stroke="#c0392b" stroke-width="${Math.min(12, S.zs * 1.5)}"><animate attributeName="opacity" values=".35;.95;.35" dur="2s" repeatCount="indefinite"/></line><text x="90" y="158" text-anchor="middle" font-size="12">${SY[z - 1]}: n = ${S.n}, Z* ≈ ${n2(S.zs)}</text></svg>` }; $('#cmp').innerHTML = `<div class="grid">${card(a, A)}${card(b, B)}</div><div class="card"><h3>Visualización animada</h3><div class="row">${ring(a, A)}${ring(b, B)}</div><p class="mu">Anillos: niveles n (misma escala); puntos azules: electrones internos y de valencia (verde: el que se analiza). Flecha roja: atracción Z* sobre el electrón de valencia (más gruesa = mayor Z*). Esquema cualitativo.</p></div><div class="card"><h3>Z, σ y Z* (Slater, e⁻ s/p más externo)</h3>${row('Z', a, b, m)}${row('σ', A.s, B.s, m)}${row('Z*', A.zs, B.zs, m)}<p>${ex}</p><p class="mu">Z* = Z − σ es un modelo aproximado; los valores de Slater son estimaciones.</p></div>`
+        }
+        $('#ca').value = 3; $('#cb').value = 11; $('#ca').onchange = $('#cb').onchange = cmp; document.querySelectorAll('[data-p]').forEach(x => x.onclick = () => { const [a, b] = x.dataset.p.split(','); $('#ca').value = a; $('#cb').value = b; cmp() }); cmp();
+        // Mapa
+        const mc = build($('#mini'), 1); function map() { const k = $('#msel').value, m = MAP[k], show = $('#marr').checked; paint(mc, k); const L = 'linear-gradient(var(--ac),var(--ac))'; $('#ah').style.cssText = show ? `justify-content:${m.h == '←' ? 'flex-start' : 'flex-end'};background:${L} center/100% 3px no-repeat` : ''; $('#av').style.cssText = show ? `flex-direction:column;justify-content:${m.v == '↑' ? 'flex-start' : 'flex-end'};background:${L} center/3px 100% no-repeat` : ''; $('#ah').innerHTML = show ? `<span>${m.h}</span>` : ''; $('#av').innerHTML = show ? `<span>${m.v}</span>` : ''; mc.forEach((b, i) => b.classList.toggle('exc', $('#mexc').checked && m.e.includes(i + 1))); $('#mtxt').innerHTML = `<b>${PR[k].n}:</b> ${m.t}<br><b>Conexión con Z* y σ:</b> ${m.z}<br><b>Excepciones destacadas:</b> ${m.e.map(z => SY[z - 1]).join(', ')}. ${T[k].exc}<br><span class="mu">Tendencia general; los valores concretos pueden variar.</span>` }
+        $('#msel').onchange = $('#marr').onchange = $('#mexc').onchange = map; map();
+        const QZ = [['¿Qué átomo tiene mayor Rₐ: Na o Cl?', ['Na', 'Cl', 'Igual'], 0, 'Ambos tienen n = 3, pero Z* ≈ 2,20 en Na y 6,10 en Cl: Cl se comprime (166 frente a 102 pm).'], ['Calcula Z* del Na con Z = 11 y σ ≈ 8,8.', ['2,2', '8,8', '11', '19,8'], 0, 'Z* = Z − σ = 11 − 8,8 = 2,2.'], ['¿Por qué Eᵢ(O) < Eᵢ(N)?', ['El O tiene menos protones', 'En el O hay un par apareado en 2p que se repele', 'El O tiene más niveles'], 1, 'La repulsión del par apareado facilita arrancar un electrón del O (13,62 eV frente a 14,53 eV).'], ['En la serie isoelectrónica O²⁻, F⁻, Na⁺, Mg²⁺, Al³⁺, ¿cuál tiene mayor Rᵢ?', ['O²⁻', 'Na⁺', 'Al³⁺'], 0, 'Mismo nº de electrones (10), pero O²⁻ tiene menos protones (8) y atrae menos a la nube: Rᵢ = 140 pm.'], ['¿Cuál de estos elementos no forma un anión estable (Eₐ sin valor positivo)?', ['Cl', 'F', 'Be', 'S'], 2, 'Be tiene el subnivel 2s lleno: el electrón entrante iría a 2p, de mayor energía.'], ['En H–Cl, ¿hacia dónde se desplaza la densidad electrónica?', ['Hacia H', 'Hacia Cl', 'No se desplaza'], 1, 'EN(Cl) = 3,16 > EN(H) = 2,20: Cl queda δ⁻ y H δ⁺.'], ['¿Qué afirmación es correcta?', ['La EN es lo mismo que Eᵢ', 'La EN describe un átomo enlazado y depende de la escala', 'La EN se mide directamente'], 1, 'Eᵢ y Eₐ son propiedades de átomos aislados en fase gas; la EN se define en escalas (Pauling, Mulliken…).'], ['¿Cuál tiene mayor Eᵢ: Mg o Al?', ['Mg', 'Al', 'Igual'], 0, 'El electrón del Al está en 3p (más alto y apantallado por 3s²); el del Mg está en un 3s lleno: Eᵢ = 7,65 eV frente a 5,99 eV.'], ['Al avanzar en un período, Rₐ disminuye porque…', ['aumenta el número de niveles', 'aumenta Z* con el mismo nivel n', 'disminuye el número de protones'], 1, 'Los electrones nuevos entran en el mismo nivel y apantallan poco (≈ 0,35): Z* crece y comprime el átomo.'], ['¿Qué ion es menor: Fe²⁺ o Fe³⁺?', ['Fe²⁺', 'Fe³⁺', 'Son iguales'], 1, 'Fe³⁺ tiene un electrón menos y la misma carga nuclear: más atracción por electrón (64,5 frente a 78 pm, alto espín).'], ['¿Cuál es más electronegativo: Cl o Br?', ['Cl', 'Br', 'Igual'], 0, 'Cl: 3,16; Br: 2,96. Al subir en el grupo el par de enlace queda más cerca del núcleo.'], ['¿Quién tiene mayor Eₐ (energía liberada): F o Cl?', ['F', 'Cl', 'Igual'], 1, 'Cl (349 kJ/mol) > F (328 kJ/mol): en el pequeño 2p del F la repulsión entre electrones reduce la energía liberada.'], ['Calcula Z* del Cl con σ ≈ 10,9 (Z = 17).', ['6,1', '10,9', '17'], 0, 'Z* = Z − σ = 17 − 10,9 = 6,1.'], ['¿Por qué la 2.ª energía de ionización del Na es mucho mayor que la 1.ª?', ['El electrón sale ahora de un nivel interno (n = 2), más cercano y menos apantallado', 'El Na⁺ es más grande', 'Se necesita menos energía'], 0, 'Tras perder el 3s, el Na⁺ tiene configuración de gas noble y el siguiente electrón está mucho más ligado.'], ['¿Qué es mayor: Rᵢ(Cl⁻) o Rₐ(Cl)?', ['Rᵢ(Cl⁻)', 'Rₐ(Cl)', 'Son iguales'], 0, 'Al ganar un electrón aumenta la repulsión con la misma carga nuclear: el anión es mayor.'], ['Al bajar por un grupo, Rₐ aumenta principalmente porque…', ['hay más niveles electrónicos', 'Z* disminuye mucho', 'hay menos electrones'], 0, 'Se ocupa un nivel n mayor, más alejado; Z* varía mucho menos que Z.']]; let sc = 0, an = 0; $('#qz').innerHTML = QZ.map((q, i) => `<div class="card" data-i="${i}"><b>${i + 1}. ${q[0]}</b><div class="row">${q[1].map((o, j) => `<button data-j="${j}">${o}</button>`).join('')}</div><p class="mu"></p></div>`).join(''); $('#qz').onclick = e => { const b = e.target.closest('button'); if (!b) return; const c = b.closest('.card'), q = QZ[c.dataset.i]; if (c.dataset.d) return; c.dataset.d = 1; an++; const ok = +b.dataset.j == q[2]; if (ok) sc++; b.style.background = ok ? '#1e8449' : '#c0392b'; b.style.color = '#fff'; c.querySelectorAll('button')[q[2]].style.outline = '3px solid #1e8449'; c.querySelector('p').textContent = (ok ? '¡Correcto! ' : 'No exactamente. ') + q[3]; $('#qs b').textContent = 'Puntuación: ' + sc + ' / ' + an + ' (de ' + QZ.length + ')' + (an == QZ.length ? ' · Has terminado: ' + Math.round(sc / an * 100) + ' %' : '') };
+        const sst = z => { const o = occ(z), ks = Object.keys(o), ns = Math.max(...ks.filter(k => 'sp'.includes(k[1])).map(k => +k[0])), same = (o[ns + 's'] || 0) + (o[ns + 'p'] || 0); let a = 0, bb = 0; ks.forEach(k => { if (+k[0] == ns - 1) a += o[k]; else if (+k[0] < ns - 1) bb += o[k] }); const k1 = ns == 1 ? .30 : .35, s = (same - 1) * k1 + a * .85 + bb; return `<p>${NM[z - 1]} (Z = ${z}): ${cfg(z)}</p><ol><li>Electrón analizado: ${same == 1 ? 'el único electrón' : 'uno de los ' + same + ' electrones'} del grupo (${ns == 1 ? '1s' : ns + 's, ' + ns + 'p'}). Mismo grupo: (${same} − 1) × ${n2(k1)} = <b>${n2((same - 1) * k1)}</b></li><li>Nivel n − 1 (${ns - 1}): ${a} e⁻ × 0,85 = <b>${n2(a * .85)}</b></li><li>Niveles inferiores: ${bb} e⁻ × 1,00 = <b>${n2(bb)}</b></li><li>σ = ${n2((same - 1) * k1)} + ${n2(a * .85)} + ${n2(bb)} = <b>${n2(s)}</b></li><li>Z* = Z − σ = ${z} − ${n2(s)} = <b>${n2(z - s)}</b></li></ol><p class="mu">Aproximación de Slater para un electrón s/p externo; es un modelo simplificado.</p>` };
+        $('#ssel').innerHTML = SY.slice(0, 86).map((s, i) => `<option value="${i + 1}">${s} — ${NM[i]}</option>`).join(''); $('#ssel').value = 17; $('#ssel').onchange = () => $('#sout').innerHTML = sst(+$('#ssel').value); $('#ssel').onchange();
+        const EX = [['Calcula Z* para el electrón de valencia del cloro (Z = 17).', 'Configuración: 1s² 2s² 2p⁶ 3s² 3p⁵. Mismo grupo (3s, 3p): 6 × 0,35 = 2,10. Nivel n = 2: 8 × 0,85 = 6,80. Nivel n = 1: 2 × 1,00 = 2,00. σ = 10,90 y Z* = 17 − 10,90 = <b>6,10</b>.'], ['Ordena Li, Na y K por Rₐ creciente y explica el resultado con Z* y n.', 'Li (n = 2, Z* ≈ 1,30) < Na (n = 3, Z* ≈ 2,20) < K (n = 4, Z* ≈ 2,20). Z* aumenta algo, pero el nivel n sube cada vez y el electrón de valencia queda más lejos: Rₐ = 128 < 166 < 203 pm.'], ['Ordena Na, Mg, Al y Si por Eᵢ creciente.', 'Valores (NIST): Na 5,14; Al 5,99; Mg 7,65; Si 8,15 eV. Orden: Na < Al < Mg < Si. La tendencia general crece con Z*, con la excepción Mg > Al: el electrón del Al está en 3p, mejor apantallado por 3s².'], ['Ordena por Rᵢ creciente: O²⁻, F⁻, Na⁺, Mg²⁺.', 'Todos tienen 10 e⁻ (1s² 2s² 2p⁶), pero Z = 8, 9, 11 y 12. A más protones, más atracción sobre la misma nube: Mg²⁺ (72) < Na⁺ (102) < F⁻ (133) < O²⁻ (140 pm). Shannon, CN 6.'], ['El Cl capta un electrón y se liberan 349 kJ/mol. Exprésalo con las dos convenciones de signo.', 'Cl(g) + e⁻ → Cl⁻(g). Con la convención de esta página, Eₐ = +349 kJ/mol (energía liberada). Como variación de energía del proceso, ΔE = −349 kJ/mol (Eₐ = −ΔE). Algunas fuentes tabulan ΔE: hay que comprobar siempre qué signo usan.'], ['Ordena H–F, H–Cl y H–Br por polaridad creciente.', 'ΔEN = EN(X) − EN(H): Br 2,96 − 2,20 = 0,76; Cl 3,16 − 2,20 = 0,96; F 3,98 − 2,20 = 1,78. Polaridad: H–Br < H–Cl < H–F. En todos la densidad electrónica se desplaza hacia el halógeno (δ⁻).']];
+        $('#exs').innerHTML = EX.map((q, i) => `<div class="card"><b>Ejercicio ${i + 1}.</b> ${q[0]}<details><summary>Ver solución paso a paso</summary><p>${q[1]}</p></details></div>`).join('');
+        const G = [['Apantallamiento (σ)', 'Reducción de la atracción del núcleo sobre un electrón por la repulsión de los demás electrones, sobre todo los internos.'], ['Carga nuclear efectiva (Z*)', 'Atracción neta que siente un electrón: Z* = Z − σ. Es un modelo aproximado.'], ['Reglas de Slater', 'Reglas empíricas para estimar σ: 0,35 para electrones del mismo grupo, 0,85 del nivel n − 1 y 1,00 de niveles inferiores (para un electrón s/p).'], ['Penetración orbital', 'Capacidad de un electrón de acercarse al núcleo: s > p > d > f en un mismo nivel. Explica por qué un electrón s apantalla y se apantalla distinto que uno p.'], ['Electrón de valencia', 'Electrón del nivel más externo, implicado en el enlace y en las propiedades periódicas.'], ['Configuración electrónica', 'Distribución de los electrones en niveles y subniveles (por ejemplo, 1s² 2s² 2p⁶ 3s¹ para el Na).'], ['Estado fundamental', 'Estado de menor energía de un átomo; es el que se usa para definir Eᵢ y Eₐ.'], ['Isoelectrónico', 'Que tiene el mismo número de electrones (O²⁻, F⁻, Na⁺, Mg²⁺ y Al³⁺ tienen 10).'], ['Catión y anión', 'Ion con carga positiva (pierde electrones) o negativa (gana electrones).'], ['Radio atómico (Rₐ)', 'Medida del tamaño de un átomo. Depende de la definición: covalente, metálico, de van der Waals…'], ['Radio iónico (Rᵢ)', 'Tamaño efectivo de un ion en un cristal; depende de la carga, la coordinación y el espín.'], ['Energía de ionización (Eᵢ)', 'Energía para arrancar un electrón de un átomo gaseoso aislado en su estado fundamental. Las sucesivas (Eᵢ₂, Eᵢ₃…) son cada vez mayores.'], ['Afinidad electrónica (Eₐ)', 'Energía liberada cuando un átomo gaseoso neutro capta un electrón. Convención usada: positiva si se libera (Eₐ = −ΔE).'], ['Electronegatividad (EN)', 'Capacidad relativa de un átomo enlazado para atraer los electrones del enlace. Depende de la escala.'], ['Escala de Pauling', 'Escala de EN basada en energías de enlace; F = 3,98. Es adimensional.'], ['Contracción lantánida', 'Disminución del tamaño de los átomos tras los lantánidos: los electrones 4f apantallan mal y Z* aumenta.'], ['Período y grupo', 'Período: fila de la tabla (mismo n de valencia). Grupo: columna (misma configuración de valencia).'], ['Enlace covalente polar', 'Enlace en el que los electrones se comparten de forma desigual por una diferencia de EN, con cargas parciales δ⁺ y δ⁻.']];
+        const nz2 = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(), rg = q => { q = nz2(q.trim()); $('#gl').innerHTML = G.filter(g => nz2(g[0] + ' ' + g[1]).includes(q)).map(g => `<div class="card"><b>${g[0]}</b><br>${g[1]}</div>`).join('') || '<p class="mu">Sin resultados.</p>' }; $('#gq').oninput = e => rg(e.target.value); rg('');
+        KEYS.forEach(k => $('#gsel').add(new Option(PR[k].n + ' — ' + PR[k].nm, k)));
+        function gr() { const k = $('#gsel').value || 'ra', d = PR[k].d.slice(0, 86), v = d.filter(x => x != null), mx = Math.max(...v), mn = Math.min(...v), X = z => 50 + (z - 1) * 830 / 85, Y = x => 270 - (x - mn) / (mx - mn || 1) * 230; let s = `<line x1="50" y1="270" x2="880" y2="270" stroke="#8aa"/><line x1="50" y1="30" x2="50" y2="270" stroke="#8aa"/><text x="46" y="34" text-anchor="end" font-size="11">${n2(mx, 2)}</text><text x="46" y="274" text-anchor="end" font-size="11">${n2(mn, 2)}</text><text x="60" y="20" font-size="13">${PR[k].n} (${PR[k].u})</text>`;[2, 10, 18, 36, 54, 86].forEach(z => s += `<line x1="${X(z)}" y1="30" x2="${X(z)}" y2="270" stroke="#8aa" stroke-dasharray="3 4" opacity=".5"/><text x="${X(z)}" y="290" text-anchor="middle" font-size="11">${SY[z - 1]}</text>`); d.forEach((x, i) => { if (x != null && d[i + 1] != null) s += `<line x1="${X(i + 1)}" y1="${Y(x)}" x2="${X(i + 2)}" y2="${Y(d[i + 1])}" stroke="#8aa" opacity=".45"/>` }); d.forEach((x, i) => { if (x != null) s += `<circle cx="${X(i + 1)}" cy="${Y(x)}" r="4.5" fill="hsl(${per(i + 1) * 55},65%,45%)" data-t="${NM[i]} (${SY[i]}), Z = ${i + 1}: ${n2(x, 3)} ${PR[k].u}" style="cursor:pointer"><title>${NM[i]} (${SY[i]}): ${n2(x, 3)} ${PR[k].u}</title></circle>` }); $('#gsv').innerHTML = s; $('#gro').textContent = PR[k].note }
+        $('#gsv').onclick = e => { const c = e.target.closest('circle'); if (c) $('#gro').textContent = c.dataset.t }; $('#gsel').onchange = gr; gr();
+        const TH0 = () => { try { return localStorage.getItem('th') } catch (e) { return null } }; if (TH0()) document.documentElement.dataset.theme = TH0();
+        $('#th').onclick = () => { const d = document.documentElement, dark = d.dataset.theme ? d.dataset.theme == 'dark' : matchMedia('(prefers-color-scheme:dark)').matches, n = dark ? 'light' : 'dark'; d.dataset.theme = n; try { localStorage.setItem('th', n) } catch (e) { } };
+        const NL = [...document.querySelectorAll('#nav a')], NV = $('#nav'), io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { NL.forEach(a => a.classList.toggle('on', a.getAttribute('href') == '#' + e.target.id)); const a = NL.find(a => a.classList.contains('on')); if (a) NV.scrollTo({ left: a.offsetLeft - NV.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' }) } }), { rootMargin: '-45% 0px -50% 0px' }); NL.forEach(a => { const s = document.querySelector(a.getAttribute('href')); if (s) io.observe(s) });
+        addEventListener('scroll', () => { const h = document.documentElement; $('#pb').style.width = (h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight) * 100) + '%' }, { passive: true });
+        function closeF() { selZ = null; document.body.classList.remove('fo'); $('#ficha').classList.remove('open'); cells.forEach(b => b.classList.remove('sel')) } addEventListener('keydown', e => { if (e.key == 'Escape') closeF() });
+        const ZP = {}; for (let z = 1; z <= 118; z++)ZP[pos(z).join()] = z;
+        const tr = k => { const d = PR[k].d; let a = [0, 0], b = [0, 0]; for (let z = 1; z <= 86; z++) { const [r, c] = pos(z); if (r < 2 || r > 5 || d[z - 1] == null || !(c < 3 || c > 12)) continue; const zb = ZP[(r + 1) + ',' + c], zr = (c == 1 || (c > 12 && c < 18)) ? ZP[r + ',' + (c + 1)] : null; if (zb && d[zb - 1] != null) a[d[zb - 1] > d[z - 1] ? 0 : 1]++; if (zr && d[zr - 1] != null) b[d[zr - 1] > d[z - 1] ? 0 : 1]++ } return { v: a[0] / (a[0] + a[1] || 1), nv: a[0] + a[1], h: b[0] / (b[0] + b[1] || 1), nh: b[0] + b[1] } };
+        const PK = ['ra', 'ei', 'ea', 'en']; PK.forEach(k => $('#pk').add(new Option(PR[k].n + ' — ' + PR[k].nm, k))); let pa = [null, null], pt = 0, pw = 0; const pmr = build($('#pmini'), 1);
+        const rst = () => { pa = [null, null]; document.querySelectorAll('#pq1 button,#pq2 button').forEach(b => b.classList.remove('on')); pmr.forEach(b => { b.style.background = ''; b.style.color = ''; b.className = 'el nd' }); $('#pres').innerHTML = ''; const n = PR[$('#pk').value].n; $('#pn1').textContent = n; $('#pn2').textContent = n };
+        document.querySelectorAll('#pq1 button,#pq2 button').forEach(b => b.onclick = () => { pa[b.parentElement.id == 'pq1' ? 0 : 1] = +b.dataset.v; b.parentElement.querySelectorAll('button').forEach(x => x.classList.toggle('on', x == b)) });
+        $('#pk').onchange = rst; $('#pn').onclick = () => { $('#pk').value = PK[Math.floor(Math.random() * PK.length)]; rst() }; rst();
+        $('#pc').onclick = () => { if (pa[0] == null || pa[1] == null) { $('#pres').innerHTML = '<p>Responde primero las dos preguntas.</p>'; return } const k = $('#pk').value, t = tr(k), ok = [pa[0] == (t.v > .5 ? 1 : 0), pa[1] == (t.h > .5 ? 1 : 0)]; paint(pmr, k); pt += ok[0] + ok[1]; pw += 2; $('#ps').textContent = 'Aciertos acumulados: ' + pt + ' / ' + pw; $('#pres').innerHTML = `<p>${ok[0] ? '✅' : '❌'} <b>Vertical:</b> en ${t.nv} comparaciones dentro de un grupo, el ${Math.round(t.v * 100)} % aumenta al bajar.<br>${ok[1] ? '✅' : '❌'} <b>Horizontal:</b> en ${t.nh} comparaciones entre vecinos de un período, el ${Math.round(t.h * 100)} % aumenta hacia la derecha.</p><p><b>Por qué:</b> ${MAP[k].t} ${MAP[k].z}</p><p class="mu">Es una tendencia general: el porcentaje no llega al 100 % porque hay excepciones (${MAP[k].e.slice(0, 4).map(z => SY[z - 1]).join(', ')}…).</p>` };
+    </script>
+</body>
+
+</html>

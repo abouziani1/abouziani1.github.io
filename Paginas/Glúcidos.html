@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="utf-8">
+    <title>Glúcids · Guia d’estudi interactiva</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+            color-scheme: dark;
+            --bg: #050b1c;
+            --s1: #0a1630;
+            --s2: #10224a;
+            --line: #22397300;
+            --bd: #27427e;
+            --tx: #eaf1ff;
+            --mu: #93aad6;
+            --a: #3b82f6;
+            --a2: #60a5fa;
+            --c: #22d3ee;
+            --v: #818cf8;
+            --k: #ff6b9a;
+            --f: "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+            --m: ui-monospace, Menlo, Consolas, monospace
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 70px)
+        }
+
+        body {
+            margin: 0;
+            color: var(--tx);
+            font: 16px/1.65 var(--f);
+            background: radial-gradient(900px 500px at 85% 0, #1b3f8a55, transparent), linear-gradient(rgba(96, 165, 250, .045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(90deg, rgba(96, 165, 250, .045) 1px, transparent 1px) 0 0/48px 48px, var(--bg);
+            background-attachment: fixed
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0 0 auto;
+            height: env(safe-area-inset-top, 0px);
+            background: #050b1cf0;
+            z-index: 50
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit
+        }
+
+        .nav {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 40;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 0 18px;
+            background: rgba(5, 11, 28, .82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--bd)
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            color: var(--tx);
+            text-decoration: none;
+            padding: 12px 0;
+            font-size: 18px
+        }
+
+        .brand svg {
+            color: var(--a2)
+        }
+
+        .links {
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            flex: 1;
+            position: relative;
+            padding: 8px 0
+        }
+
+        .links a {
+            white-space: nowrap;
+            text-decoration: none;
+            color: var(--mu);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 7px 14px;
+            border-radius: 99px;
+            transition: .2s
+        }
+
+        .links a:hover {
+            color: #fff;
+            background: rgba(59, 130, 246, .15)
+        }
+
+        .links a.act {
+            color: #fff;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            box-shadow: 0 4px 14px #2563eb66
+        }
+
+        #bar {
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            height: 3px;
+            width: 0;
+            background: linear-gradient(90deg, var(--c), var(--a))
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 70px 20px 60px;
+            background: linear-gradient(160deg, #0b2d6b99, transparent 70%)
+        }
+
+        .hexbg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .hx {
+            fill: none;
+            stroke: #4f9bff;
+            stroke-width: 1.5;
+            opacity: .28;
+            animation: fl 8s ease-in-out infinite alternate;
+            transform-box: fill-box;
+            transform-origin: center
+        }
+
+        @keyframes fl {
+            to {
+                transform: translateY(-20px) rotate(30deg);
+                opacity: .6
+            }
+        }
+
+        .hi {
+            position: relative;
+            max-width: 1000px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 30px;
+            align-items: center
+        }
+
+        .kick {
+            display: inline-block;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--c);
+            border: 1px solid var(--bd);
+            padding: 5px 16px;
+            border-radius: 99px
+        }
+
+        .hero h1 {
+            font-size: clamp(52px, 10vw, 92px);
+            line-height: 1;
+            margin: 16px 0;
+            letter-spacing: -3px;
+            background: linear-gradient(90deg, #fff, #6db4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        .hero p {
+            color: var(--mu);
+            font-size: 18px;
+            margin: 0 0 18px
+        }
+
+        .fml {
+            display: inline-block;
+            font: 700 16px var(--m);
+            color: #c9e0ff;
+            background: rgba(59, 130, 246, .15);
+            border: 1px solid var(--a);
+            padding: 8px 16px;
+            border-radius: 12px
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px
+        }
+
+        .stats div {
+            background: rgba(59, 130, 246, .1);
+            border: 1px solid var(--bd);
+            border-radius: 14px;
+            padding: 8px 16px
+        }
+
+        .stats b {
+            display: block;
+            font-size: 28px;
+            line-height: 1.2
+        }
+
+        .stats span {
+            font-size: 12px;
+            color: var(--mu)
+        }
+
+        .orb {
+            position: relative;
+            display: grid;
+            place-items: center;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, #1c4fb866, transparent 68%);
+            animation: pu 5s ease-in-out infinite alternate
+        }
+
+        @keyframes pu {
+            to {
+                transform: scale(1.05)
+            }
+        }
+
+        .orb .hw {
+            max-width: 300px
+        }
+
+        .orb i {
+            position: absolute;
+            font: 700 12px var(--m);
+            font-style: normal;
+            padding: 4px 10px;
+            border-radius: 99px;
+            background: #0a1630;
+            border: 1px solid var(--bd);
+            color: var(--c)
+        }
+
+        main {
+            max-width: 1000px;
+            margin: auto;
+            padding: 0 16px 50px
+        }
+
+        section {
+            margin-top: 84px
+        }
+
+        .sh {
+            display: flex;
+            align-items: flex-end;
+            gap: 18px;
+            margin-bottom: 22px
+        }
+
+        .sh b {
+            font: 800 72px/.85 var(--f);
+            color: transparent;
+            -webkit-text-stroke: 1.5px var(--a);
+            opacity: .8
+        }
+
+        .sh h2 {
+            margin: 0;
+            font-size: clamp(26px, 5vw, 38px);
+            letter-spacing: -1px;
+            line-height: 1.1
+        }
+
+        .sh p {
+            margin: 6px 0 0;
+            color: var(--mu)
+        }
+
+        .cd {
+            background: linear-gradient(160deg, rgba(28, 56, 118, .55), rgba(9, 20, 44, .8));
+            border: 1px solid var(--bd);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 14px 0;
+            transition: border-color .2s, box-shadow .2s
+        }
+
+        .cd:hover {
+            border-color: var(--a);
+            box-shadow: 0 0 0 1px #3b82f655, 0 12px 30px #0006
+        }
+
+        .cd h3 {
+            margin: 0 0 8px;
+            font-size: 18px
+        }
+
+        .g2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 14px;
+            align-items: center
+        }
+
+        .g3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 3px 12px;
+            border-radius: 99px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid;
+            margin: 2px 4px 2px 0
+        }
+
+        .k1 {
+            color: #8cc0ff;
+            background: #3b82f61f;
+            border-color: #3b82f688
+        }
+
+        .k2 {
+            color: #67e8f9;
+            background: #22d3ee1c;
+            border-color: #22d3ee77
+        }
+
+        .k3 {
+            color: #b4b9ff;
+            background: #818cf824;
+            border-color: #818cf888
+        }
+
+        .k4 {
+            color: #ff9fbf;
+            background: #ff6b9a1c;
+            border-color: #ff6b9a77
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 6px 0 14px
+        }
+
+        .tabs button,
+        .btn {
+            font: 600 14px/1 var(--f);
+            border: 1.5px solid var(--bd);
+            background: rgba(15, 34, 74, .7);
+            color: var(--tx);
+            padding: 10px 16px;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .tabs button:hover,
+        .btn:hover {
+            border-color: var(--a2);
+            transform: translateY(-1px)
+        }
+
+        .tabs button.on,
+        .btn.p {
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            border-color: #60a5fa;
+            color: #fff;
+            box-shadow: 0 4px 14px #2563eb55
+        }
+
+        .btn.p:disabled {
+            opacity: .4;
+            cursor: default;
+            transform: none
+        }
+
+        .tile {
+            text-align: left;
+            font: inherit;
+            color: var(--tx);
+            cursor: pointer;
+            border: 1.5px solid var(--bd);
+            border-radius: 18px;
+            padding: 14px;
+            background: linear-gradient(160deg, rgba(28, 56, 118, .5), rgba(9, 20, 44, .8));
+            transition: .2s
+        }
+
+        .tile:hover {
+            transform: translateY(-4px);
+            border-color: var(--a2);
+            box-shadow: 0 10px 26px #0007
+        }
+
+        .tile b {
+            display: block;
+            font-size: 17px
+        }
+
+        .tile small {
+            color: var(--mu)
+        }
+
+        .tile .more {
+            display: block;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: .35s;
+            font-size: 14px;
+            color: #c9d9f5
+        }
+
+        .tile.open .more {
+            max-height: 140px;
+            opacity: 1;
+            margin-top: 8px
+        }
+
+        .tile svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 6px
+        }
+
+        .sl {
+            width: 100%;
+            accent-color: var(--a2);
+            margin: 8px 0
+        }
+
+        .big {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--c)
+        }
+
+        svg {
+            max-width: 100%
+        }
+
+        .fz {
+            width: 100%;
+            max-width: 230px;
+            display: block;
+            margin: auto
+        }
+
+        .ft {
+            font-family: var(--m)
+        }
+
+        .hw {
+            width: 100%;
+            max-width: 320px;
+            display: block;
+            margin: auto
+        }
+
+        .hw g {
+            transition: opacity .45s
+        }
+
+        .hw[data-an=a] .u1,
+        .hw[data-an=b] .d1 {
+            opacity: .1
+        }
+
+        .hw[data-an=a] .d1,
+        .hw[data-an=b] .u1 {
+            opacity: 1
+        }
+
+        .hw[data-an=x] .u1,
+        .hw[data-an=x] .d1 {
+            opacity: .55
+        }
+
+        .hot {
+            cursor: pointer
+        }
+
+        .hot:hover rect {
+            fill: rgba(34, 211, 238, .1)
+        }
+
+        .gal {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 12px
+        }
+
+        .gal .cd {
+            margin: 0;
+            text-align: center;
+            padding: 14px
+        }
+
+        .gal h4 {
+            margin: 6px 0 2px
+        }
+
+        .step {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0
+        }
+
+        .step i {
+            flex: 1;
+            height: 6px;
+            border-radius: 9px;
+            background: var(--s2);
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .step i.on {
+            background: linear-gradient(90deg, var(--c), var(--a))
+        }
+
+        .fm .oh,
+        .fm .r2,
+        .fm .ob,
+        .fm .w {
+            transition: all .9s
+        }
+
+        .fm .ob,
+        .fm .w {
+            opacity: 0
+        }
+
+        .fm .w {
+            transform: translateY(-26px)
+        }
+
+        .fm.done .oh {
+            opacity: 0
+        }
+
+        .fm.done .r2 {
+            transform: translateX(-40px)
+        }
+
+        .fm.done .ob {
+            opacity: 1
+        }
+
+        .fm.done .w {
+            opacity: 1;
+            transform: none
+        }
+
+        .liq {
+            fill: #2f6fe0;
+            transition: fill 1.8s
+        }
+
+        .pp {
+            opacity: 0;
+            transition: opacity 1.8s
+        }
+
+        .tube.red .liq {
+            fill: #d9482b
+        }
+
+        .tube.red .pp {
+            opacity: 1
+        }
+
+        .bub {
+            opacity: 0
+        }
+
+        .tube.heat .bub {
+            animation: bub 1s infinite
+        }
+
+        @keyframes bub {
+            0% {
+                opacity: .9;
+                transform: translateY(0)
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-40px)
+            }
+        }
+
+        .opt {
+            display: block;
+            width: 100%;
+            text-align: left;
+            font: inherit;
+            color: var(--tx);
+            background: rgba(15, 34, 74, .6);
+            border: 1.5px solid var(--bd);
+            border-radius: 14px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .opt:hover:not(:disabled) {
+            border-color: var(--a2);
+            transform: translateX(4px)
+        }
+
+        .opt.ok {
+            background: #0a3a47;
+            border-color: var(--c)
+        }
+
+        .opt.ko {
+            background: #3b1a33;
+            border-color: #ff6b8b
+        }
+
+        .pb {
+            height: 8px;
+            border-radius: 9px;
+            background: var(--s2);
+            overflow: hidden
+        }
+
+        .pb i {
+            display: block;
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--c), var(--a));
+            transition: .4s
+        }
+
+        .fb {
+            margin: 10px 0;
+            color: #c9d9f5;
+            font-size: 15px
+        }
+
+        .pool {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            min-height: 44px;
+            margin-bottom: 12px
+        }
+
+        .it {
+            font: 600 14px var(--f);
+            color: #fff;
+            background: rgba(59, 130, 246, .2);
+            border: 1.5px solid var(--a);
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer
+        }
+
+        .it.sel {
+            background: var(--a);
+            box-shadow: 0 0 0 3px #60a5fa55
+        }
+
+        .bins {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px
+        }
+
+        .bin {
+            border: 2px dashed var(--bd);
+            border-radius: 16px;
+            padding: 10px;
+            min-height: 96px;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .bin:hover {
+            border-color: var(--c);
+            background: rgba(34, 211, 238, .06)
+        }
+
+        .bin h4 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            color: var(--a2)
+        }
+
+        .bin .it {
+            margin: 3px;
+            font-size: 12px;
+            cursor: default;
+            padding: 5px 10px
+        }
+
+        .shake {
+            animation: sh .3s
+        }
+
+        @keyframes sh {
+            25% {
+                transform: translateX(-6px)
+            }
+
+            75% {
+                transform: translateX(6px)
+            }
+        }
+
+        #gsr {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 99px;
+            border: 1.5px solid var(--bd);
+            background: rgba(15, 34, 74, .7);
+            color: var(--tx);
+            font-size: 15px;
+            margin-bottom: 14px
+        }
+
+        .gl {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 10px
+        }
+
+        .gl div {
+            background: rgba(15, 34, 74, .55);
+            border: 1px solid var(--bd);
+            border-left: 4px solid var(--a);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 14px
+        }
+
+        .gl b {
+            display: block;
+            color: var(--a2);
+            font-size: 15px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px
+        }
+
+        td,
+        th {
+            padding: 8px;
+            border-bottom: 1px solid var(--bd);
+            text-align: left
+        }
+
+        .rv {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .6s, transform .6s
+        }
+
+        .rv.in {
+            opacity: 1;
+            transform: none
+        }
+
+        footer {
+            text-align: center;
+            color: var(--mu);
+            padding: 30px 16px;
+            border-top: 1px solid var(--bd);
+            font-size: 14px
+        }
+
+        @media(max-width:760px) {
+            .hi {
+                grid-template-columns: 1fr
+            }
+
+            .orb {
+                max-width: 300px;
+                margin: auto
+            }
+
+            .sh b {
+                font-size: 48px
+            }
+
+            .brand span {
+                display: none
+            }
+        }
+
+        .nd {
+            cursor: pointer
+        }
+
+        .nd rect {
+            transition: .2s
+        }
+
+        .nd:hover rect {
+            fill-opacity: .5
+        }
+
+        .fl {
+            animation: fd 3s linear infinite
+        }
+
+        @keyframes fd {
+            to {
+                stroke-dashoffset: -24
+            }
+        }
+
+        .hs {
+            cursor: pointer;
+            fill: rgba(255, 107, 154, .1);
+            stroke: #ff6b9a;
+            stroke-width: 2;
+            stroke-dasharray: 4 3;
+            animation: hp 1.4s infinite
+        }
+
+        @keyframes hp {
+            50% {
+                stroke-opacity: .25
+            }
+        }
+
+        .fcg {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 12px
+        }
+
+        .fc {
+            position: relative;
+            height: 130px;
+            perspective: 800px;
+            cursor: pointer
+        }
+
+        .fc i {
+            position: absolute;
+            inset: 0;
+            transition: transform .6s;
+            transform-style: preserve-3d
+        }
+
+        .fc.f i {
+            transform: rotateY(180deg)
+        }
+
+        .fc b,
+        .fc span {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            padding: 12px;
+            text-align: center;
+            border: 1.5px solid var(--bd)
+        }
+
+        .fc b {
+            background: linear-gradient(135deg, #1d4ed8, #0e2a66);
+            font-size: 17px
+        }
+
+        .fc span {
+            background: #0a1630;
+            transform: rotateY(180deg);
+            font-size: 13px;
+            color: #cfe0ff;
+            border-color: var(--c)
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav"><a class="brand" href="#top"><svg viewBox="0 0 24 24" width="24" height="24">
+                <path d="M12 2l8.5 5v10L12 22l-8.5-5V7z" fill="none" stroke="currentColor" stroke-width="2" />
+                <circle cx="12" cy="12" r="3" fill="currentColor" />
+            </svg><span>Glúcids</span></a>
+        <div class="links" id="lk"></div><i id="bar"></i>
+    </nav>
+    <header class="hero" id="top"><svg class="hexbg" id="hbg" viewBox="0 0 800 340"
+            preserveAspectRatio="xMidYMid slice"></svg>
+        <div class="hi">
+            <div><span class="kick">Biologia · Biomolècules</span>
+                <h1>Glúcids</h1>
+                <p>Clica, arrossega, equivoca’t i repassa. Tota la teoria, amb esquemes que reaccionen a cada gest.</p>
+                <span class="fml">C · H · O &nbsp;|&nbsp; –OH &nbsp;+&nbsp; C=O</span>
+                <div class="stats">
+                    <div><b data-n="4">0</b><span>famílies</span></div>
+                    <div><b data-n="7">0</b><span>monosacàrids clau</span></div>
+                    <div><b data-n="4">0</b><span>disacàrids</span></div>
+                    <div><b data-n="18">0</b><span>preguntes</span></div>
+                </div>
+            </div>
+            <div class="orb" id="orb"><i style="top:8%;left:6%">C₆H₁₂O₆</i><i
+                    style="bottom:10%;right:0">α-D-glucopiranosa</i></div>
+        </div>
+    </header>
+    <main>
+        <section id="intro">
+            <div class="sh"><b>01</b>
+                <div>
+                    <h2>Què són els glúcids?</h2>
+                    <p>Biomolècules orgàniques de C, H i O amb molts grups –OH i un grup carbonil (C=O):
+                        polihidroxialdehids o polihidroxicetones.</p>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Mapa conceptual <small style="color:var(--mu);font-weight:400">(clica una família per
+                        anar-hi)</small></h3><svg id="map" viewBox="0 0 900 360" style="width:100%"></svg>
+            </div>
+            <div class="g3" id="fam"></div>
+            <div class="cd">
+                <h3>Quina família és? Mou el control</h3><input class="sl" id="ns" type="range" min="1" max="14"
+                    value="1"><svg id="nsv" viewBox="0 0 700 60" style="width:100%"></svg>
+                <div class="big" id="nst"></div>
+            </div>
+        </section>
+
+        <section id="mono">
+            <div class="sh"><b>02</b>
+                <div>
+                    <h2>Monosacàrids</h2>
+                    <p>1 unitat de sucre · no hidrolitzables · entre 3 i 7 carbonis.</p>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Construeix el nom</h3>
+                <p style="margin:0 0 8px;color:var(--mu)">Nom = tipus de carbonil + nombre de carbonis. Aldosa: carbonil
+                    terminal (aldehid, C1). Cetosa: carbonil interior (cetona, C2).</p>
+                <div class="tabs" id="ntb"></div><input class="sl" id="nc" type="range" min="3" max="7" value="6"><svg
+                    id="nsc" viewBox="0 0 420 120" style="width:100%;max-width:520px;display:block;margin:auto"></svg>
+                <div class="big" id="nnm" style="text-align:center"></div>
+            </div>
+            <h3 style="margin:26px 0 6px">Monosacàrids importants</h3>
+            <div class="tabs" id="gtb"></div>
+            <div class="gal" id="gal"></div>
+        </section>
+
+        <section id="este">
+            <div class="sh"><b>03</b>
+                <div>
+                    <h2>Estereoisomeria</h2>
+                    <p>Mateixa fórmula, mateixos enllaços, diferent disposició a l’espai.</p>
+                </div>
+            </div>
+            <div class="g3">
+                <div class="cd"><span class="chip k1">=</span><b>Mateixa fórmula molecular</b></div>
+                <div class="cd"><span class="chip k2">=</span><b>Mateixa connectivitat</b></div>
+                <div class="cd"><span class="chip k4">≠</span><b>Diferent disposició espacial</b></div>
+            </div>
+            <div class="g2">
+                <div class="cd">
+                    <h3>Origen: carboni asimètric (C*)</h3>
+                    <p style="color:var(--mu);margin:0">Carboni unit a 4 grups diferents.</p><svg viewBox="0 0 240 170"
+                        style="width:100%;max-width:260px;display:block;margin:auto">
+                        <g stroke="#7da2e6" stroke-width="2.5">
+                            <line x1="120" y1="85" x2="120" y2="25" />
+                            <line x1="120" y1="85" x2="55" y2="125" />
+                            <line x1="120" y1="85" x2="185" y2="125" />
+                            <line x1="120" y1="85" x2="120" y2="150" stroke-dasharray="5 5" />
+                        </g>
+                        <circle cx="120" cy="85" r="18" fill="#10224a" stroke="#ff6b9a" stroke-width="2.5" /><text
+                            x="120" y="91" text-anchor="middle" fill="#ff9fbf" font-weight="800"
+                            font-size="15">C*</text>
+                        <circle cx="120" cy="22" r="14" fill="#3b82f6" />
+                        <circle cx="52" cy="127" r="14" fill="#22d3ee" />
+                        <circle cx="188" cy="127" r="14" fill="#818cf8" />
+                        <circle cx="120" cy="152" r="14" fill="#ff6b9a" />
+                        <g font-size="12" font-weight="700" fill="#050b1c" text-anchor="middle"><text x="120"
+                                y="26">R₁</text><text x="52" y="131">R₂</text><text x="188" y="131">R₃</text><text
+                                x="120" y="156">R₄</text></g>
+                    </svg>
+                </div>
+                <div class="cd">
+                    <h3>Formes D i L (Fischer)</h3>
+                    <p style="color:var(--mu);margin:0 0 6px">Es mira el C* més allunyat del carbonil: –OH a la dreta →
+                        <b>D</b>; a l’esquerra → <b>L</b>.</p>
+                    <div style="display:flex;justify-content:center;align-items:center;gap:6px" id="mir"></div>
+                    <div style="text-align:center"><span class="chip k1">Estereoisòmers</span><span
+                            class="chip k4">Enantiòmers: imatges especulars no superposables</span></div>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Laboratori: gira els –OH</h3>
+                <p style="color:var(--mu);margin:0">Clica un carboni per canviar el costat del seu –OH i descobreix quin
+                    monosacàrid has format.</p>
+                <div class="g2">
+                    <div id="lab"></div>
+                    <div>
+                        <div id="labr"></div>
+                        <div style="margin-top:12px"><button class="btn" id="lmir">Imatge especular</button> <button
+                                class="btn" id="lrst">Reinicia (D-glucosa)</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>D-glucosa vs D-galactosa</h3>
+                <div class="g2">
+                    <div style="display:flex;gap:10px;justify-content:center" id="cmp"></div>
+                    <div><span class="chip k1">Estereoisòmers (C₆H₁₂O₆)</span><span class="chip k4">NO
+                            enantiòmers</span>
+                        <p style="color:#c9d9f5">Només canvia l’–OH del <b>C4</b>. No són imatges especulars i tenen
+                            propietats físiques i químiques diferents. Les dues són aldohexoses amb 6 C i 4 C*.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cicl">
+            <div class="sh"><b>04</b>
+                <div>
+                    <h2>Ciclació</h2>
+                    <p>Formació de hemiacetals i hemicetals, més estables en dissolució aquosa.</p>
+                </div>
+            </div>
+            <div class="g3">
+                <div class="cd"><span class="chip k2">Per què?</span>
+                    <p style="margin:6px 0 0;font-size:14px">Reacció intramolecular entre el carbonil (C=O) i un –OH de
+                        la mateixa molècula.</p>
+                </div>
+                <div class="cd"><span class="chip k1">Quin –OH?</span>
+                    <p style="margin:6px 0 0;font-size:14px">El més allunyat del carbonil; en hexoses, el del C5.
+                        Aldoses → piranosa (6); cetoses → furanosa (5).</p>
+                </div>
+                <div class="cd"><span class="chip k4">Carboni anomèric</span>
+                    <p style="margin:6px 0 0;font-size:14px">El que provenia del C=O: C1 en aldoses, C2 en cetoses. Nou
+                        centre quiral: α i β.</p>
+                </div>
+            </div>
+            <div class="cd">
+                <div class="tabs" id="ctb"></div>
+                <div class="step" id="cst"></div>
+                <div class="g2">
+                    <div id="cvis"></div>
+                    <div>
+                        <h3 id="ctit"></h3>
+                        <p id="ctx" style="color:#c9d9f5"></p><button class="btn" id="cpv">← Enrere</button> <button
+                            class="btn p" id="cnx">Següent →</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Tanca l’anell</h3>
+                <p style="color:var(--mu);margin:0 0 6px">Arrossega el control i mira com la cadena de D-glucosa es
+                    plega fins que l’–OH del C5 ataca el C1.</p>
+                <div class="g2"><svg id="rgs" viewBox="0 0 300 290"
+                        style="width:100%;max-width:340px;margin:auto"></svg>
+                    <div><input class="sl" id="rg" type="range" min="0" max="100" value="0"><button class="btn p"
+                            id="rgp">Anima</button>
+                        <p class="big" id="rgt" style="font-size:19px;margin-top:12px"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="g2">
+                <div class="cd" style="text-align:center"><span class="chip k3">Piranosa · 5 C + 1 O</span>
+                    <div id="pyr"></div><small style="color:var(--mu)">Habitual en aldoses (glucopiranosa)</small>
+                </div>
+                <div class="cd" style="text-align:center"><span class="chip k3">Furanosa · 4 C + 1 O</span>
+                    <div id="fur"></div><small style="color:var(--mu)">Habitual en cetoses (fructofuranosa)</small>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Anòmers α i β</h3>
+                <p style="color:var(--mu);margin:0">Depenen de la posició de l’–OH del carboni anomèric (C1). Canvia’l!
+                </p>
+                <div class="g2">
+                    <div id="anr"></div>
+                    <div>
+                        <div class="tabs" id="atb"></div>
+                        <p id="atx" style="font-size:18px"></p>
+                        <p id="hst"
+                            style="background:rgba(255,107,154,.1);border:1px dashed #ff6b9a88;border-radius:12px;padding:8px 12px;font-size:14px">
+                            Clica els cercles rosa de l’anell per descobrir què són.</p><small
+                            style="color:var(--mu)">En la sèrie D, el CH₂OH (C5) queda cap amunt en les projeccions de
+                            Haworth.</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="di">
+            <div class="sh"><b>05</b>
+                <div>
+                    <h2>Disacàrids</h2>
+                    <p>Dos monosacàrids units per un enllaç O-glucosídic.</p>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Com es formen? Condensació</h3><svg class="fm" id="fm" viewBox="0 0 420 170"
+                    style="width:100%;max-width:560px;display:block;margin:auto"></svg>
+                <div style="text-align:center"><button class="btn p" id="fbt">Formar l’enllaç</button></div>
+            </div>
+            <div class="g2">
+                <div class="cd"><span class="chip k1">Monocarbonílic</span>
+                    <p style="margin:6px 0 0;font-size:14px">L’enllaç uneix un C anomèric amb un C no anomèric → <b>1 C
+                            anomèric lliure</b> → poder reductor (Fehling +).</p>
+                </div>
+                <div class="cd"><span class="chip k4">Dicarbonílic</span>
+                    <p style="margin:6px 0 0;font-size:14px">Els dos C anomèrics participen en l’enllaç → <b>cap C
+                            anomèric lliure</b> → no reductor (Fehling –).</p>
+                </div>
+            </div>
+            <div class="tabs" id="dtb"></div>
+            <div class="cd g2" id="dpn"></div>
+            <div class="cd">
+                <h3>Construeix el teu disacàrid</h3>
+                <p style="color:var(--mu);margin:0">Tria dos monosacàrids i el tipus d’enllaç: quin disacàrid obtens?
+                </p>
+                <div class="tabs" id="bt1"></div>
+                <div class="tabs" id="bt2"></div>
+                <div class="tabs" id="bt3"></div>
+                <div id="bld"></div>
+            </div>
+            <p style="color:var(--mu);font-size:14px">L’α o β indica la configuració del carboni anomèric del primer
+                monosacàrid que participa en l’enllaç.</p>
+        </section>
+
+        <section id="poli">
+            <div class="sh"><b>06</b>
+                <div>
+                    <h2>Polisacàrids</h2>
+                    <p>Macromolècules de moltes unitats de monosacàrid (&gt; 10) unides per enllaços O-glucosídics.</p>
+                </div>
+            </div>
+            <div class="g2">
+                <div class="cd"><span class="chip k2">Homopolisacàrids</span>
+                    <p style="margin:6px 0 0;font-size:14px">Un únic tipus de monosacàrid (la mateixa unitat repetida).
+                    </p>
+                </div>
+                <div class="cd"><span class="chip k3">Heteropolisacàrids</span>
+                    <p style="margin:6px 0 0;font-size:14px">Dos o més tipus diferents de monosacàrids.</p>
+                </div>
+            </div>
+            <div class="tabs" id="ptb"></div>
+            <div class="cd" id="ppn"></div>
+            <div class="cd">
+                <h3>Per què α reserva i β estructura?</h3>
+                <div class="tabs" id="abt"></div><svg id="abv" viewBox="0 0 400 150"
+                    style="width:100%;max-width:520px;display:block;margin:auto"></svg>
+                <p id="abx" style="text-align:center;color:#c9d9f5;margin:0"></p>
+            </div>
+        </section>
+
+        <section id="rep">
+            <div class="sh"><b>07</b>
+                <div>
+                    <h2>Repàs</h2>
+                    <p>Primer classifica, després posa’t a prova.</p>
+                </div>
+            </div>
+            <div class="cd">
+                <h3>Joc: classifica els glúcids</h3>
+                <p style="color:var(--mu);margin:0 0 10px">Clica un glúcid i després la família a la qual pertany.</p>
+                <div class="pool" id="pool"></div>
+                <div class="bins" id="bins"></div>
+                <p class="fb" id="gfb"></p><button class="btn" id="grs">Reinicia</button>
+            </div>
+            <div class="cd">
+                <h3>Targetes de memòria</h3>
+                <p style="color:var(--mu);margin:0 0 10px">Clica una targeta per girar-la i comprovar la definició.</p>
+                <div class="fcg" id="fcs"></div><button class="btn" id="fcb" style="margin-top:12px">Noves
+                    targetes</button>
+            </div>
+            <div class="cd" id="qz"></div>
+        </section>
+
+        <section id="glos">
+            <div class="sh"><b>08</b>
+                <div>
+                    <h2>Glossari</h2>
+                    <p>Cerca qualsevol terme.</p>
+                </div>
+            </div><input id="gsr" type="search" placeholder="Cerca un terme…">
+            <div class="gl" id="gl"></div>
+        </section>
+    </main>
+    <footer>Glúcids · Guia d’estudi · Bon estudi!</footer>
+    <script>
+        const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+        const C = { a: "#3b82f6", a2: "#60a5fa", c: "#22d3ee", v: "#818cf8", k: "#ff6b9a", t: "#eaf1ff", m: "#8fa6d3", l: "#7da2e6" };
+        const hxp = (x, y, r, n = 6) => Array.from({ length: n }, (_, i) => { const a = Math.PI / 180 * (i * 360 / n - 90 + (n == 6 ? 30 : 0)); return (x + r * Math.cos(a)).toFixed(1) + "," + (y + r * Math.sin(a)).toFixed(1) }).join(" ");
+        const H = (x, y, c, r = 22, n = 6, tx = "") => `<polygon points="${hxp(x, y, r, n)}" fill="${c}" fill-opacity=".28" stroke="${c}" stroke-width="2"/>${tx ? `<text x="${x}" y="${y + 5}" fill="#fff" font-size="${r > 30 ? 14 : 11}" font-weight="700" text-anchor="middle">${tx}</text>` : ""}`;
+        const L = (a, b, c, d, w = 2, col = C.l, dash) => `<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col}" stroke-width="${w}"${dash ? ' stroke-dasharray="5 5"' : ""}/>`;
+        const T = (x, y, t, c = C.m, s = 12, b = 0) => `<text x="${x}" y="${y}" fill="${c}" font-size="${s}" font-weight="${b ? 800 : 500}" text-anchor="middle">${t}</text>`;
+        const tabs = (el, labels, cb, st = 0) => { el.innerHTML = labels.map((l, i) => `<button class="${i == st ? "on" : ""}">${l}</button>`).join(""); const bs = [...el.children]; bs.forEach((b, i) => b.onclick = () => { bs.forEach(x => x.classList.toggle("on", x === b)); cb(i) }); cb(st) };
+        let uid = 0;
+        function fis(items, o = {}) {
+            const hl = o.hl || [], gap = 46, w = o.arrow ? 240 : (o.w || 150), cx = o.arrow ? 70 : w / 2, n = items.length, Hh = n * gap + 14, y = i => 24 + i * gap, id = "m" + uid++;
+            let s = `<svg viewBox="0 0 ${w} ${Hh}" class="fz" ${o.arrow ? 'style="max-width:260px"' : ""}><defs><marker id="${id}" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L8 4L0 8z" fill="${C.k}"/></marker></defs>`;
+            s += L(cx, y(0) + 10, cx, y(n - 1) - 16, 2);
+            const tx = (x, yy, t, c, b) => `<text x="${x}" y="${yy + 5}" text-anchor="middle" font-size="15" font-weight="${b ? 800 : 500}" fill="${c}" class="ft">${t}</text>`;
+            items.forEach((it, i) => {
+                const yy = y(i), h = hl.includes(i);
+                if (it.t) s += tx(cx, yy, it.t, h ? C.k : C.t, h); else if (it.c) s += tx(cx, yy, "C=O", C.k, 1);
+                else { const R = it.s == "R", Lf = it.s == "L"; s += `<g ${o.click ? `class="hot" data-i="${i}"` : ""}>${o.click ? `<rect x="${cx - 90}" y="${yy - 20}" width="180" height="40" fill="transparent" rx="8"/>` : ""}${L(cx - 28, yy, cx + 28, yy, 2)}${tx(cx + 46, yy, R ? "OH" : "H", R ? (h ? C.k : C.c) : C.m, R)}${tx(cx - 46, yy, Lf ? "HO" : "H", Lf ? (h ? C.k : C.c) : C.m, Lf)}</g>`; if (o.nums) s += `<text x="${cx - 88}" y="${yy + 4}" font-size="11" fill="${C.m}" class="ft">C${i + 1}</text>` }
+            });
+            if (o.arrow) { const [a, b] = o.arrow, x1 = cx + 62, x2 = cx + 32; s += `<path d="M${x1} ${y(a)} C ${x1 + 55} ${y(a)} ${x2 + 55} ${y(b)} ${x2} ${y(b)}" fill="none" stroke="${C.k}" stroke-width="2.5" marker-end="url(#${id})"/>` }
+            return s + "</svg>"
+        }
+        const R = s => ({ s }), CHO = { t: "CHO" }, CH2 = { t: "CH₂OH" }, KET = { c: 1 };
+        const FIS = { ga: [CHO, R("R"), CH2], gal: [CHO, R("L"), CH2], dha: [CH2, KET, CH2], rib: [CHO, R("R"), R("R"), R("R"), CH2], drib: [CHO, R("H"), R("R"), R("R"), CH2], glu: [CHO, R("R"), R("L"), R("R"), R("R"), CH2], gala: [CHO, R("R"), R("L"), R("L"), R("R"), CH2], fru: [CH2, KET, R("L"), R("R"), R("R"), CH2] };
+        function haw(k, an, o = {}) {
+            const ln = (x1, y1, x2, y2, w, c = C.l) => L(x1, y1, x2, y2, w, c), lb = (x, y, t, c = C.c) => T(x, y, t, c, 15, 1), num = (x, y, t) => T(x, y, t, C.m, 11);
+            const up = (x, y, t, c) => ln(x, y, x, y - 30, 2) + lb(x, y - 38, t, c), dn = (x, y, t, c) => ln(x, y, x, y + 30, 2) + lb(x, y + 50, t, c);
+            if (k == "p") {
+                return `<svg class="hw" data-an="${an}" viewBox="0 0 300 245"><polygon points="110,70 190,70 235,115 200,160 110,160 70,115" fill="${C.a}" fill-opacity=".14" stroke="none"/>
+${ln(70, 115, 110, 70, 2.5)}${ln(110, 70, 190, 70, 2.5)}${ln(190, 70, 235, 115, 2.5)}${ln(235, 115, 200, 160, 4.5)}${ln(200, 160, 110, 160, 8, C.a2)}${ln(110, 160, 70, 115, 4.5)}
+<circle cx="190" cy="70" r="12" fill="#050b1c" stroke="${C.a}" stroke-width="2"/>${T(190, 75, "O", "#fff", 14, 1)}
+${up(110, 70, "CH₂OH", C.t)}<g class="u1">${up(235, 115, "OH")}</g><g class="d1">${dn(235, 115, "OH")}</g>${dn(200, 160, "OH")}${up(110, 160, "OH")}${dn(70, 115, "OH")}
+${num(222, 110, "1")}${num(193, 148, "2")}${num(120, 148, "3")}${num(82, 112, "4")}${num(114, 86, "5")}${o.hot ? [["c1", 235, 115], ["o", 190, 70], ["c5", 110, 70], ["c2", 200, 160]].map(h => `<circle class="hs" data-h="${h[0]}" cx="${h[1]}" cy="${h[2]}" r="17"/>`).join("") : ""}</svg>`
+            }
+            return `<svg class="hw" viewBox="0 0 300 245"><polygon points="150,60 215,105 190,170 110,170 85,105" fill="${C.v}" fill-opacity=".16"/>${ln(85, 105, 150, 60, 2.5)}${ln(150, 60, 215, 105, 2.5)}${ln(215, 105, 190, 170, 4)}${ln(190, 170, 110, 170, 7, C.a2)}${ln(110, 170, 85, 105, 4)}
+<circle cx="150" cy="60" r="12" fill="#050b1c" stroke="${C.v}" stroke-width="2"/>${T(150, 65, "O", "#fff", 14, 1)}${up(85, 105, "CH₂OH", C.t)}${up(215, 105, "CH₂OH", C.t)}${ln(215, 105, 232, 135, 2)}${lb(246, 152, "OH")}${up(190, 170, "OH")}${dn(110, 170, "OH")}</svg>`
+        }
+        /* hero */
+        $("#hbg").innerHTML = [[60, 70, 34], [150, 150, 20], [250, 60, 26], [420, 120, 40], [560, 50, 22], [660, 160, 36], [740, 70, 28], [340, 40, 18], [520, 200, 26], [110, 250, 30], [700, 280, 22], [260, 300, 34]].map(([x, y, r], i) => `<polygon class="hx" style="animation-delay:-${i * 2}s;animation-duration:${6 + i % 4 * 2}s" points="${hxp(x, y, r)}"/>`).join("");
+        $("#orb").insertAdjacentHTML("afterbegin", haw("p", "a"));
+        /* nav */
+        const SEC = [["intro", "Introducció"], ["mono", "Monosacàrids"], ["este", "Estereoisomeria"], ["cicl", "Ciclació"], ["di", "Disacàrids"], ["poli", "Polisacàrids"], ["rep", "Repàs"], ["glos", "Glossari"]];
+        $("#lk").innerHTML = SEC.map(s => `<a href="#${s[0]}">${s[1]}</a>`).join("");
+        const lk = $$("#lk a"), lw = $("#lk");
+        const sp = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) lk.forEach(a => { const on = a.getAttribute("href") == "#" + e.target.id; a.classList.toggle("act", on); if (on) lw.scrollTo({ left: a.offsetLeft - lw.clientWidth / 2 + a.clientWidth / 2, behavior: "smooth" }) }) }), { rootMargin: "-40% 0px -55% 0px" });
+        $$("main section").forEach(x => sp.observe(x));
+        addEventListener("scroll", () => { const h = document.documentElement; $("#bar").style.width = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100 + "%" });
+        /* intro */
+        const fam = [["Monosacàrids", "1 unitat de sucre", "Els glúcids més senzills. No hidrolitzables (no es poden dividir en glúcids més petits).", C.c, H(0, 0, C.c)], ["Oligosacàrids", "2–10 unitats", "Units per enllaç glucosídic. Inclouen disacàrids, trisacàrids, etc.", C.a, ""], ["Polisacàrids", "> 10 unitats", "Moltes unitats unides per enllaç glucosídic. Funció de reserva o estructural.", C.v, ""], ["Glúcids associats", "Units a molècules no glucídiques", "Combinats amb altres biomolècules: glicoproteïnes, glicolípids, proteoglicans, etc.", C.k, ""]];
+        const ic = (k) => { const c = fam[k][3]; const hs = n => Array.from({ length: n }, (_, i) => H(30 + i * 44, 28, c, 17) + (i ? L(30 + i * 44 - 27, 28, 30 + i * 44 - 17, 28) : "")).join(""); return k == 0 ? H(40, 28, c, 19) : k == 1 ? hs(2) : k == 2 ? hs(5) + T(260, 34, "…", c, 22) : H(30, 28, c, 17) + L(47, 28, 80, 28) + `<rect x="80" y="14" width="64" height="28" rx="8" fill="${C.a}" fill-opacity=".3" stroke="${C.a}"/>` + T(112, 33, "Proteïna", C.t, 11) };
+        $("#fam").innerHTML = fam.map((f, i) => `<button class="tile"><svg viewBox="0 0 300 56">${ic(i)}</svg><b style="color:${f[3]}">${f[0]}</b><small>${f[1]}</small><span class="more">${f[2]}</span></button>`).join("");
+        $$(".tile").forEach(t => t.onclick = () => t.classList.toggle("open"));
+        function ns() { const n = +$("#ns").value, c = n == 1 ? C.c : n <= 10 ? C.a : C.v; $("#nsv").innerHTML = Array.from({ length: n }, (_, i) => H(30 + i * 48, 30, c, 19) + (i ? L(30 + i * 48 - 29, 30, 30 + i * 48 - 19, 30, 2) : "")).join(""); $("#nst").style.color = c; $("#nst").textContent = n + (n == 1 ? " unitat" : " unitats") + " → " + (n == 1 ? "Monosacàrid" : n <= 10 ? (n == 2 ? "Oligosacàrid (disacàrid)" : "Oligosacàrid") : "Polisacàrid") }
+        $("#ns").oninput = ns; ns();
+        /* monosacarids */
+        let nk = 0; const NM = ["triosa", "tetrosa", "pentosa", "hexosa", "heptosa"];
+        function nb() {
+            const n = +$("#nc").value, p = nk ? 2 : 1, x0 = 210 - (n - 1) * 28; let s = ""; for (let i = 0; i < n; i++) { const x = x0 + i * 56, on = i + 1 == p; s += (i ? L(x - 56 + 17, 80, x - 17, 80, 2.5) : "") + `<circle cx="${x}" cy="80" r="17" fill="${on ? C.k : C.a}" fill-opacity="${on ? .35 : .25}" stroke="${on ? C.k : C.a}" stroke-width="2"/>` + T(x, 85, "C" + (i + 1), "#fff", 12, 1) }
+            const x = x0 + (p - 1) * 56; s += `<line x1="${x - 3}" y1="63" x2="${x - 3}" y2="38" stroke="${C.k}" stroke-width="2.5"/><line x1="${x + 3}" y1="63" x2="${x + 3}" y2="38" stroke="${C.k}" stroke-width="2.5"/><circle cx="${x}" cy="26" r="13" fill="#050b1c" stroke="${C.k}" stroke-width="2"/>` + T(x, 31, "O", C.k, 13, 1) + T(210, 115, nk ? "carbonil interior (cetona)" : "carbonil terminal (aldehid)", C.m, 12);
+            $("#nsc").innerHTML = s; $("#nnm").textContent = (nk ? "ceto" : "aldo") + NM[n - 3]
+        }
+        tabs($("#ntb"), ["Aldosa", "Cetosa"], i => { nk = i; nb() }); $("#nc").oninput = nb;
+        const GAL = [["Triosa", [["D-gliceraldehid", "aldotriosa", "ga", ""], ["Dihidroxiacetona", "cetotriosa", "dha", ""]]], ["Pentosa", [["Ribosa", "aldopentosa", "rib", "Forma part de l’RNA"], ["Desoxiribosa", "aldopentosa", "drib", "Forma part del DNA"]]], ["Hexosa", [["Glucosa", "aldohexosa", "glu", ""], ["Galactosa", "aldohexosa", "gala", ""], ["Fructosa", "cetohexosa", "fru", ""]]]];
+        tabs($("#gtb"), GAL.map(g => g[0] + "s"), i => { $("#gal").innerHTML = GAL[i][1].map(m => `<div class="cd">${fis(FIS[m[2]])}<h4>${m[0]}</h4><span class="chip k1">${m[1]}</span>${m[3] ? `<span class="chip k4">${m[3]}</span>` : ""}</div>`).join("") });
+        /* estereo */
+        $("#mir").innerHTML = fis(FIS.ga) + `<div style="text-align:center;color:var(--mu);font-size:11px"><div style="border-left:2px dashed ${C.a2};height:120px;margin:0 auto 4px;width:0"></div>mirall</div>` + fis(FIS.gal) + "";
+        $("#mir").insertAdjacentHTML("beforeend", "");
+        const LS = ["R", "L", "R", "R"];
+        function lab() {
+            $("#lab").innerHTML = fis([CHO, ...LS.map(R), CH2], { click: 1, nums: 1, hl: [4], w: 210 }); $$("#lab .hot").forEach(g => g.onclick = () => { const i = +g.dataset.i - 1; LS[i] = LS[i] == "R" ? "L" : "R"; lab() });
+            const k = LS.join(""), d = LS[3] == "R" ? "D" : "L", N = { RLRR: ["D-glucosa", "L’aldohexosa més coneguda."], RLLR: ["D-galactosa", "Només difereix de la glucosa en el C4: estereoisòmer, NO enantiòmer."], LRLL: ["L-glucosa", "Imatge especular de la D-glucosa: és el seu enantiòmer."], LRRL: ["L-galactosa", "Enantiòmer de la D-galactosa."] }[k] || ["Un altre estereoisòmer", "Mateixa fórmula C₆H₁₂O₆ però no és ni glucosa ni galactosa."];
+            $("#labr").innerHTML = `<div class="big">${N[0]}</div><span class="chip k${d == "D" ? 1 : 3}">Forma ${d} (–OH del C5 a ${d == "D" ? "la dreta" : "l’esquerra"})</span><p style="color:#c9d9f5">${N[1]}</p><small style="color:var(--mu)">4 C* → 2⁴ = 16 estereoisòmers possibles</small>`
+        }
+        $("#lmir").onclick = () => { LS.forEach((s, i) => LS[i] = s == "R" ? "L" : "R"); lab() }; $("#lrst").onclick = () => { LS.splice(0, 4, "R", "L", "R", "R"); lab() }; lab();
+        $("#cmp").innerHTML = `<div style="text-align:center">${fis(FIS.glu, { hl: [3] })}<b>D-glucosa</b></div><div style="text-align:center">${fis(FIS.gala, { hl: [3] })}<b>D-galactosa</b></div>`;
+        /* cicl */
+        const CY = [{ n: "D-glucosa (aldosa)", f: FIS.glu, hl: [0, 4], ar: [4, 0], k: "p", ring: "Glucopiranosa", tx: ["Forma lineal: carbonil (C1) en un extrem i –OH al C5.", "L’–OH del C5 ataca el carbonil del C1 (reacció intramolecular).", "Es forma l’hemiacetal. El C1 passa a ser un carboni anomèric (nou centre quiral).", "Forma cíclica final: glucopiranosa, anell de 6 membres (5 C + 1 O)."] }, { n: "D-fructosa (cetosa)", f: FIS.fru, hl: [1, 4], ar: [4, 1], k: "f", ring: "Fructofuranosa", tx: ["Forma lineal: carbonil (C2) a l’interior i –OH al C5.", "L’–OH del C5 ataca el carbonil del C2.", "Es forma l’hemicetal. El C2 passa a ser un carboni anomèric.", "Forma cíclica final: fructofuranosa, anell de 5 membres (4 C + 1 O)."] }];
+        let cy = 0, cs = 0; const TT = ["Forma lineal", "Reacció intramolecular", "Formació de l’hemiacetal / hemicetal", "Forma cíclica"];
+        function cyc() {
+            const d = CY[cy]; $("#cst").innerHTML = [0, 1, 2, 3].map(i => `<i class="${i <= cs ? "on" : ""}" data-i="${i}"></i>`).join(""); $$("#cst i").forEach(e => e.onclick = () => { cs = +e.dataset.i; cyc() });
+            $("#cvis").innerHTML = cs < 2 ? fis(d.f, { hl: d.hl, arrow: cs == 1 ? d.ar : null }) : haw(d.k, cs == 2 ? "x" : "a"); $("#ctit").textContent = (cs + 1) + ". " + (cs == 3 ? d.ring : TT[cs]); $("#ctx").textContent = d.tx[cs]; $("#cpv").disabled = cs == 0; $("#cnx").disabled = cs == 3
+        }
+        tabs($("#ctb"), ["Aldosa: D-glucosa", "Cetosa: D-fructosa"], i => { cy = i; cs = 0; cyc() }); $("#cpv").onclick = () => { cs--; cyc() }; $("#cnx").onclick = () => { cs++; cyc() };
+        $("#pyr").innerHTML = haw("p", "a"); $("#fur").innerHTML = haw("f", "a");
+        tabs($("#atb"), ["α (alfa)", "β (beta)"], i => { $("#anr").innerHTML = haw("p", i ? "b" : "a", { hot: 1 }); const HT = { c1: "C1 · carboni anomèric: prové del grup carbonil (C=O) i és un nou centre quiral. Aquí l’–OH pot ser α o β.", o: "Oxigen de l’anell: ve de l’–OH del C5, que ha atacat el carbonil (enllaç hemiacetal).", c5: "C5: el seu CH₂OH (C6) queda cap amunt en la sèrie D.", c2: "C2, C3 i C4: els –OH conserven l’orientació de la forma lineal (dreta a Fischer → avall; esquerra → amunt)." }; $$("#anr .hs").forEach(h => h.onclick = () => $("#hst").textContent = HT[h.dataset.h]); $("#atx").innerHTML = i ? "<b>β-D-glucopiranosa</b><br>–OH anomèric cap <b>amunt</b> (cis al CH₂OH)." : "<b>α-D-glucopiranosa</b><br>–OH anomèric cap <b>avall</b> (trans al CH₂OH)." });
+        /* disacarids */
+        const fm = $("#fm"); fm.innerHTML = H(110, 70, C.c, 42, 6, "Glucosa") + `<g class="oh">${T(168, 64, "OH", C.k, 15, 1)}${T(252, 64, "HO", C.k, 15, 1)}</g><g class="r2">${H(310, 70, C.a, 42, 6, "Glucosa")}</g><g class="ob">${L(152, 70, 182, 70, 3)}${L(198, 70, 228, 70, 3)}<circle cx="190" cy="70" r="9" fill="${C.k}"/>${T(190, 74, "O", "#fff", 11, 1)}</g><g class="w"><circle cx="190" cy="140" r="18" fill="${C.c}" fill-opacity=".25" stroke="${C.c}"/>${T(190, 145, "H₂O", "#fff", 12, 1)}</g>${T(110, 135, "Monosacàrid 1", C.m)}${T(310, 135, "Monosacàrid 2", C.m)}`;
+        let fd = 0; $("#fbt").onclick = () => { fd = !fd; fm.classList.toggle("done", fd); $("#fbt").textContent = fd ? "Separar-los" : "Formar l’enllaç" };
+        const DI = [["Maltosa", "Glucosa", "Glucosa", "α (1→4)", 1, 4, 0], ["Lactosa", "Galactosa", "Glucosa", "β (1→4)", 1, 4, 0], ["Sacarosa", "Glucosa", "Fructosa", "α (1→2) β", 1, 2, 1], ["Cel·lobiosa", "Glucosa", "Glucosa", "β (1→4)", 1, 4, 0]], CO = { Glucosa: C.a, Galactosa: C.c, Fructosa: C.v };
+        tabs($("#dtb"), DI.map(d => d[0]), i => {
+            const [n, a, b, l, c1, c2, di] = DI[i];
+            $("#dpn").innerHTML = `<div><svg viewBox="0 0 420 170" style="width:100%">${H(105, 70, CO[a], 44, a == "Fructosa" ? 5 : 6, a)}${H(315, 70, CO[b], 44, b == "Fructosa" ? 5 : 6, b)}${L(149, 70, 200, 70, 3)}${L(220, 70, 271, 70, 3)}<circle cx="210" cy="70" r="10" fill="${C.k}"/>${T(210, 75, "O", "#fff", 12, 1)}${T(210, 40, l, "#fff", 15, 1)}${T(166, 56, c1, C.k, 13, 1)}${T(256, 56, c2, C.k, 13, 1)}${T(210, 150, di ? "Dicarbonílic: cap C anomèric lliure" : "Monocarbonílic: 1 C anomèric lliure", C.m, 12)}</svg><h3 style="margin:0">${n}</h3><span class="chip k1">${a} + ${b}</span><span class="chip k3">Enllaç ${l}</span><span class="chip ${di ? "k4" : "k2"}">${di ? "No reductor" : "Poder reductor"}</span></div>
+<div style="text-align:center"><svg class="tube" id="tb" viewBox="0 0 160 190" style="width:150px"><rect x="55" y="20" width="50" height="150" rx="25" fill="#0a1630" stroke="${C.l}" stroke-width="3"/><clipPath id="tc"><rect x="58" y="23" width="44" height="144" rx="22"/></clipPath><g clip-path="url(#tc)"><rect class="liq" x="55" y="80" width="50" height="95"/><rect class="pp" x="55" y="150" width="50" height="25" fill="#a8301a"/></g><circle class="bub" cx="72" cy="140" r="4" fill="#fff"/><circle class="bub" cx="88" cy="150" r="3" fill="#fff" style="animation-delay:.4s"/><circle class="bub" cx="80" cy="130" r="3" fill="#fff" style="animation-delay:.7s"/></svg><div><button class="btn p" id="fh">Afegir Fehling i escalfar</button></div><p class="big" id="fr" style="margin:6px 0 0;font-size:18px"> </p></div>`;
+            $("#fh").onclick = () => { const t = $("#tb"); t.classList.add("heat"); setTimeout(() => t.classList.toggle("red", !di), 500); $("#fr").style.color = di ? C.a2 : C.k; $("#fr").textContent = di ? "Fehling – (es manté blau)" : "Fehling + (precipitat vermell)" }
+        });
+        /* poli */
+        const hr = (y, xs, c, r = 18) => xs.map((x, i) => H(x, y, c, r) + (i ? L(xs[i - 1] + r * .87, y, x - r * .87, y, 2.5) + `<circle cx="${(x + xs[i - 1]) / 2}" cy="${y}" r="3.5" fill="${C.k}"/>` : "")).join("");
+        const X = [50, 105, 160, 215, 270], PS = {
+            mid: () => `<svg viewBox="0 0 400 230" style="width:100%;max-width:520px">${T(14, 22, "Amilosa · lineal, α (1→4)", C.a2, 13, 1).replace('text-anchor="middle"', 'text-anchor="start"')}${hr(55, X, C.a)}${T(320, 60, "…", C.a, 22)}${T(14, 115, "Amilopectina · ramificada", C.c, 13, 1).replace('text-anchor="middle"', 'text-anchor="start"')}${hr(150, X, C.c)}${L(160, 168, 160, 188, 2.5)}<circle cx="160" cy="178" r="3.5" fill="${C.k}"/>${hr(205, [160, 215, 270], C.c)}${T(320, 155, "…", C.c, 22)}${T(240, 181, "ramificació α (1→6)", C.k, 12)}</svg>`,
+            gli: () => `<svg viewBox="0 0 400 230" style="width:100%;max-width:520px">${hr(40, X, C.c)}${[105, 160, 215].map(x => L(x, 58, x, 86, 2.5) + hr(104, [x], C.a) + L(x, 122, x, 150, 2.5) + H(x, 168, C.a, 18)).join("")}${T(320, 45, "…", C.c, 22)}${T(335, 125, "molt ramificat", C.k, 13, 1)}</svg>`,
+            cel: () => `<svg viewBox="0 0 400 190" style="width:100%;max-width:520px">${T(14, 22, "β (1→4) · cadenes lineals", C.a2, 13, 1).replace('text-anchor="middle"', 'text-anchor="start"')}${hr(60, X, C.a)}${hr(140, X, C.a)}${X.map(x => L(x, 80, x, 120, 2, C.c, 1)).join("")}${T(340, 105, "ponts d’H", C.c, 13, 1)}${T(320, 64, "…", C.a, 22)}${T(320, 144, "…", C.a, 22)}</svg>`,
+            het: () => { const cs = [C.c, C.k, C.a, C.v], ch = n => `<svg viewBox="0 0 400 44" style="width:100%">${Array.from({ length: n }, (_, i) => H(24 + i * 52, 22, cs[(i * 3 + i % 2) % 4], 17) + (i ? L(24 + i * 52 - 26, 22, 24 + i * 52 - 17, 22) : "")).join("")}</svg>`; return [["Pectina", "Diversos monosacàrids (ex.: àcid galacturònic). Present a la paret cel·lular vegetal."], ["Agar-agar", "Diversos monosacàrids. Present en algues."], ["Goma aràbiga", "Diversos monosacàrids. Exsudat de diverses plantes."]].map((p, i) => `<div style="margin:10px 0"><b>${p[0]}</b>${ch(7)}<small style="color:var(--mu)">${p[1]}</small></div>`).join("") }
+        };
+        const PI = [["Midó", "Reserva vegetal", "mid", ["Format per glucosa", "S’acumula en grànuls", "Dos polímers: amilosa (helicoidal) i amilopectina"], "k3"], ["Glicogen", "Reserva animal", "gli", ["Format per glucosa", "Estructura molt ramificada", "S’acumula sobretot en fetge i músculs"], "k2"], ["Cel·lulosa", "Estructural vegetal", "cel", ["Format per glucosa", "Enllaços β (1→4), cadena lineal", "Ponts d’hidrogen entre cadenes → fibres resistents"], "k1"], ["Heteropolisacàrids", "Diversos monosacàrids", "het", ["Pectina", "Agar-agar", "Goma aràbiga"], "k4"]];
+        tabs($("#ptb"), PI.map(p => p[0]), i => { const p = PI[i]; $("#ppn").innerHTML = `<div class="g2"><div>${PS[p[2]]()}</div><div><span class="chip ${p[4]}">${p[1]}</span><ul style="padding-left:20px;color:#c9d9f5">${p[3].map(f => `<li>${f}</li>`).join("")}</ul></div></div>` });
+        tabs($("#abt"), ["Enllaç α (1→4)", "Enllaç β (1→4)"], i => {
+            const hx = Array.from({ length: 11 }, (_, j) => { const a = j * .75, s = 1 + .25 * Math.cos(a); return H(36 + j * 33, 70 + 42 * Math.sin(a), C.a, 13 * s) }).join("");
+            $("#abv").innerHTML = i ? hr(45, [50, 100, 150, 200, 250, 300, 350], C.c, 18) + hr(105, [50, 100, 150, 200, 250, 300, 350], C.c, 18) + [50, 100, 150, 200, 250, 300, 350].map(x => L(x, 65, x, 85, 2, C.k, 1)).join("") : hx;
+            $("#abx").textContent = i ? "β: cadenes rectes que s’alineen i s’uneixen per ponts d’hidrogen → fibres rígides (cel·lulosa: estructural)." : "α: la cadena es corba en hèlix, compacta i fàcil d’hidrolitzar (midó, glicogen: reserva)."
+        });
+        /* joc */
+        const GI = [["Glucosa", "m"], ["Fructosa", "m"], ["Ribosa", "m"], ["Maltosa", "o"], ["Sacarosa", "o"], ["Lactosa", "o"], ["Midó", "p"], ["Glicogen", "p"], ["Cel·lulosa", "p"], ["Pectina", "p"], ["Glicoproteïna", "a"], ["Glicolípid", "a"]], GB = { m: "Monosacàrid", o: "Oligosacàrid", p: "Polisacàrid", a: "Glúcid associat" };
+        let sel = null, ok = 0, er = 0;
+        function game() {
+            sel = null; ok = er = 0; $("#gfb").textContent = ""; $("#pool").innerHTML = [...GI].sort(() => Math.random() - .5).map(g => `<button class="it" data-k="${g[1]}">${g[0]}</button>`).join("");
+            $("#bins").innerHTML = Object.entries(GB).map(([k, v]) => `<div class="bin" data-k="${k}"><h4>${v}</h4></div>`).join("");
+            $$("#pool .it").forEach(b => b.onclick = () => { $$("#pool .it").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); sel = b });
+            $$(".bin").forEach(bn => bn.onclick = () => { if (!sel) return; if (sel.dataset.k == bn.dataset.k) { sel.onclick = null; bn.appendChild(sel); sel = null; ok++; if (ok == GI.length) $("#gfb").textContent = "Perfecte! " + er + " errors." } else { er++; bn.classList.add("shake"); setTimeout(() => bn.classList.remove("shake"), 300); $("#gfb").textContent = "Aquest no. Prova una altra família." } })
+        }
+        $("#grs").onclick = game; game();
+        /* quiz */
+        const Q = [["Quins elements formen els glúcids?", ["C, H i O", "C, H i N", "C, O i P", "C, H, O i S"], 0, "Biomolècules formades per C, H i O."], ["Quin és el glúcid més senzill, que no es pot hidrolitzar?", ["Oligosacàrid", "Monosacàrid", "Polisacàrid", "Glúcid associat"], 1, "Els monosacàrids tenen 1 unitat de sucre."], ["La fructosa és una…", ["aldohexosa", "aldopentosa", "cetohexosa", "cetotriosa"], 2, "Carbonil interior (cetosa) i 6 carbonis."], ["Monosacàrid amb carbonil terminal i 5 carbonis:", ["Cetopentosa", "Aldohexosa", "Aldopentosa", "Aldotriosa"], 2, "Aldosa + pentosa = aldopentosa (ex.: ribosa)."], ["Quina pentosa forma part del DNA?", ["Ribosa", "Desoxiribosa", "Glucosa", "Galactosa"], 1, "La desoxiribosa és al DNA; la ribosa a l’RNA."], ["Una molècula és de la sèrie D quan, en Fischer, l’–OH del C* més allunyat del carbonil és a…", ["l’esquerra", "dalt", "la dreta", "baix"], 2, "–OH a la dreta → D; a l’esquerra → L."], ["D-glucosa i D-galactosa són…", ["Enantiòmers", "Estereoisòmers que no són enantiòmers", "La mateixa molècula", "Isòmers de funció"], 1, "Difereixen en un –OH (C4) però no són imatges especulars."], ["Quin –OH reacciona habitualment en la ciclació de les hexoses?", ["El del C2", "El del C3", "El del C5", "El del C6"], 2, "L’–OH del C5 ataca el carbonil."], ["La glucosa cíclica (anell de 6 membres) s’anomena…", ["Glucofuranosa", "Glucopiranosa", "Glucotriosa", "Glucosídica"], 1, "Anell de 6 = piranosa; de 5 = furanosa."], ["Quin és el carboni anomèric de la fructosa?", ["C1", "C2", "C5", "C6"], 1, "En cetoses és el C2; en aldoses, el C1."], ["En l’α-D-glucopiranosa, l’–OH anomèric està…", ["cap amunt (cis al CH₂OH)", "cap avall (trans al CH₂OH)", "a l’esquerra", "absent"], 1, "α: cap avall; β: cap amunt."], ["Quin disacàrid és NO reductor?", ["Maltosa", "Lactosa", "Sacarosa", "Cel·lobiosa"], 2, "Enllaç dicarbonílic: cap C anomèric lliure."], ["La lactosa està formada per…", ["Glucosa + Glucosa", "Glucosa + Fructosa", "Galactosa + Glucosa", "Fructosa + Galactosa"], 2, "Enllaç β (1→4)."], ["Quin enllaç té la maltosa?", ["β (1→4)", "α (1→4)", "α (1→2) β", "α (1→6)"], 1, "La cel·lobiosa té β (1→4) amb la mateixa composició."], ["Reserva energètica animal:", ["Midó", "Cel·lulosa", "Glicogen", "Pectina"], 2, "S’acumula en fetge i músculs."], ["Fibres resistents amb enllaços β (1→4):", ["Amilosa", "Amilopectina", "Glicogen", "Cel·lulosa"], 3, "Cadenes lineals unides per ponts d’hidrogen."], ["Diferència entre amilosa i amilopectina:", ["L’amilosa és ramificada", "L’amilopectina és ramificada", "Cap", "L’amilopectina és de β-glucosa"], 1, "L’amilopectina té ramificacions α (1→6)."], ["Quin és un heteropolisacàrid?", ["Midó", "Glicogen", "Cel·lulosa", "Pectina"], 3, "També agar-agar i goma aràbiga."]];
+        let ord = [], qi = 0, sc = 0, wr = [];
+        function qstart(ids) { ord = ids; qi = 0; sc = 0; wr = []; qs() }
+        function qs() {
+            const z = $("#qz"); if (qi >= ord.length) { const pc = Math.round(sc / ord.length * 100), cir = 2 * Math.PI * 54; z.innerHTML = `<h3>Resultat del test</h3><div style="text-align:center"><svg viewBox="0 0 140 140" width="150"><circle cx="70" cy="70" r="54" fill="none" stroke="#10224a" stroke-width="12"/><circle cx="70" cy="70" r="54" fill="none" stroke="${C.c}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${cir * pc / 100} ${cir}" transform="rotate(-90 70 70)"/><text x="70" y="78" text-anchor="middle" fill="#fff" font-size="26" font-weight="800">${pc}%</text></svg><p class="big">${sc} / ${ord.length}</p><p>${pc == 100 ? "Perfecte!" : pc >= 70 ? "Molt bé!" : "Repassa la teoria i torna-ho a provar."}</p><button class="btn p" id="qa">Repeteix tot</button> ${wr.length ? `<button class="btn" id="qw">Repassa les ${wr.length} errades</button>` : ""}</div>`; $("#qa").onclick = () => qstart(Q.map((_, i) => i)); if (wr.length) $("#qw").onclick = () => qstart([...wr]); return }
+            const i = ord[qi], q = Q[i], o = q[1].map((t, j) => ({ t, ok: j == q[2] })).sort(() => Math.random() - .5);
+            z.innerHTML = `<div style="display:flex;justify-content:space-between;color:var(--mu);font-size:13px"><span>Pregunta ${qi + 1} / ${ord.length}</span><span>Encerts: ${sc}</span></div><div class="pb"><i style="width:${qi / ord.length * 100}%"></i></div><h3 style="margin:16px 0 4px">${q[0]}</h3><div id="qo"></div><p class="fb" id="qf"></p><button class="btn p" id="qn" style="display:none">Següent →</button>`;
+            o.forEach(x => { const b = document.createElement("button"); b.className = "opt"; b.textContent = x.t; b.onclick = () => { $$("#qo .opt").forEach((e, k) => { e.disabled = true; if (o[k].ok) e.classList.add("ok") }); if (x.ok) sc++; else { b.classList.add("ko"); wr.push(i) } $("#qf").textContent = (x.ok ? "Correcte! " : "Ep! ") + q[3]; $("#qn").style.display = "inline-block"; $("#qn").onclick = () => { qi++; qs() } }; $("#qo").appendChild(b) })
+        }
+        qstart(Q.map((_, i) => i));
+        /* glossari */
+        const G = [["Aldosa", "Monosacàrid amb grup carbonil terminal (aldehid)."], ["Amilopectina", "Component ramificat del midó: enllaços α (1→4) i ramificacions α (1→6)."], ["Amilosa", "Component lineal i helicoidal del midó: enllaços α (1→4)."], ["Anòmers α i β", "Isòmers que difereixen en la posició de l’–OH del carboni anomèric."], ["Carboni anomèric", "El que provenia del grup carbonil; nou centre quiral en ciclar (C1 en aldoses, C2 en cetoses)."], ["Carboni asimètric (C*)", "Carboni unit a 4 grups diferents."], ["Cetosa", "Monosacàrid amb grup carbonil interior (cetona)."], ["Ciclació", "Reacció intramolecular que forma hemiacetals o hemicetals cíclics."], ["Condensació", "Unió de dues molècules amb pèrdua d’aigua."], ["Dicarbonílic", "Enllaç entre els dos carbonis anomèrics; disacàrid no reductor."], ["Disacàrid", "Glúcid format per dos monosacàrids."], ["Enantiòmers", "Estereoisòmers que són imatges especulars no superposables."], ["Enllaç O-glucosídic", "Uneix monosacàrids amb alliberament d’H₂O."], ["Estereoisòmers", "Mateixa fórmula i connectivitat, diferent disposició espacial."], ["Fehling", "Prova que detecta el poder reductor (+ si hi ha C anomèric lliure)."], ["Furanosa", "Anell cíclic de 5 membres (4 C + 1 O)."], ["Glúcids associats", "Units a molècules no glucídiques (glicoproteïnes, glicolípids, proteoglicans)."], ["Heteropolisacàrid", "Format per dos o més monosacàrids diferents (pectina, agar-agar, goma aràbiga)."], ["Hemiacetal / hemicetal", "Forma cíclica d’una aldosa / cetosa."], ["Homopolisacàrid", "Format per un únic tipus de monosacàrid (midó, glicogen, cel·lulosa)."], ["Hidrolitzable", "Que es pot dividir en molècules més petites per addició d’aigua."], ["Monocarbonílic", "Enllaç amb un C anomèric lliure; disacàrid reductor."], ["Monosacàrid", "Glúcid més senzill, d’1 unitat, no hidrolitzable (3–7 C)."], ["Oligosacàrid", "Glúcid de 2 a 10 unitats de sucre."], ["Piranosa", "Anell cíclic de 6 membres (5 C + 1 O)."], ["Poder reductor", "Capacitat de reduir altres substàncies gràcies al carbonil anomèric lliure."], ["Polisacàrid", "Macromolècula de més de 10 unitats de monosacàrid."], ["Projecció de Fischer", "Representació lineal usada per assignar les formes D i L."], ["Projecció de Haworth", "Representació de les formes cícliques."]];
+        const rg = f => $("#gl").innerHTML = G.filter(g => (g[0] + g[1]).toLowerCase().includes(f)).map(g => `<div><b>${g[0]}</b>${g[1]}</div>`).join("") || "<div>Cap resultat.</div>"; rg(""); $("#gsr").oninput = e => rg(e.target.value.toLowerCase());
+
+        /* mapa */
+        const MP = [["Monosacàrids", C.c, "mono", ["1 unitat · 3–7 C", "Aldoses / cetoses", "Glucosa, fructosa, ribosa…"]], ["Oligosacàrids", C.a, "di", ["2–10 unitats", "Disacàrids", "Maltosa, lactosa, sacarosa"]], ["Polisacàrids", C.v, "poli", ["> 10 unitats", "Homo / hetero", "Midó, glicogen, cel·lulosa"]], ["Glúcids associats", C.k, "fam", ["Units a no glúcids", "Glicoproteïnes", "Glicolípids, proteoglicans"]]];
+        $("#map").innerHTML = `<rect x="360" y="8" width="180" height="52" rx="16" fill="${C.a}" fill-opacity=".3" stroke="${C.a2}" stroke-width="2.5"/>${T(450, 41, "GLÚCIDS", "#fff", 22, 1)}` + MP.map((m, i) => { const x = 115 + i * 223; return `<path class="fl" d="M450 60 C450 105 ${x} 95 ${x} 135" fill="none" stroke="${m[1]}" stroke-width="2.5" stroke-dasharray="6 6"/><path d="M${x} 183 V320" stroke="${m[1]}" stroke-opacity=".5" stroke-width="2"/><g class="nd" data-t="${m[2]}"><rect x="${x - 95}" y="135" width="190" height="48" rx="14" fill="${m[1]}" fill-opacity=".22" stroke="${m[1]}" stroke-width="2"/>${T(x, 165, m[0], "#fff", 16, 1)}</g>` + m[3].map((t, j) => `<rect x="${x - 92}" y="${199 + j * 52}" width="184" height="36" rx="10" fill="#0a1630" stroke="${m[1]}" stroke-opacity=".6"/>${T(x, 222 + j * 52, t, "#cfe0ff", 12.5)}`).join("") }).join("");
+        $$("#map .nd").forEach(g => g.onclick = () => $("#" + g.dataset.t).scrollIntoView({ behavior: "smooth" }));
+        /* anell */
+        const RL = [[100, 30], [100, 75], [100, 120], [100, 165], [100, 210], [100, 262]], RR = [[223, 108], [223, 192], [150, 235], [77, 192], [77, 108], [28, 74]], OL = [165, 210], OR = [150, 65];
+        function rgf(t) {
+            const m = (a, b) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t], P = RL.map((p, i) => m(p, RR[i])), O = m(OL, OR), bd = (a, b, c = C.l, w = 3, o = 1) => `<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${c}" stroke-width="${w}" opacity="${o}"/>`, cl = Math.max(0, Math.min(1, (t - .8) / .2));
+            let s2 = [0, 1, 2, 3].map(i => bd(P[i], P[i + 1])).join("") + bd(P[4], P[5]) + bd(P[4], O, C.c) + bd(O, P[0], C.k, 4, cl);
+            P.forEach((p, i) => { const a = i == 0; s2 += `<circle cx="${p[0]}" cy="${p[1]}" r="15" fill="${a ? C.k : C.a}" fill-opacity=".3" stroke="${a ? C.k : C.a}" stroke-width="2"/>` + T(p[0], p[1] + 4, "C" + (i + 1), "#fff", 11, 1) });
+            s2 += `<circle cx="${O[0]}" cy="${O[1]}" r="14" fill="#050b1c" stroke="${C.c}" stroke-width="2"/>` + T(O[0], O[1] + 5, "O", C.c, 14, 1);
+            $("#rgs").innerHTML = s2; $("#rgt").textContent = t < .05 ? "Forma lineal (aldosa)" : t < .8 ? "L’–OH del C5 s’acosta al carbonil del C1…" : t < .97 ? "Es forma l’enllaç O–C1…" : "Anell tancat: glucopiranosa (5 C + 1 O). El C1 és ara el carboni anomèric."
+        }
+        let ra; $("#rg").oninput = e => { cancelAnimationFrame(ra); rgf(e.target.value / 100) }; $("#rgp").onclick = () => { cancelAnimationFrame(ra); const t0 = performance.now(), f = n => { const k = Math.min(1, (n - t0) / 2800); $("#rg").value = k * 100; rgf(k); if (k < 1) ra = requestAnimationFrame(f) }; ra = requestAnimationFrame(f) }; rgf(0);
+        /* constructor disacarid */
+        const B = [0, 0, 0], MN = ["Glucosa", "Galactosa", "Fructosa"], BD = ["α (1→4)", "β (1→4)", "α (1→2) β"], KN = { "0-0-0": ["Maltosa", 0], "1-0-1": ["Lactosa", 0], "0-2-2": ["Sacarosa", 1], "0-0-1": ["Cel·lobiosa", 0] };
+        function bl() {
+            const [a, b, d] = B, k = KN[a + "-" + b + "-" + d], A = MN[a], Bn = MN[b], e = d == 2 ? "2" : "4";
+            $("#bld").innerHTML = `<div class="g2"><svg viewBox="0 0 420 150" style="width:100%">${H(105, 70, CO[A], 44, a == 2 ? 5 : 6, A)}${H(315, 70, CO[Bn], 44, b == 2 ? 5 : 6, Bn)}${L(149, 70, 200, 70, 3)}${L(220, 70, 271, 70, 3)}<circle cx="210" cy="70" r="10" fill="${C.k}"/>${T(210, 75, "O", "#fff", 12, 1)}${T(210, 40, BD[d], "#fff", 15, 1)}${T(166, 56, "1", C.k, 13, 1)}${T(256, 56, e, C.k, 13, 1)}</svg><div>${k ? `<div class="big">${k[0]}</div><span class="chip ${k[1] ? "k4" : "k2"}">${k[1] ? "Dicarbonílic · no reductor" : "Monocarbonílic · poder reductor"}</span>` : `<div class="big" style="color:var(--k)">Cap disacàrid estudiat</div><p style="color:#c9d9f5">Aquesta combinació no correspon a maltosa, lactosa, sacarosa ni cel·lobiosa. Prova’n una altra!</p>`}</div></div>`
+        }
+        tabs($("#bt1"), MN.map(m => "1r: " + m), i => { B[0] = i; bl() }); tabs($("#bt2"), MN.map(m => "2n: " + m), i => { B[1] = i; bl() }); tabs($("#bt3"), BD.map(m => "Enllaç " + m), i => { B[2] = i; bl() });
+        /* targetes */
+        function fc() { $("#fcs").innerHTML = [...G].sort(() => Math.random() - .5).slice(0, 8).map(g => `<div class="fc"><i><b>${g[0]}</b><span>${g[1]}</span></i></div>`).join(""); $$(".fc").forEach(e => e.onclick = () => e.classList.toggle("f")) }
+        $("#fcb").onclick = fc; fc();
+        /* animacions */
+        if ("IntersectionObserver" in window) { const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); rv.unobserve(e.target) } }), { threshold: .05 }); $$("section>*").forEach(e => { e.classList.add("rv"); rv.observe(e) }) }
+        $$("[data-n]").forEach(b => { const n = +b.dataset.n; let i = 0; const t = setInterval(() => { b.textContent = ++i; if (i >= n) clearInterval(t) }, 700 / n) });
+    </script>
+</body>
+
+</html>
