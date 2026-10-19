@@ -1,8 +1,3 @@
-/*
-CONFIGURACIÓN: edita únicamente esta lista para añadir o cambiar materias y enlaces.
-Cada tema enlaza a una página que ya existe. No hay editor ni almacenamiento en el navegador.
-Usa rutas relativas (ej. "./biologia/genetica/index.html") o URLs completas.
-*/
 const MATERIAS = [
     {
         id: "Bio y Geo",
@@ -18,7 +13,7 @@ const MATERIAS = [
         ],
         temas: [
             { nombre: "Composición de la materia", url: "#", etiqueta: "Bioquímica" },
-            { nombre: "Agua y sales minerales", url: "Páginas/Agua y sales minerales.html", etiqueta: "Bioquímica" },
+            { nombre: "Agua y sales minerales", url: "Paginas/Agua y sales minerales.html", etiqueta: "Bioquímica" },
             { nombre: "", url: "#", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
         ]
@@ -36,7 +31,7 @@ const MATERIAS = [
             ["Salud", "pink"],
         ],
         temas: [
-            { nombre: "Glúcidos", url: "Páginas/Glúcidos.html", etiqueta: "Bioquímica" },
+            { nombre: "Glúcidos", url: "Paginas/Glúcidos.html", etiqueta: "Bioquímica" },
             { nombre: "Lípidos", url: "#", etiqueta: "Bioquímica" },
             { nombre: "Proteínas", url: "#", etiqueta: "Bioquímica" },
             { nombre: "Ácidos nucleicos", url: "#", etiqueta: "Bioquímica" },
@@ -56,7 +51,7 @@ const MATERIAS = [
             ["Sistemas", "violet"],
         ],
         temas: [
-            { nombre: "Tabla periódica", url: "Páginas/Tabla periódica.html", etiqueta: "Química" },
+            { nombre: "Tabla periódica", url: "Paginas/Tabla periódica.html", etiqueta: "Química" },
             { nombre: "Propiedades periódicas", url: "Páginas/Propiedades periódicas.html", etiqueta: "Química" },
             { nombre: "", url: "#", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
