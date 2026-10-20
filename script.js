@@ -52,7 +52,7 @@ const MATERIAS = [
         ],
         temas: [
             { nombre: "Tabla periódica", url: "Paginas/Tabla periódica.html", etiqueta: "Química" },
-            { nombre: "Propiedades periódicas", url: "Páginas/Propiedades periódicas.html", etiqueta: "Química" },
+            { nombre: "Propiedades periódicas", url: "Paginas/Propiedades periódicas.html", etiqueta: "Química" },
             { nombre: "", url: "#", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
         ],
