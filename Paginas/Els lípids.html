@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Els lípids</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050b1c;--b1:#3b82f6;--b2:#60a5fa;--cy:#22d3ee;--vi:#818cf8;--pk:#ff6b9a;--tx:#eaf1ff;--tx2:#93aad6;--bd:#27427e;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*:before,*:after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(78px + env(safe-area-inset-top,0px));height:100%}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--tx);font-family:Sora,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body:before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(700px 500px at 90% -5%,rgba(59,130,246,.28),transparent 70%),linear-gradient(rgba(96,165,250,.05) 1px,transparent 1px) 0 0/48px 48px,linear-gradient(90deg,rgba(96,165,250,.05) 1px,transparent 1px) 0 0/48px 48px,var(--bg)}
+body:after{content:"";position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);background:rgba(5,11,28,.9);z-index:60}
+.mono,.m{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+h1,h2,h3,h4{letter-spacing:-.03em;line-height:1.1;margin:0}
+a{color:var(--b2)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding:72px 0 24px}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;background:rgba(7,16,40,.62);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(39,66,126,.7)}
+.nin{display:flex;align-items:center;gap:14px;max-width:1240px;margin:0 auto;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.03em;white-space:nowrap;color:var(--tx);text-decoration:none}
+.links{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+.links::-webkit-scrollbar{display:none}
+.links a{white-space:nowrap;font-size:13px;color:var(--tx2);text-decoration:none;padding:6px 12px;border-radius:999px;border:1px solid transparent;transition:.2s}
+.links a:hover{color:var(--tx);border-color:var(--bd)}
+.links a.on{color:#fff;background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 0 18px rgba(59,130,246,.55)}
+#prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--b1),var(--cy))}
+.hero{padding:130px 0 40px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;align-items:center}
+.hero h1{font-size:clamp(46px,9vw,92px);font-weight:800;letter-spacing:-.05em;background:linear-gradient(120deg,#fff,#60a5fa 55%,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--tx2);font-size:17px;max-width:520px}
+.cnt{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.cnt div{flex:1 1 110px;padding:14px 16px;border:1px solid var(--bd);border-radius:16px;background:rgba(59,130,246,.08)}
+.cnt b{display:block;font-size:30px;letter-spacing:-.04em;color:var(--b2)}
+.cnt span{font-size:12px;color:var(--tx2)}
+.float{animation:fl 6s ease-in-out infinite}.float.d2{animation-duration:8s;animation-delay:-2s}.float.d3{animation-duration:7s;animation-delay:-4s}
+@keyframes fl{50%{transform:translateY(-14px)}}
+.pulse{animation:pu 3s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes pu{50%{transform:scale(1.08);opacity:.85}}
+.sh{margin-bottom:26px}
+.num{font-size:clamp(64px,12vw,120px);font-weight:800;letter-spacing:-.06em;line-height:.9;color:transparent;-webkit-text-stroke:1.5px rgba(96,165,250,.55);display:block}
+.sh h2{font-size:clamp(30px,5.5vw,52px);margin-top:-8px}
+.sh p{color:var(--tx2);max-width:680px;margin:10px 0 0}
+h3{font-size:22px;margin:30px 0 12px;color:#fff}
+h4{font-size:16px;margin:0 0 8px;letter-spacing:-.02em}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.grid.s{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.card{background:linear-gradient(160deg,rgba(59,130,246,.16),rgba(30,58,138,.12));border:1px solid var(--bd);border-radius:20px;padding:22px;box-shadow:0 10px 34px rgba(0,0,0,.28);transition:.25s;min-width:0}
+.card:hover{border-color:var(--b2);transform:translateY(-3px);box-shadow:0 14px 40px rgba(59,130,246,.2)}
+.card.flat:hover{transform:none}
+.card p{margin:.4em 0;color:var(--tx2)}.card p b,.card li b,b.k{color:var(--tx)}
+.card ul{margin:.4em 0;padding-left:20px;color:var(--tx2)}.card li{margin:4px 0}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 11px;border-radius:999px;margin:2px 3px 2px 0;border:1px solid transparent}
+.cb{background:rgba(59,130,246,.2);color:#cfe1ff;border-color:rgba(96,165,250,.4)}
+.cc{background:rgba(34,211,238,.14);color:#b9f3fd;border-color:rgba(34,211,238,.4)}
+.cv{background:rgba(129,140,248,.2);color:#dcdfff;border-color:rgba(129,140,248,.45)}
+.cp{background:rgba(255,107,154,.16);color:#ffd3e1;border-color:rgba(255,107,154,.5)}
+.pk{color:var(--pk);font-weight:600}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pill{font:600 13px Sora,system-ui,sans-serif;color:var(--tx2);background:rgba(59,130,246,.08);border:1px solid var(--bd);border-radius:999px;padding:8px 16px;cursor:pointer;transition:.2s}
+.pill:hover{color:#fff;border-color:var(--b2)}
+.pill.on{color:#fff;border-color:transparent;background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 0 20px rgba(59,130,246,.55)}
+.panel{animation:fi .35s}@keyframes fi{from{opacity:0;transform:translateY(6px)}}
+svg{max-width:100%;height:auto;display:block}
+.hot{cursor:pointer;transition:.2s}.hot:hover,.hot.act{filter:drop-shadow(0 0 7px #60a5fa)}
+.hot.act rect,.hot.act circle,.hot.act ellipse,.hot.act polygon{stroke:var(--pk)!important;stroke-width:2.5!important}
+.info{margin-top:12px;padding:14px 16px;border-radius:14px;border:1px dashed var(--bd);background:rgba(5,11,28,.55);color:var(--tx2);font-size:14px;min-height:54px}
+.info b{color:#fff}
+details.acc{border:1px solid var(--bd);border-radius:16px;background:rgba(59,130,246,.07);margin:8px 0;transition:.2s}
+details.acc[open]{border-color:var(--b2);background:rgba(59,130,246,.12)}
+details.acc summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:10px}
+details.acc summary::-webkit-details-marker{display:none}
+details.acc summary:after{content:"+";color:var(--b2);font-size:20px;line-height:1}
+details.acc[open] summary:after{content:"–"}
+details.acc>div{padding:0 18px 16px;color:var(--tx2)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid rgba(39,66,126,.7);vertical-align:top}
+th{color:var(--b2);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+td{color:var(--tx2)}tr.sel td{background:rgba(59,130,246,.18);color:#fff}tr[data-r]{cursor:pointer}
+.tw{overflow-x:auto}
+input[type=range]{width:100%;accent-color:#3b82f6;height:28px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.big{font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--b2)}
+.rx{padding:18px;border:1px solid var(--bd);border-radius:16px;background:rgba(5,11,28,.55);font-size:clamp(12px,3.4vw,17px);line-height:2.2;overflow-x:auto}
+.rx .prod,.rx .w{transition:.5s}
+.rx[data-s="0"] .prod,.rx[data-s="1"] .prod{opacity:.12}
+.rx[data-s="0"] .w,.rx[data-s="1"] .w{opacity:.12}
+.rx .a,.rx .b{transition:.4s}
+.rx:not([data-s="0"]) .a,.rx:not([data-s="0"]) .b{color:var(--pk);font-weight:700}
+.rx[data-s="3"] .e{color:var(--cy);font-weight:700;border-bottom:2px solid var(--cy)}
+.rx .w{color:var(--cy)}
+.btn{font:600 14px Sora,system-ui,sans-serif;color:#fff;border:0;border-radius:999px;padding:10px 20px;cursor:pointer;background:linear-gradient(135deg,#3b82f6,#2563eb);box-shadow:0 0 18px rgba(59,130,246,.45)}
+.btn.g{background:rgba(59,130,246,.1);box-shadow:none;border:1px solid var(--bd);color:var(--tx2)}
+.rv{opacity:0;transform:translateY(22px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+.cls{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr))}
+.item{padding:9px 14px;border-radius:12px;border:1px solid var(--bd);background:rgba(59,130,246,.1);cursor:pointer;font-size:14px;margin:4px 4px 4px 0;display:inline-block;transition:.2s;color:var(--tx)}
+.item.sel{border-color:var(--b2);box-shadow:0 0 16px rgba(96,165,250,.6)}.item.ok{background:rgba(34,211,238,.18);border-color:var(--cy);cursor:default}
+.item.no{border-color:var(--pk);animation:sh .4s}@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.bin{min-height:78px;padding:12px;border:1px dashed var(--bd);border-radius:16px;cursor:pointer;transition:.2s}
+.bin:hover{border-color:var(--b2);background:rgba(59,130,246,.1)}.bin h4{color:var(--b2);font-size:14px}
+.fc{perspective:900px;height:190px;cursor:pointer}
+.fci{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.fc.fl .fci{transform:rotateY(180deg)}
+.fcf,.fcb{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:20px;border:1px solid var(--bd);padding:18px;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(160deg,rgba(59,130,246,.2),rgba(30,58,138,.2));overflow:auto}
+.fcf{font-weight:700;font-size:18px}.fcb{transform:rotateY(180deg);font-size:14px;color:var(--tx2);background:linear-gradient(160deg,rgba(129,140,248,.25),rgba(30,58,138,.25))}
+.opt{display:block;width:100%;text-align:left;font:500 15px Sora,system-ui,sans-serif;color:var(--tx);padding:13px 16px;margin:8px 0;border-radius:14px;border:1px solid var(--bd);background:rgba(59,130,246,.08);cursor:pointer;transition:.2s}
+.opt:hover:not(:disabled){border-color:var(--b2)}.opt.ok{border-color:var(--cy);background:rgba(34,211,238,.18)}.opt.bad{border-color:var(--pk);background:rgba(255,107,154,.16)}
+.srch{width:100%;padding:14px 20px;border-radius:999px;border:1px solid var(--bd);background:rgba(5,11,28,.7);color:var(--tx);font:500 15px Sora,system-ui,sans-serif;margin-bottom:14px;outline:none}.srch:focus{border-color:var(--b2);box-shadow:0 0 18px rgba(59,130,246,.4)}
+.bar{height:14px;border-radius:99px;background:linear-gradient(90deg,var(--b1),var(--cy));transition:width .5s}
+footer{padding:50px 20px;text-align:center;color:var(--tx2);font-size:13px}
+@media(max-width:600px){section{padding-top:56px}.brand span{display:none}.card{padding:16px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+svg text{font-family:Sora,system-ui,sans-serif}.hs svg text{pointer-events:none}
+.grid{align-items:start}.grid>*{min-width:0}.tw table{min-width:520px}
+#gl{align-items:stretch}
+.rxs g{transition:transform .8s,opacity .8s;transform-box:fill-box}
+.rxs .w,.rxs .bond,.rxs .bl{opacity:0}
+.rxs:not([data-s="0"]) .oh rect,.rxs:not([data-s="0"]) .h rect{fill:rgba(255,107,154,.4)}
+.rxs[data-s="2"] .oh,.rxs[data-s="3"] .oh{transform:translate(72px,70px)}
+.rxs[data-s="2"] .h,.rxs[data-s="3"] .h{transform:translate(-72px,70px)}
+.rxs[data-s="2"] .w,.rxs[data-s="3"] .w{opacity:1}
+.rxs[data-s="3"] .a{transform:translateX(115px)}
+.rxs[data-s="3"] .b{transform:translateX(-115px)}
+.rxs[data-s="3"] .bond,.rxs[data-s="3"] .bl{opacity:1}
+@keyframes jit{25%{transform:translate(-6px,4px)}50%{transform:translate(7px,-6px)}75%{transform:translate(4px,6px)}}
+.jt circle{transform-box:fill-box;transform-origin:center}
+@keyframes drift{50%{transform:translateX(10px)}}
+</style>
+</head>
+<body>
+<nav><div class="nin">
+<a class="brand" href="#top"><svg width="26" height="26" viewBox="0 0 26 26"><polygon points="13,1.5 23,7.2 23,18.8 13,24.5 3,18.8 3,7.2" fill="none" stroke="#60a5fa" stroke-width="1.8"/><circle cx="13" cy="13" r="3.4" fill="#22d3ee"/></svg><span>Lípids</span></a>
+<div class="links" id="links"></div></div><div id="prog"></div></nav>
+
+<main id="top" class="wrap">
+<div class="hero">
+ <div>
+  <h1>Els lípids</h1>
+  <p>Grup de biomolècules orgàniques molt heterogeni: classificació, àcids grassos, lípids saponificables i insaponificables, i les seves funcions. Toca, mou i explora.</p>
+  <div class="cnt">
+   <div><b data-c="9.3" data-d="1">0</b><span>kcal/g dels lípids</span></div>
+   <div><b data-c="2">0</b><span>grups principals</span></div>
+   <div><b data-c="3">0</b><span>tipus d’insaponificables</span></div>
+   <div><b data-c="6">0</b><span>funcions</span></div>
+  </div>
+ </div>
+ <svg viewBox="0 0 400 340" aria-hidden="true">
+  <defs><linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
+  <g class="pulse"><polygon points="200,60 270,100 270,180 200,220 130,180 130,100" fill="rgba(59,130,246,.14)" stroke="url(#hg)" stroke-width="3"/>
+  <polygon points="200,92 242,116 242,164 200,188 158,164 158,116" fill="none" stroke="#818cf8" stroke-width="1.6" stroke-dasharray="4 5"/>
+  <circle cx="200" cy="140" r="12" fill="#22d3ee"/></g>
+  <g class="float"><polygon points="70,60 96,75 96,105 70,120 44,105 44,75" fill="rgba(129,140,248,.2)" stroke="#818cf8" stroke-width="2"/></g>
+  <g class="float d2"><polygon points="330,230 352,243 352,269 330,282 308,269 308,243" fill="rgba(34,211,238,.15)" stroke="#22d3ee" stroke-width="2"/><circle cx="330" cy="256" r="5" fill="#ff6b9a"/></g>
+  <g class="float d3"><path d="M60 260 l20 -14 l20 14 l20 -14 l20 14 l20 -14" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/><circle cx="60" cy="260" r="6" fill="#ff6b9a"/></g>
+  
+ </svg>
+</div>
+
+<div class="card flat rv" style="margin-top:20px">
+ <h4>Mapa conceptual · toca un node</h4>
+ <div id="map"></div>
+</div>
+
+<!-- 01 -->
+<section id="s1"><div class="sh rv"><span class="num">01</span><h2>Què són els lípids?</h2><p>Un grup molt heterogeni de biomolècules orgàniques, constituïdes bàsicament per C i H.</p></div>
+<div class="grid">
+ <div class="card rv"><h4>Composició</h4><svg viewBox="0 0 250 70" style="margin:6px 0 10px"><g class="pulse"><circle cx="28" cy="34" r="25" fill="rgba(59,130,246,.3)" stroke="#60a5fa" stroke-width="2"/><text x="28" y="40" text-anchor="middle" fill="#fff" font-weight="800" font-size="18">C</text></g><g class="pulse" style="animation-delay:-1s"><circle cx="82" cy="34" r="21" fill="rgba(34,211,238,.25)" stroke="#22d3ee" stroke-width="2"/><text x="82" y="40" text-anchor="middle" fill="#fff" font-weight="800" font-size="18">H</text></g><circle cx="122" cy="34" r="11" fill="rgba(255,107,154,.25)" stroke="#ff6b9a" stroke-width="2"/><text x="122" y="38" text-anchor="middle" fill="#fff" font-weight="700" font-size="11">O</text><g fill="rgba(129,140,248,.25)" stroke="#818cf8" stroke-width="1.5"><circle cx="156" cy="34" r="9"/><circle cx="182" cy="34" r="9"/><circle cx="208" cy="34" r="9"/></g><g fill="#eaf1ff" font-size="10" font-weight="700" text-anchor="middle"><text x="156" y="38">P</text><text x="182" y="38">N</text><text x="208" y="38">S</text></g></svg><ul><li>Grup de biomolècules orgàniques <b>molt heterogeni</b></li><li>Constituïts bàsicament per <b>C i H</b></li><li>També presenten <b>O</b> però en proporcions molt baixes</li><li>Alguns contenen <b>P, N i S</b></li></ul></div>
+ <div class="card rv"><h4>Energia</h4><p>Poden oxidar-se més: en ser metabolitzats donaran més quantitat d’energia (<b>9,3 Kcal/g</b> en comptes de <b>4,1 Kcal/g</b> dels glúcids i proteïnes).</p><div id="e1"></div></div>
+ <div class="card rv"><h4>Solubilitat</h4><p><span class="chip cp">Insolubles</span> en aigua i altres dissolvents polars.</p><p><span class="chip cc">Solubles</span> en dissolvents <b>no polars</b> (orgànics): èter, benzè, acetona, metanol, aiguarràs...</p>
+ <svg viewBox="0 0 320 140"><polygon points="60,80 48,52 76,34 104,52 92,80" fill="rgba(59,130,246,.15)" stroke="#60a5fa" stroke-width="2.5"/><path d="M104 52 L124 38 L148 52 L172 38 L196 52 L220 38 L244 52 L268 38" fill="none" stroke="#60a5fa" stroke-width="2.5"/><path d="M92 80 L112 96 L136 82 L160 98 L184 84 L208 100" fill="none" stroke="#60a5fa" stroke-width="2.5"/><text x="270" y="34" fill="#ff6b9a" font-size="12" font-weight="700">COOH</text><text x="212" y="116" fill="#93aad6" font-size="12">CH₃</text><text x="160" y="134" fill="#93aad6" font-size="11" text-anchor="middle">àcid prostanoic · anell ciclopentà + 2 cadenes</text></svg></div>
+</div>
+<h3 class="rv">Classificació dels lípids</h3>
+<p class="rv" style="color:var(--tx2)">Es classifiquen en dos grups: els lípids <b class="k">saponificables</b> (contenen àcids grassos*) i els lípids <b class="k">no</b> saponificables (no contenen àcids grassos). <span style="font-size:13px"><span class="pk">*</span>Àcid gras: ho veurem a continuació.</span></p>
+<div class="card flat rv" id="cls"></div>
+</section>
+
+<!-- 02 -->
+<section id="s2"><div class="sh rv"><span class="num">02</span><h2>Els àcids grassos (aagg)</h2><p>Molècules formades per una llarga cadena hidrocarbonada amb un nombre parell d’àtoms de carboni.</p></div>
+<div class="grid">
+ <div class="card rv"><p>Els àcids grassos són molècules formades per una <b>llarga cadena hidrocarbonada</b> amb un nombre parell d’àtoms de carboni. Tenen en un <b>extrem</b> de la cadena un <b>grup carboxil</b> (-COOH).</p><p>Poc abundants en estat lliure, s’obtenen a partir de la <b>hidròlisi dels greixos</b>.</p></div>
+ <div class="card rv"><h4>Estructura d’un àcid gras · toca les zones</h4><div id="faS"></div></div>
+</div>
+
+<h3 class="rv">Classificació dels àcids grassos</h3>
+<div class="card flat rv"><div id="faT"></div></div>
+<div class="grid" style="margin-top:16px">
+ <div class="card rv"><h4><span class="chip cb">Saturats</span></h4><p>Només tenen <b>enllaços simples</b> entre els àtoms de carboni de la cadena hidrocarbonada. Per això, les cadenes hidrocarbonades són <b>rectilínies</b>, és a dir, <b>cadenes lineals (alifàtiques)</b>. Exemples: àcid palmític (16C), àcid esteàric (18C). Fórmula general: <span class="mono">CH₃—(CH₂)ₙ—COOH</span></p></div>
+ <div class="card rv"><h4><span class="chip cp">Insaturats</span></h4><p>Tenen un o més <b>enllaços dobles</b> entre els àtoms de carboni. Per això <b>no</b> són <b>rectilínies</b>, sinó que presenten <b>colzes</b> on hi ha els dobles enllaços. A temperatura ambient solen trobar-se en <b>estat líquid</b>.</p><p>Segons el <b>nombre de dobles enllaços</b> o insaturacions: <b>monoinsaturats</b> (un únic doble enllaç entre carbonis, ex. àcid oleic) i <b>poliinsaturats</b> (més d’un doble enllaç, ex. àcid linoleic).</p></div>
+</div>
+<h3 class="rv">Nomenclatura</h3>
+<div class="grid">
+ <div class="card rv"><h4>Aagg saturats</h4><p>El nombre d’àtoms de carboni de les seves molècules sol ser parell i està entre 12 i 20. Per exemple, l’àcid <b>esteàric</b> i l’àcid <b>palmític</b>.</p><details class="acc"><summary>Formes de representar l’àcid esteàric</summary><div><p><b>Desenvolupada:</b> <span class="mono">CH₃–CH₂–CH₂–…–CH₂–COOH</span></p><p><b>Abreujada:</b> <span class="mono">CH₃–(CH₂)₁₆–COOH</span></p><p><b>Angles de 110°:</b> es visualitzen els angles; <b>simplificat</b> sense els CH₂ (línia en zig-zag); <b>model compacte</b> amb boles de diferents colors (carboni, oxigen, hidrogen).</p></div></details></div>
+ <div class="card rv"><h4>Aagg insaturats</h4><p>Els que tenen un o més enllaços dobles entre els carbonis de la cadena. Per això les seves molècules no són rectilínies sinó que presenten colzes. Si tenen un únic enllaç doble s’anomenen <b>monoinsaturats</b>, per exemple l’<b>àcid oleic</b>, i si en tenen més es diuen <b>poliinsaturats</b>, per exemple l’<b>àcid linoleic</b>.</p>
+ <p class="mono" style="font-size:13px"><b class="k">Oleic (C18:1⁹)</b><br>CH₃-(CH₂)₇-CH=CH-(CH₂)₇-COOH<br><b class="k">Linoleic (C18:2⁹˒¹²)</b><br>CH₃-(CH₂)₄-CH=CH-CH₂-CH=CH-(CH₂)₇-COOH</p></div>
+</div>
+<div class="card rv" style="margin-top:16px"><h4>Els àcids grassos essencials</h4><p>Els mamífers només podem sintetitzar àcids grassos <b>saturats i monoinsaturats</b> a partir d’altres molècules precursores. En canvi, som incapaços de sintetitzar àcids grassos que tenen dos o més dobles enllaços a la molècula, és a dir, insaturats. Als vegetals sí són abundants els poliinsaturats.</p><p><b>Àcids grassos essencials</b> són els que no podem sintetitzar però ens són imprescindibles per a la vida, per això s’han d’obtenir a partir de la dieta. Exemple: l’àcid linoleic, abundant a l’oli de lli (llavors de lli).</p><p><span class="chip cb">Saturats: zig-zag sense dobles enllaços</span><span class="chip cc">Monoinsaturats: un doble enllaç</span><span class="chip cv">Poliinsaturats: més d’un doble enllaç</span></p></div>
+
+<h3 class="rv">Per saber-ne més… cis i trans</h3>
+<div class="card flat rv"><div id="ct"></div></div>
+
+<h3 class="rv">L’àcid gras: molècula amfipàtica</h3>
+<div class="grid">
+ <div class="card rv"><p>En ambient aquós i pH fisiològic (7,4), els àcids grassos lliures són molècules <b>amfipàtiques</b> (bipolars):</p>
+  <p><span class="chip cc">Part hidròfoba o apolar</span> (insoluble en aigua / lipòfila*) en la cadena carbonatada. Mostra tendència a establir enllaços de <b>Van der Waals</b> amb altres cadenes hidrocarbonades.</p>
+  <p><span class="chip cp">Part polar o hidròfila</span> (soluble en aigua / lipòfoba), corresponent a l’extrem carboxil <b>ionitzat</b>, amb una càrrega negativa COO⁻, amb tendència a establir <b>ponts d’hidrogen</b> amb altres molècules polars com l’aigua.</p>
+  <p style="font-size:13px">*té afinitat pels lípids: tendeixen a estar junts. Quan més llarga és la cadena hidrocarbonada més caràcter hidròfob presenta. La part hidròfila és la que pot establir atraccions elèctriques amb les molècules d’aigua mentre que la hidròfoba presenta repulsió front a l’aigua.</p></div>
+ <div class="card rv"><h4>Molècula amfipàtica</h4>
+  <svg viewBox="0 0 300 200"><rect x="10" y="10" width="280" height="55" rx="14" fill="rgba(255,107,154,.14)" stroke="#ff6b9a"/><text x="150" y="33" fill="#ffd3e1" text-anchor="middle" font-size="13" font-weight="600">hidròfila · regió polar</text><text x="150" y="52" fill="#ffd3e1" text-anchor="middle" font-size="10">-COOH · interacciona amb l’aigua · lipòfoba</text>
+  <rect x="10" y="75" width="280" height="115" rx="14" fill="rgba(34,211,238,.1)" stroke="#22d3ee"/><path d="M40 160 l22 -26 l22 26 l22 -26 l22 26 l22 -26 l22 26 l22 -26 l22 26" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/><text x="150" y="98" fill="#b9f3fd" text-anchor="middle" font-size="13" font-weight="600">hidròfoba · regió apolar</text><text x="150" y="182" fill="#b9f3fd" text-anchor="middle" font-size="10">repel·leix l’aigua · lipòfila</text></svg></div>
+</div>
+
+<h3 class="rv">Interaccions entre aagg</h3>
+<div class="grid">
+ <div class="card rv"><p>Els àcids grassos tendeixen a agrupar-se perquè:</p><ul><li>Entre els caps (grups carboxil) s’estableixen <b>ponts d’hidrogen</b></li><li>Entre els trams lipòfils (cues) de les cadenes hidrocarbonades es formen forces de <b>Van der Waals</b></li></ul><p style="font-size:13px">a) Àcids grassos saturats · b) Àcids grassos insaturats amb estructures amb colze.</p></div>
+ <div class="card rv"><div id="pack"></div></div>
+</div>
+</section>
+
+<!-- 03 -->
+<section id="s3"><div class="sh rv"><span class="num">03</span><h2>Propietats químiques</h2><p>Les reaccions més importants en les que intervenen els àcids grassos són l’esterificació i la saponificació.</p></div>
+<div class="card flat rv"><div id="rxT"></div></div>
+</section>
+
+<!-- 04 -->
+<section id="s4"><div class="sh rv"><span class="num">04</span><h2>Propietats físiques dels àcids grassos</h2><p>Les més importants: la solubilitat i el punt de fusió.</p></div>
+<p class="rv" style="color:var(--tx2)">*Hem de tenir en compte que els àcids alifàtics de cadena inferior a 8 carbonis no es consideren àcids grassos perquè són solubles en aigua.</p>
+<h3 class="rv">3.1 Solubilitat</h3>
+<div class="grid">
+ <div class="card rv"><p>En ambient aquós i pH fisiològic (7,4), els àcids grassos lliures són <b>molècules amfipàtiques</b>:</p><ul><li><b>Cua hidrocarbonada apolar</b> (insoluble en aigua = hidròfoba = lipòfila). Aquestes cues mostren tendència a establir enllaços de Van der Waals amb altres cadenes hidrocarbonades.</li><li><b>Regió polar</b> (soluble en aigua = hidròfila = lipòfoba). L’extrem carboxil es troba ionitzat, amb una càrrega negativa COO⁻, amb tendència a establir atraccions de tipus elèctric amb altres molècules polars.</li></ul>
+ <p>Com que la regió apolar d’un àcid gras és molt més gran que la regió polar, <b>els àcids grassos no es dissolen en l’aigua</b>.</p></div>
+ <div class="card rv"><p>En medi aquós, els caps hidròfils dels àcids grassos s’orienten cap a les molècules d’aigua, mentre que les cues hidròfobes s’allunyen d’ella, la qual cosa explica la formació de diversos tipus d’estructures. Les cues hidrocarbonades tendeixen a relacionar-se entre si mitjançant interaccions hidrofòbiques creant ambients on no hi ha aigua.</p><div id="agg"></div></div>
+</div>
+<div class="grid" style="margin-top:16px">
+ <div class="card rv"><h4>Dissociació en medi aquós</h4><p>Els àcids grassos en medi aquós es troben <span class="pk">dissociats</span>:</p><p class="mono" style="font-size:13px;overflow-x:auto">CH₃-(CH₂)₁₂-COOH —ionització→ CH₃-(CH₂)₁₂-COO⁻ + H⁺</p><p>Àcid palmític</p><p>Els sabons dels àcids grassos també són molècules amfipàtiques i en medi aquós també es troben dissociats:</p><p class="mono" style="font-size:13px;overflow-x:auto">CH₃-(CH₂)₁₂-COOK —ionització→ CH₃-(CH₂)₁₂-COO⁻ + K⁺</p><p>Palmitat potàssic</p></div>
+ <div class="card rv"><h4>Els sabons i l’emulsió</h4><p>Quan els sabons s’afegeixen a una dissolució aquosa que conté greix, formen micel·les facilitant així l’emulsió del greix i la seva eliminació.</p><p>Les micel·les del sabó poden ser monocapa o bicapa. Si atrapen aire en el seu interior, tenen un <b>efecte escumós</b>. Si atrapen gotes de lípids, tenen un <b>efecte emulsionant o detergent</b>.</p><div id="soap"></div></div>
+</div>
+<div class="card rv" style="margin-top:16px"><h4>La membrana plasmàtica · toca les parts</h4><p>Els lípids amfipàtics poden formar, entre dos medis aquosos, <b>bicapes</b>. La membrana plasmàtica és un model de bicapa lipídica.</p><div id="bil"></div></div>
+
+<h3 class="rv">3.2 El punt de fusió</h3>
+<div class="grid">
+ <div class="card rv"><p>El <b>punt de fusió</b> d’un àcid gras depèn del nombre carbonis (llargada de la cadena hidrocarbonada) i de la presència o no de dobles i triples enllaços. <span style="font-size:13px">*Punt de fusió: Tª a la que es passa de sòlid a líquid.</span></p>
+ <p>El punt de fusió dels àcids grassos <b>augmenta amb la llargària</b> de la cadena hidrocarbonada i <b>disminueix amb el grau d’insaturació</b>. Aquest fet condiciona la consistència física de la mescla que els contenen. Els punts de fusió dels àcids grassos insaturats són més baixos que els dels saturats de pes molecular semblant.</p></div>
+ <div class="card rv"><h4>Mou els lliscadors</h4><label class="mono" style="font-size:13px">Àtoms de carboni: <b id="nv">18</b></label><input type="range" id="nR" min="4" max="24" step="2" value="18"><label class="mono" style="font-size:13px">Dobles enllaços: <b id="dv">0</b></label><input type="range" id="dR" min="0" max="3" step="1" value="0">
+ <div id="mpOut"></div></div>
+</div>
+<div class="grid" style="margin-top:16px">
+ <div class="card rv"><h4>Aagg saturats</h4><p>Com més llarga és la cadena hidrocarbonada:</p><ul><li>més enllaços de <b>Van der Waals</b> hi haurà</li><li><b>més temperatura</b> farà falta per separar les molècules</li><li>més <b>alta</b> serà la <b>temperatura de fusió</b></li><li>més <b>sòlid</b> serà l’àcid gras</li><li>acostumen a ser <b>sòlids a temperatura ambient</b> i formen greixos que també solen ser sòlids a temperatura ambient</li></ul><p>Per això, <b>a temperatura ambient, els àcids grassos saturats solen trobar-se en estat sòlid</b>. Ex.: àcid esteàric (18°C), un àcid gras saturat a temperatura ambient es troba en estat sòlid.</p></div>
+ <div class="card rv"><h4>Aagg insaturats</h4><p>Els colzes que presenten les cues dels insaturats dificulta la formació d’enllaços. Els seus punts de fusió són més baixos. Per això, <b>a temperatura ambient, els àcids grassos insaturats solen trobar-se en estat líquid</b>. Si són monoinsaturats són líquids però solidifiquen amb temperatures no gaire baixes, per exemple, a la nevera. Si són poliinsaturats són líquids també a temperatures més fredes.</p><p>Ex.: àcid oleic (18°C), un àcid gras insaturat que a temperatura ambient es troba en estat líquid. El doble enllaç produeix un colze.</p></div>
+</div>
+<div class="card flat rv" style="margin-top:16px"><h4>Resumint…</h4><p>El <b>punt de fusió</b> depèn del nombre carbonis i de la presència o no de dobles i triples enllaços: a més C, major punt de fusió (+ enllaços a trencar); a més dobles i triples enllaços menor punt de fusió (els colzes dificulten la formació de forces de Van der Waals entre els aagg).</p><div class="grid"><div><p style="font-size:12px">Punt de fusió segons el nombre de carbonis (°C)</p><div id="ch1"></div></div><div><p style="font-size:12px">Àcids grassos de 18C (cis) segons els dobles enllaços (°C)</p><div id="ch2"></div></div></div></div>
+</section>
+
+<!-- 05 -->
+<section id="s5"><div class="sh rv"><span class="num">05</span><h2>Lípids saponificables simples</h2><p>Contenen àcids grassos en la seva estructura. Tots són èsters d’àcids grassos amb un alcohol.</p></div>
+<div class="grid">
+ <div class="card rv"><h4>Lípids saponificables</h4><ul><li>Contenen <b>àcids grassos</b> en la seva estructura</li><li>Tots són <b>èsters</b> d’àcids grassos amb un alcohol</li><li>Presenten <b>enllaços èster</b> (COO)</li><li>Poden formar <b>sabons</b> per saponificació</li><li>Hi ha dos tipus:</li></ul><p><span class="chip cp">Lípids simples</span> formats només per àcids grassos i alcohol.</p><p><span class="chip cv">Lípids complexos</span> formats per àcids grassos, alcohol i un tercer tipus de molècula.</p></div>
+ <div class="card rv"><h4>Els lípids simples</h4><p>Fomats exclusivament per àcids grassos i un alcohol. Contenen només C, H i O. Hi ha dos tipus:</p><p><span class="chip cp">Els acilglicèrids o greixos</span><span class="chip cp">Els cèrids o ceres</span></p></div>
+</div>
+<h3 class="rv">Els acilglicèrids o greixos</h3>
+<div class="grid">
+ <div class="card rv"><ul><li>Són els més abundants.</li><li>Formats per l’alcohol <b class="pk">glicerol</b>, que s’esterifica amb un, dos o tres àcids grassos.</li><li>Són <b>insolubles en aigua</b></li><li><b>Baixa densitat</b> (suren en l’aigua).</li></ul><details class="acc"><summary>La glicerina</summary><div><svg viewBox="0 0 200 90" style="max-width:220px"><g stroke="#60a5fa" stroke-width="3" stroke-linecap="round"><line x1="40" y1="40" x2="100" y2="40"/><line x1="100" y1="40" x2="160" y2="40"/><line x1="40" y1="40" x2="40" y2="66"/><line x1="100" y1="40" x2="100" y2="66"/><line x1="160" y1="40" x2="160" y2="66"/></g><g fill="#eaf1ff" font-size="12" font-weight="700" text-anchor="middle"><circle cx="40" cy="40" r="11" fill="#1e3a8a"/><circle cx="100" cy="40" r="11" fill="#1e3a8a"/><circle cx="160" cy="40" r="11" fill="#1e3a8a"/><text x="40" y="44">C</text><text x="100" y="44">C</text><text x="160" y="44">C</text></g><g fill="#ff6b9a" font-size="12" font-weight="700" text-anchor="middle"><text x="40" y="82">OH</text><text x="100" y="82">OH</text><text x="160" y="82">OH</text></g></svg><p>La <b>glicerina</b> (C₃H₈O₃) o glicerol és un alcohol amb tres grups hidroxils (-OH): <span class="mono">CH₂OH–CHOH–CH₂OH</span>.</p><p>Productes de la degradació digestiva dels lípids (cicle de Krebs). Producte intermedi de la fermentació alcohòlica. Components de lípids com els triglicèrids i els fosfolípids.</p></div></details></div>
+ <div class="card rv"><h4>Esterificació del glicerol amb àcids grassos</h4><p>Els acilglicèrids es formen per esterificació d’una, dues o tres molècules d’àcids grassos amb una molècula de glicerol.</p><p class="mono" style="font-size:12px;overflow-x:auto">3 CH₃–(CH₂)₁₄–COOH + CH₂OH–CHOH–CH₂OH → triacilglicèrid + 3 H₂O</p><p>Àcid palmític + glicerina (propantriol) → triacilglicèrid (tripalmitina).</p></div>
+</div>
+<h3 class="rv">Constructor d’acilglicèrids</h3>
+<div class="card flat rv"><p style="margin-top:0">Segons el nombre d’àcids grassos que esterifiquen la glicerina: <b>monoacilglicèrids</b> (un àcid gras), <b>diacilglicèrids</b> (dos) i <b>triacilglicèrids</b> (tres, els més abundants). Tria què posar a cada posició de la glicerina.</p><div id="bld"></div></div>
+<div class="grid" style="margin-top:16px">
+ <div class="card rv"><h4>Triacilglicèrids simples i mixtos</h4><p>Els triacilglicèrids compostos per àcids grassos diferents s’anomenen <b>triacilglicèrids mixtes</b>. Aquells en què els tres àcids grassos són iguals s’anomenen <b>triacilglicèrids simples</b>. Exemple de simple: tristearin.</p><p>Els monoacilglicèrids i el diacilglicèrids són molècules amb certa polaritat a causa dels radicals hidroxil que queden lliures de la glicerina. Els triacilglicèrids en canvi, són <b>molècules apolars</b>, per la qual cosa també s’anomenen greixos neutres. Són molècules hidrofòbes, insolubles que s’emmagatzemen sense estar envoltades d’aigua (de forma anhidra, no retenen aigua) a diferència del glicogen (glúcid de reserva energètica dels animals) que s’emmagatzema hidratat (envoltat de molècules d’aigua).</p></div>
+ <div class="card rv"><h4>Funcions dels acilglicèrids</h4><details class="acc" open><summary>Reserva energètica</summary><div>Constitueixen la <span class="pk">principal reserva energètica</span> en els animals.</div></details><details class="acc"><summary>Aïllament tèrmic</summary><div>En els animals homeoterms se situen a sota la pell formant el panícle adipòs.</div></details><details class="acc"><summary>Protecció contra els traumatismes</summary><div>Els greixos es dipositen al voltant d’òrgans delicats com el cor, ronyons...</div></details></div>
+</div>
+<h3 class="rv">L’estat físic dels greixos</h3>
+<div class="card flat rv"><p style="margin-top:0">La longitud de la cadena dels àcids grassos, així com el nombre i posició de les dobles enllaços, tenen una influència determinant en el seu punt de fusió i, per tant, en l’<b>estat físic en el que es troben els greixos</b>. Els greixos sòlids (sèus) posseeixen un punt de fusió superior a 40°C de manera que romanen en aquest estat a temperatura ambient. En els greixos líquids (olis), per contra, el punt de fusió és inferior a 15°C, i en els semisòlids (mantegues, margarines) es troba en un punt intermedi.</p><div id="fat"></div></div>
+<h3 class="rv">Els cèrids o ceres</h3>
+<div class="grid">
+ <div class="card rv"><ul><li>Són èsters d’<b>àcids grassos</b> de cadena llarga (16 a 20 C) amb <b>alcohols també de cadena llarga</b> (14 a 30C)</li></ul><p class="mono" style="font-size:12px;overflow-x:auto">CH₃–(CH₂)₁₄–COOH + HO–C₃₀H₆₁ → CH₃–(CH₂)₁₄–COO–C₃₀H₆₁ + H₂O</p><p>Àcid palmític + alcohol miricílic → palmitat de miricil (cera d’abella). Formació d’un cèrid.</p><svg viewBox="0 0 300 70"><rect x="2" y="6" width="150" height="26" rx="6" fill="rgba(255,107,154,.15)" stroke="#ff6b9a"/><text x="77" y="23" font-size="11" fill="#ffd3e1" text-anchor="middle">Àcid gras (C18)</text><rect x="152" y="6" width="26" height="26" fill="#ff6b9a"/><text x="165" y="23" font-size="9" fill="#050b1c" text-anchor="middle">èster</text><rect x="22" y="38" width="276" height="26" rx="6" fill="rgba(34,211,238,.14)" stroke="#22d3ee"/><text x="160" y="55" font-size="11" fill="#b9f3fd" text-anchor="middle">Alcohol de cadena llarga (C30)</text></svg></div>
+ <div class="card rv"><h4>Propietats dels cèrids</h4><ul><li><b>Sòlids i durs</b> a Tª ambient (llargues cadenes hidrocarbonades)</li><li>Són totalment <b>insolubles</b> en aigua pel seu marcat caràcter lipòfil</li><li>Formen <b>làmines impermeables</b> que protegeixen l’epidermis i les formacions dèrmiques dels animals (pèls, plomes i cabells) i la superfície de molts òrgans vegetals (tiges, fulles, fruits)</li></ul><p><b>Altres exemples:</b> <span class="chip cc">el cerumen del conducte auditiu</span><span class="chip cc">les ceres de les fulles</span><span class="chip cc">l’espermaceti de les balenes</span></p></div>
+</div>
+</section>
+
+<!-- 06 -->
+<section id="s6"><div class="sh rv"><span class="num">06</span><h2>Lípids saponificables complexos</h2><p>Formats per àcids grassos, alcohol i un tercer tipus de molècula.</p></div>
+<div class="grid">
+ <div class="card rv"><p>Formats per: àcids grassos, alcohol i un tercer tipus de molècula. A més de C, H i O poden contenir també N, P i S. També s’anomenen <b>lípids de membrana</b> o <b>lípids amfipàtics</b>.</p><p>Els lípids amfipàtics poden formar, entre dos medis aquosos, <b>bicapes</b> (cap hidròfil, cues hidròfobes, aigua).</p></div>
+ <div class="card rv"><h4>Lípids de membrana · toca per explorar</h4><div id="memT"></div></div>
+</div>
+<h3 class="rv">Fosfoglicèrids</h3>
+<div class="grid">
+ <div class="card rv"><ul><li>Són les molècules més abundants de la membrana plasmàtica.</li><li>Estan formades per <b>dos àcids grassos</b> (un saturat i un insaturat) esterificats a una molècula de <b>glicerol</b> a la qual s’uneix per enllaç fosfoèster un <b>àcid fosfòric</b>. Generalment a l’àcid fosfòric se li uneix un altre alcohol (sovint un aminoalcohol).</li></ul><p>El fosfoglicèrid més simple és l’<span class="pk">àcid fosfatídic</span> i no té cap alcohol unit al fosfat.</p><p>Els fosfoglicèrids <b>es diferencien per l’aminoalcohol</b> que forma part de la seva estructura i es nomenen amb el prefix “<i>fosfatidil</i>” seguit del nom de l’alcohol. Del seu caràcter amfipàtic deriva la funció més important dels fosfoglicèrids que és l’estructural al ser el component principal de les bicapes lipídiques de les membranes cel·lulars.</p></div>
+ <div class="card rv"><h4>Constructor de fosfoglicèrids</h4><p style="margin-top:0">Tria l’aminoalcohol:</p><div id="pg"></div></div>
+</div>
+<div class="card rv" style="margin-top:16px"><p style="margin-top:0">Els fosfoglicèrids, a l’igual que la resta de lípids complexos, són <b>molècules amfipàtiques</b>, és a dir, tenen una part hidròfila (polar) i una part lipòfila (apolar). El grup fosfat i el grup amino constitueixen la part polar de la molècula. En medi aquós es troben ionitzats. <i>Cap hidròfil:</i> aminoalcohol (colina), fosfat, glicerol. <i>Cues hidròfobes:</i> àcids grassos.</p></div>
+<h3 class="rv">Fosfoesfingolípids</h3>
+<div class="grid">
+ <div class="card rv"><p>Estan formats per un <b>àcid gras</b> unit a una molècula d’<b>esfingosina</b>* a la qual s’uneix per enllaç fosfoèster un <b>àcid fosfòric</b> i <b>aminoalcohol</b>.</p><p style="font-size:13px">*Esfingosina (aminoalcohol de cadena llarga): <span class="mono">CH₃(CH₂)₁₂CH=CH–CH(OH)–CH(NH₂)–CH₂OH</span></p><p>El fosfoesfingolípid més abundant és la <span class="pk">esfingomielina</span> que presenta l’aminoalcohol colina. L’esfingomielina es troba a les membranes plasmàtiques de les cèl·lules animals sobretot a les cèl·lules nervioses. També es troba i és especialment abundant a les <b>beines de mielina</b> que protegeixen els àxons de les neurones. En l’ésser humà un 25% dels lípids de la beina de mielina són esfingomielines.</p></div>
+ <div class="card rv"><h4>Les cèl·lules de Schwann</h4><p>Les cèl·lules de Schwann envolten l’axó de les neurones i formen capes de mielina. La mielina està composta principalment d’esfingomielina. La beina de mielina proporciona aïllament elèctric a l’axó.</p><svg viewBox="0 0 300 90"><rect x="10" y="38" width="280" height="14" fill="#93aad6" opacity=".6"/><g fill="rgba(129,140,248,.35)" stroke="#818cf8"><rect x="40" y="26" width="70" height="38" rx="14"/><rect x="130" y="26" width="70" height="38" rx="14"/><rect x="220" y="26" width="60" height="38" rx="14"/></g><text x="75" y="82" font-size="10" fill="#93aad6" text-anchor="middle">beina de mielina</text><text x="150" y="16" font-size="10" fill="#b9f3fd" text-anchor="middle">àxon</text><text x="120" y="50" font-size="9" fill="#ffd3e1">nòduls de Ranvier</text></svg></div>
+</div>
+<h3 class="rv">Glicoesfingolípids (glicolípids)</h3>
+<div class="grid">
+ <div class="card rv"><p>Estan formats per un <b>àcid gras</b> unit a una molècula d’<b>esfingosina</b>* a la qual s’uneix un <b>glúcid</b>.</p><p>Els glicoesfingolípids es troben a la cara externa de la membrana plasmàtica de totes les cèl·lules en fan la funció de <b>receptors de molècules externes</b>. Són especialment abundants a les neurones del cervell. En els botons sinàptics del sistema nerviós actuen com a receptors de neurotransmissors.</p></div>
+ <div class="card rv"><h4>Grups sanguinis · toca un grup</h4><p>La part glucídica d’alguns glicoesfingolípids defineix els grups sanguinis humans i determina el tipus de sang que les persones poden rebre en una transfusió sanguínia.</p><div id="abo"></div></div>
+</div>
+<h3 class="rv">Repassem?</h3>
+<div class="card flat rv"><div id="rep"></div></div>
+</section>
+
+<!-- 07 -->
+<section id="s7"><div class="sh rv"><span class="num">07</span><h2>Lípids insaponificables</h2><p>No tenen enllaços èster, no formen sabons i no hi ha àcids grassos en la seva composició.</p></div>
+<div class="grid"><div class="card rv"><ul><li>No tenen enllaços èster.</li><li>No formen sabons.</li><li>No hi ha àcids grassos en la seva composició.</li><li>Hi ha tres tipus:</li></ul><p><span class="chip cc">Isoprenoides o terpens</span><span class="chip cc">Esteroides</span><span class="chip cc">Prostaglandines</span></p></div></div>
+<h3 class="rv">5.1 Els isoprenoides o terpens</h3>
+<div class="grid">
+ <div class="card rv"><ul><li>Formats per dos o més unitats de <b>isoprè</b> (2-metil-1,3-butadiè)</li><li>Poden ser molècules <b>lineals</b> o <b>cícliques</b> i alguns poden tenir ambdues estructures</li><li>Segons el nombre de molècules d’isoprè poden ser: monoterpens (2), diterpens (4), triterpens (6), tetraterpens (8) i politerpens (&gt; 8 molècules d’isoprè)</li></ul><p class="mono">CH₂=C(CH₃)–CH=CH₂ <span style="color:var(--tx2)">· isoprè</span></p><p>A causa de la seva naturalesa hidrocarbonada són substàncies netament hidrofòbiques i per tant insolubles en aigua. Són especialment abundants en els vegetals la majoria són pigments, olis essencials i vitamines.</p></div>
+ <div class="card rv"><h4>Classificació dels isoprenoides · toca una fila</h4><div class="tw"><table><tr><th>nom</th><th>nre. d’isoprens</th><th>funció</th><th>exemple</th></tr>
+ <tr data-r="2"><td>monoterpens</td><td>2</td><td>Essències vegetals</td><td>mentol, limonè, geraniol</td></tr>
+ <tr data-r="4"><td>diterpens</td><td>4</td><td>Pigments i vitamines</td><td>fitol (clorofil·la), vitamines A, E, K.</td></tr>
+ <tr data-r="6"><td>triterpens</td><td>6</td><td>Intermediaris síntesi colesterol</td><td>esqualè</td></tr>
+ <tr data-r="8"><td>tetraterpens</td><td>8</td><td>Pigments fotosintètics.</td><td><b style="color:#fb923c">carotens</b>, <b style="color:#fde047">xantofil·les</b></td></tr>
+ <tr data-r="10"><td>politerpens</td><td>milers</td><td>Aïllants</td><td>cautxú, làtex</td></tr></table></div><div id="iso" class="info"></div><p style="font-size:12px">Exemples de terpens: vitamina A, vitamina K, vitamina E, β-carotè.</p></div>
+</div>
+<h3 class="rv">5.2 Els esteroides</h3>
+<div class="grid">
+ <div class="card rv"><ul><li>Deriven d’un compost químic en forma d’anell anomenat <b>ciclopentà perhidrofenantrè</b> o <b>esterà</b> (4 anells)</li><li>Dos tipus: <b>esteroides = esterols</b> (OH al C3) i <b>hormones esteroides</b> (C=O al C3)</li></ul><p><b>Esterols:</b> colesterol, vitamina D, àcids biliars, estradiol. <b>Hormones esteroïdals:</b> hormones suprarenals i hormones sexuals (testosterona, corticosterona, progesterona, aldosterona).</p></div>
+ <div class="card rv"><h4>L’esterà · canvia de tipus</h4><div id="ster"></div></div>
+</div>
+<h3 class="rv">Esterols</h3>
+<div class="card flat rv"><p style="margin-top:0">Grup més nombrós dels esteroides. Tenen un grup hidroxil al C3 i una cadena alifàtica al C17. Els més importants: colesterol, àcids biliars, vitamines i estradiol.</p><div id="est"></div></div>
+<h3 class="rv">Hormones esteroides</h3>
+<div class="card flat rv"><p style="margin-top:0">Tenen un àtom d’oxigen unit al C3 mitjançant doble enllaç.</p><div id="hor"></div></div>
+<h3 class="rv">5.3 Les prostaglandines</h3>
+<div class="grid"><div class="card rv"><p>Substàncies derivades de l’<b>àcid prostanoic</b> (anell ciclopentà + dues cadenes alifàtiques).</p><details class="acc" open><summary>Estimulen els receptors del dolor</summary><div>Inicien la vasodilatació i provoquen la febre en les infeccions.</div></details><details class="acc"><summary>Disminueixen la pressió sanguínia</summary><div>Afavoreixen l’eliminació de substàncies a través del ronyó; redueixen la secreció dels sucs gàstrics; estimulen la musculatura del part per induir-lo.</div></details><details class="acc"><summary>Coagulació de la sang</summary><div>Intervenen en la coagulació de la sang.</div></details></div>
+<div class="card rv"><svg viewBox="0 0 300 130"><polygon points="50,40 80,28 100,52 80,78 50,66" fill="none" stroke="#60a5fa" stroke-width="2.5"/><path d="M80 28 L110 14 L135 28 L160 14 L185 28 L210 14 L235 28 L260 14" fill="none" stroke="#60a5fa" stroke-width="2.5"/><path d="M80 78 L110 92 L135 78 L160 92 L185 78 L210 92 L235 78" fill="none" stroke="#60a5fa" stroke-width="2.5"/><text x="262" y="12" fill="#ff6b9a" font-size="11">COOH</text><text x="237" y="95" fill="#93aad6" font-size="11">CH₃</text><text x="150" y="124" fill="#93aad6" font-size="11" text-anchor="middle">àcid prostanoic · 20 carbonis</text></svg></div></div>
+</section>
+
+<!-- 08 -->
+<section id="s8"><div class="sh rv"><span class="num">08</span><h2>Les funcions dels lípids</h2><p>Protectora, transport, estructural, energètica i reguladora.</p></div>
+<div class="grid"><div class="card rv"><h4>Toca una funció</h4><div id="fun"></div></div>
+<div class="card rv"><h4>Energia: lípids contra glúcids i proteïnes</h4><p>La combustió metabòlica d’un gram de greix produeix 9,4 kcal davant de les 4,1 kcal de les proteïnes i els glúcids. Mou el lliscador:</p><label class="mono" style="font-size:13px">Grams: <b id="gv">10</b> g</label><input type="range" id="gR" min="1" max="100" value="10"><div id="gOut"></div><svg viewBox="0 0 240 110" style="max-width:260px;margin-top:10px"><circle cx="110" cy="55" r="46" fill="rgba(251,191,36,.22)" stroke="#fbbf24" stroke-width="2"/><ellipse cx="178" cy="62" rx="12" ry="18" fill="rgba(34,211,238,.3)" stroke="#22d3ee"/><text x="100" y="52" fill="#fde68a" font-size="11" text-anchor="middle">triacilglicèrids</text><text x="100" y="66" fill="#fde68a" font-size="10" text-anchor="middle">(gota de greix)</text><text x="178" y="92" fill="#b9f3fd" font-size="10" text-anchor="middle">nucli</text><text x="110" y="108" fill="#93aad6" font-size="10" text-anchor="middle">adipòcit</text></svg></div></div>
+<div class="card rv" style="margin-top:16px"><p style="margin-top:0">Els animals i les plantes utilitzen els lípids com a reserva d’energia, en lloc dels polisacàrids i de les proteïnes, perquè contenen més del doble d’energia que aquests. La raó per la qual els glúcids o les proteïnes donen més energia que els lípids és perquè estan constituïts bàsicament per carboni i hidrogen, mentre que els glúcids i les proteïnes presenten un elevat percentatge d’oxigen. A causa d’això, el nombre d’enllaços que s’han de trencar en els lípids per formar CO₂ és més gran i, per tant, en oxidar-los s’allibera més energia.</p></div>
+<div class="card rv" style="margin-top:16px"><h4>Funció de missatger químic</h4><p>Les hormones envien senyals a les cèl·lules. <i>Què, qui, com</i>: Hormones com a missatgers químics: <a href="https://www.ccma.cat/tv3/alacarta/quequi/les-hormones-com-a-missatgers-quimics/video/5603751/" target="_blank" rel="noopener">ccma.cat/tv3/alacarta/quequi/les-hormones-com-a-missatgers-quimics</a></p></div>
+</section>
+
+<!-- 09 -->
+<section id="s9"><div class="sh rv"><span class="num">09</span><h2>Resum</h2><p>Tot el contingut en un sol vistiplau.</p></div>
+<div class="card flat rv"><div id="sum"></div></div>
+</section>
+
+<!-- 10 -->
+<section id="s10"><div class="sh rv"><span class="num">10</span><h2>Practica</h2><p>Classifica i gira targetes abans del test.</p></div>
+<h3 class="rv" style="margin-top:0">Joc de classificar</h3>
+<div class="card flat rv"><p style="margin-top:0">Clica un element i després la seva categoria.</p><div id="gItems"></div><div class="cls" id="gBins" style="margin-top:12px"></div><p id="gSc" class="pk" style="margin-bottom:0"></p></div>
+<h3 class="rv">Targetes de memòria</h3>
+<div class="grid s" id="fcs"></div>
+</section>
+
+<!-- 11 -->
+<section id="s11"><div class="sh rv"><span class="num">11</span><h2>Repàs</h2><p>Una pregunta cada vegada. Explicació després de respondre.</p></div>
+<div class="card flat rv" id="quiz"></div>
+</section>
+
+<!-- 12 -->
+<section id="s12"><div class="sh rv"><span class="num">12</span><h2>Glossari</h2><p>Cerca en viu.</p></div>
+<input class="srch" id="gs" placeholder="Cerca un terme…" aria-label="Cerca al glossari"><div class="grid s" id="gl"></div>
+</section>
+</main>
+<footer>Els lípids · apunts interactius</footer>
+
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const NS=[["s1","Lípids"],["s2","Àcids grassos"],["s3","Reaccions"],["s4","Propietats"],["s5","Simples"],["s6","Complexos"],["s7","Insaponificables"],["s8","Funcions"],["s9","Resum"],["s10","Practica"],["s11","Repàs"],["s12","Glossari"]];
+$("#links").innerHTML=NS.map(([i,t])=>`<a href="#${i}" data-id="${i}">${t}</a>`).join("");
+/* tabs */
+function tabs(id,items){const el=$("#"+id);el.innerHTML=`<div class="tabs">${items.map((x,i)=>`<button class="pill" data-i="${i}">${x[0]}</button>`).join("")}</div><div class="panel"></div>`;
+ const go=i=>{$$(".pill",el).forEach((b,k)=>b.classList.toggle("on",k==i));const p=$(".panel",el);p.style.animation="none";p.offsetHeight;p.style.animation="";p.innerHTML=items[i][1]();items[i][2]&&items[i][2](p)};
+ el.addEventListener("click",e=>{const b=e.target.closest(".pill");if(b&&el.contains(b))go(+b.dataset.i)});go(0)}
+/* hotspots */
+document.addEventListener("click",e=>{const h=e.target.closest(".hot");if(!h)return;const w=h.closest(".hs");if(!w)return;$$(".hot",w).forEach(x=>x.classList.remove("act"));h.classList.add("act");$(".info",w).innerHTML=`<b>${h.dataset.t}</b> ${h.dataset.i}`});
+const hs=(svg,d)=>`<div class="hs">${svg}<div class="info">${d||"Toca un element per veure’n l’explicació."}</div></div>`;
+/* chain drawing */
+function chain(n,dbs=[],cis=true,W=1){const s=22,a=11;let P=[];for(let i=0;i<n;i++)P.push([i*s,(i%2)*a*2]);
+ dbs.forEach((d,k)=>{if(!cis||d>=n)return;const pv=P[d],ang=(k%2?-1:1)*.75;for(let i=d+1;i<n;i++){const x=P[i][0]-pv[0],y=P[i][1]-pv[1];P[i]=[pv[0]+x*Math.cos(ang)-y*Math.sin(ang),pv[1]+x*Math.sin(ang)+y*Math.cos(ang)]}});
+ const xs=P.map(p=>p[0]),ys=P.map(p=>p[1]),x0=Math.min(...xs)-34,x1=Math.max(...xs)+24,y0=Math.min(...ys)-40,y1=Math.max(...ys)+30;
+ let g=`<polyline points="${P.map(p=>p.join(",")).join(" ")}" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+ dbs.forEach(d=>{if(d>=n)return;const[p,q]=[P[d-1],P[d]],dx=q[1]-p[1],dy=p[0]-q[0],l=Math.hypot(dx,dy)||1,o=5;g+=`<line x1="${p[0]+dx/l*o}" y1="${p[1]+dy/l*o}" x2="${q[0]+dx/l*o}" y2="${q[1]+dy/l*o}" stroke="#ff6b9a" stroke-width="3"/>`});
+ g+=`<circle cx="${P[0][0]}" cy="${P[0][1]}" r="5" fill="#ff6b9a"/><text x="${P[0][0]-30}" y="${P[0][1]-8}" fill="#ffd3e1" font-size="12" font-weight="700" font-family="Sora">COOH</text><text x="${P[n-1][0]+4}" y="${P[n-1][1]+(n%2?18:-8)}" fill="#93aad6" font-size="11">CH₃</text>`;
+ return `<svg viewBox="${x0} ${y0} ${x1-x0} ${y1-y0}" style="width:100%;height:${Math.round(W*210)}px">${g}</svg>`}
+/* trees */
+const BH=34;
+const nd=(x,y,w,t,i,col,sec)=>`<g class="hot" data-t="${t}" data-i="${i}${sec?` <a href='#${sec}'>Veure l’apartat →</a>`:""}"><rect x="${x}" y="${y}" width="${w}" height="${BH}" rx="17" fill="${col}22" stroke="${col}" stroke-width="1.6"/><text x="${x+w/2}" y="${y+22}" text-anchor="middle" fill="#eaf1ff" font-size="12" font-weight="600">${t}</text></g>`;
+const ed=(px,py,pw,cx,cy,cw)=>{const a=px+pw/2,b=py+BH,c=cx+cw/2,m=(b+cy)/2;return `M${a} ${b} V${m} H${c} V${cy} `};
+const ind=(px,py,x,w,kids)=>{let d=`M${px+18} ${py+BH} V${py+BH+12+44*(kids.length-1)+17} `,n="";kids.forEach((k,i)=>{const y=py+BH+12+44*i;d+=`M${px+18} ${y+17} H${x} `;n+=nd(x,y,w,k[0],k[1],k[2],k[3])});return [d,n]};
+const COL={b:"#60a5fa",c:"#22d3ee",v:"#818cf8"};
+function clsTree(){let d="",n="";
+ n+=nd(325,6,110,"Lípids","Grup de biomolècules orgàniques molt heterogeni, formades bàsicament per C i H.",COL.b,"s1");
+ n+=nd(110,70,180,"Amb àcids grassos","Lípids saponificables: contenen àcids grassos.",COL.c,"s5")+nd(470,70,190,"Sense àcids grassos","Lípids insaponificables: no contenen àcids grassos.",COL.v,"s7");
+ d+=ed(325,6,110,110,70,180)+ed(325,6,110,470,70,190);
+ const L2=[[40,120,"Simples","Només àcids grassos i alcohol: acilglicèrids i cèrids.",COL.c,"s5",0],[250,130,"Complexos","Àcids grassos, alcohol i un tercer tipus de molècula.",COL.c,"s6",0],[395,160,"Terpens o isoprenoides","Formats per unitats d’isoprè.",COL.v,"s7",1],[565,100,"Esteroides","Derivats de l’esterà (4 anells).",COL.v,"s7",1],[675,112,"Prostaglandines","Derivades de l’àcid prostanoic.",COL.v,"s7",1]];
+ L2.forEach(l=>{n+=nd(l[0],140,l[1],l[2],l[3],l[4],l[5]);d+=l[6]?ed(470,70,190,l[0],140,l[1]):ed(110,70,180,l[0],140,l[1])});
+ let r=ind(40,140,70,160,[["Acilglicèrids","Greixos: glicerol + 1, 2 o 3 àcids grassos.",COL.b,"s5"],["Cèrids","Ceres: àcid gras llarg + alcohol llarg.",COL.b,"s5"]]);d+=r[0];n+=r[1];
+ r=ind(250,140,280,170,[["Fosfoglicèrids","Fosfolípids amb glicerol.",COL.b,"s6"],["Fosfoesfingolípids","Fosfolípids amb esfingosina.",COL.b,"s6"],["Glicoesfingolípids","Glicolípids: esfingosina + àcid gras + glúcid.",COL.b,"s6"]]);d+=r[0];n+=r[1];
+ return `<svg viewBox="0 0 790 318" style="min-width:640px"><path d="${d}" stroke="#27427e" stroke-width="1.6" fill="none"/>${n}</svg>`}
+$("#cls").innerHTML=`<div class="tw">`+hs(clsTree())+`</div>`;
+{const T=[["Àcids grassos","Cadenes hidrocarbonades amb un grup carboxil; saturats i insaturats; molècules amfipàtiques.","s2",COL.b],["Reaccions","Esterificació i saponificació.","s3",COL.c],["Propietats","Solubilitat i punt de fusió.","s4",COL.c],["Saponificables","Simples (acilglicèrids i cèrids) i complexos (lípids de membrana).","s5",COL.v],["Insaponificables","Isoprenoides, esteroides i prostaglandines.","s7",COL.v],["Funcions","Energètica, estructural, protectora, transportadora i reguladora.","s8",COL.b]];
+ let d="",n=nd(325,6,110,"Lípids","Toca un tema per veure’n el resum i anar a l’apartat.",COL.b,"s1");
+ T.forEach((t,i)=>{const x=i*126;n+=nd(x,100,120,t[0],t[1],t[3],t[2]);d+=ed(325,6,110,x,100,120)});
+ $("#map").innerHTML=hs(`<svg viewBox="0 0 750 140"><path d="${d}" stroke="#27427e" stroke-width="1.6" fill="none"/>${n}</svg>`,"Toca un node per veure’n la definició i anar a l’apartat.")}
+/* e1 energy bars */
+$("#e1").innerHTML=`<svg viewBox="0 0 260 70"><text x="0" y="16" fill="#93aad6" font-size="11">Lípids 9,3</text><rect x="110" y="4" width="150" height="14" rx="7" fill="#3b82f6"/><text x="0" y="48" fill="#93aad6" font-size="11">Glúcids/prot. 4,1</text><rect x="110" y="36" width="66" height="14" rx="7" fill="#818cf8"/></svg>`;
+/* fatty acid structure */
+$("#faS").innerHTML=hs(`<svg viewBox="0 0 400 150"><path d="M70 90 L92 68 L114 90 L136 68 L158 90 L180 68 L202 90 L224 68 L246 90 L268 68 L290 90 L312 68 L334 90 L356 68" fill="none" stroke="#60a5fa" stroke-width="4" stroke-linecap="round"/>
+<g class="hot" data-t="Grup carboxil (-COOH)" data-i="Extrem polar. Ionitzat (COO⁻) en medi aquós: hidròfil, lipòfob; forma ponts d’hidrogen."><rect x="14" y="40" width="74" height="76" rx="14" fill="rgba(255,107,154,.16)" stroke="#ff6b9a" stroke-width="1.5"/><text x="30" y="82" fill="#ffd3e1" font-size="15" font-weight="700" font-family="Sora">COOH</text></g>
+<g class="hot" data-t="Cadena hidrocarbonada" data-i="Llarga cadena amb un nombre parell de carbonis. Apolar, hidròfoba i lipòfila: forma forces de Van der Waals amb altres cadenes."><rect x="94" y="46" width="240" height="54" rx="14" fill="rgba(34,211,238,.1)" stroke="#22d3ee" stroke-width="1.5"/></g>
+<g class="hot" data-t="Extrem metil (CH₃)" data-i="Extrem final de la cadena (carboni ω)."><rect x="342" y="40" width="48" height="40" rx="12" fill="rgba(129,140,248,.18)" stroke="#818cf8" stroke-width="1.5"/><text x="366" y="65" fill="#dcdfff" font-size="13" text-anchor="middle" font-weight="700" font-family="Sora">CH₃</text></g>
+<text x="214" y="132" text-anchor="middle" fill="#93aad6" font-size="11">cadena hidrocarbonada</text></svg>`);
+/* fatty acid types */
+const dbPos=n=>[9,12,15].filter(x=>x<n-1);
+tabs("faT",[
+["Saturat",()=>chain(18,[])+`<p style="color:var(--tx2)"><b>Àcids grassos saturats:</b> sense dobles enllaços en les seves cadenes. Només enllaços simples. Fórmula general <span class="mono">CH₃—(CH₂)ₙ—COOH</span>.</p>`],
+["Monoinsaturat",()=>chain(18,[9])+`<p style="color:var(--tx2)"><b>Àcids grassos insaturats:</b> amb un o més dobles enllaços. Monoinsaturat: àcid oleic (C18:1⁹). El doble enllaç (<span class="pk">rosa</span>) produeix un colze.</p>`],
+["Poliinsaturat",()=>chain(18,[9,12])+`<p style="color:var(--tx2)">Poliinsaturat: àcid linoleic (C18:2⁹˒¹²), més d’un doble enllaç.</p>`],
+["Trans",()=>chain(18,[9],false)+`<p style="color:var(--tx2)">Els enllaços <b>trans</b> són estructures rectes, sense colzes.</p>`]]);
+tabs("ct",[
+["Cis",()=>chain(18,[9],true)+`<p style="color:var(--tx2)">En els àcids grassos insaturats, els dobles enllaços poden existir en configuració <b>cis</b> o <b>trans</b>. En la configuració cis, els dos hidrògens associats a l’enllaç es troben al mateix costat, mentre que en la trans es troben en costats oposats. Un doble enllaç cis genera un colze, la qual cosa té unes conseqüències importants en les propietats dels greixos. La configuració cis és la que presenten la majoria de greixos insaturats que trobem a la natura. Són cardiosaludables i bons pel colesterol.</p>`],
+["Trans",()=>chain(18,[9],false)+`<p style="color:var(--tx2)">Les formes trans són estructures rectes, sense colzes, cosa que fa que algunes de les seves propietats, encara que la composició química sigui la mateixa, siguin diferents de les molècules idèntiques però amb enllaços cis. Els enllaços trans es poden forçar artificialment, a partir dels àcids cis, per obtenir àcids trans. Tenen les mateixes propietats físiques (rectes, sòlids a temperatura ambient...) i nutritives (no cardiosaludable, obesitat, colesterol...) que els saturats. Es troben principalment en aliments industrialitzats que han estat sotmesos a hidrogenació, per tal de solidificar-los (com la margarina).</p>`]]);
+/* packing */
+tabs("pack",[["a) Saturats",()=>pk(0)],["b) Insaturats",()=>pk(1)]]);
+function pk(u){let g="";for(let i=0;i<6;i++){const x=30+i*(u?44:26)+(u&&i%2?6:0);g+=`<circle cx="${x}" cy="30" r="8" fill="#818cf8"/>`;g+=u?`<path d="M${x} 38 L${x} 70 L${x+12} 88 L${x} 106 L${x} 140" fill="none" stroke="#60a5fa" stroke-width="3"/>`:`<line x1="${x}" y1="38" x2="${x}" y2="140" stroke="#60a5fa" stroke-width="3"/>`}
+ return `<svg viewBox="0 0 320 160">${g}<text x="160" y="156" fill="#93aad6" font-size="10" text-anchor="middle">${u?"colzes: cues amb forces de Van der Waals febles":"cues paral·leles: Van der Waals i ponts d’H entre caps"}</text></svg>`}
+/* reactions */
+const rxSvg=(a,ap,bp,b,bl)=>{const P=(c,x,t,col)=>`<g class="${c}"><rect x="${x}" y="46" width="44" height="32" rx="16" fill="rgba(255,107,154,.12)" stroke="#ff6b9a"/><text x="${x+22}" y="67" text-anchor="middle" fill="#eaf1ff" font-size="13" font-weight="700">${t}</text></g>`,B=(c,x,t,col)=>`<g class="${c}"><rect x="${x}" y="40" width="130" height="44" rx="22" fill="rgba(${col},.15)" stroke="rgb(${col})"/><text x="${x+65}" y="67" text-anchor="middle" fill="#eaf1ff" font-size="14" font-weight="700">${t}</text></g>`;
+ return `<svg class="rxs" data-s="0" viewBox="0 0 520 190" style="margin-bottom:12px">${B("a",10,a,"34,211,238")}${P("oh",144,ap)}${P("h",332,bp)}${B("b",380,b,"129,140,248")}<rect class="bond" x="250" y="60" width="20" height="4" fill="#ff6b9a"/><text class="bl" x="260" y="108" text-anchor="middle" fill="#ffd3e1" font-size="12" font-weight="700">${bl}</text><text class="w" x="260" y="172" text-anchor="middle" fill="#22d3ee" font-size="14" font-weight="700">+ H₂O</text></svg>`};
+function rxn(html,steps,sv){return `${sv||""}<div class="rx" data-s="0">${html}</div><p class="info" id="rxt" style="min-height:48px">${steps[0]}</p><div class="row" style="margin-top:12px"><button class="btn g" data-a="p">Anterior</button><button class="btn" data-a="n">Següent pas</button></div>`}
+function rxHook(p,steps){let s=0;const r=$(".rx",p),t=$(".info",p),v=$(".rxs",p);p.onclick=e=>{const a=e.target.dataset.a;if(!a)return;s=Math.max(0,Math.min(3,s+(a=="n"?1:-1)));r.dataset.s=s;v.dataset.s=s;t.innerHTML=steps[s]}}
+const S1=["<b>Reactius:</b> un àcid carboxílic i un alcohol.","L’<span class='pk'>OH</span> de l’àcid i l’<span class='pk'>H</span> de l’alcohol són els que reaccionen.","Se separen i formen <b style='color:var(--cy)'>una molècula d’aigua</b>.","S’uneixen els dos fragments: apareix l’<b>enllaç èster</b>."];
+const S2=["<b>Reactius:</b> un àcid gras i una base forta (NaOH o KOH).","L’<span class='pk'>OH</span> de l’àcid i el <span class='pk'>Na</span> de la base.","Es forma <b style='color:var(--cy)'>aigua</b>.","Es forma la <b>sal sòdica de l’àcid gras</b>: el <b>sabó</b>."];
+tabs("rxT",[
+["Esterificació",()=>`<p style="margin-top:0;color:var(--tx2)">Reacció que es produeix entre un <b>àcid carboxílic</b> i <b>alcohol</b> i que porta a l’aparició d’un <b>èster</b>* i una molècula d’aigua. Reacció d’un àcid gras amb un alcohol que dóna lloc a un ÈSTER i a una molècula d’aigua.</p>`+rxn(`<span class="mono">R₁–CO–<span class="a">OH</span> + <span class="b">H</span>–O–CH₂–R₂ <span style="color:var(--cy)">⇌</span> <span class="prod">R₁–CO<span class="e">–O–</span>CH₂–R₂</span> + <span class="w">H₂O</span></span><br><span class="m" style="color:var(--tx2);font-size:.75em">àcid orgànic + alcohol ⇌ èster + aigua · l’enllaç èster, i la hidròlisi en sentit invers</span>`,S1,rxSvg("R₁–CO","OH","H","O–R₂","enllaç èster"))+`<p style="color:var(--tx2);font-size:13px">Exemple: àcid palmític (àcid gras) + propanol (alcohol) ⇌ palmitat de propil (èster) + aigua. <span class="mono">CH₃–(CH₂)₁₄–COOH + HO–CH₂–CH₂–CH₃ ⇌ CH₃–(CH₂)₁₄–COO–CH₂–CH₂–CH₃ + H₂O</span>. El sentit invers és la <b>hidròlisi</b>.</p>`,p=>rxHook(p,S1)],
+["Saponificació",()=>`<ul style="color:var(--tx2);margin-top:0"><li>És la reacció d’un <b>àcid gras</b> amb una <b>base forta</b> NaOH o KOH</li><li>Donarà lloc a una <b>sal d’àcid gras</b> que s’anomena <b>sabó</b></li><li>Formen dispersions col·loïdals (formen micel·les que es dispersen a l’aigua)</li></ul>`+rxn(`<span class="mono">R–CO–<span class="a">OH</span> + <span class="b">Na</span>OH → <span class="prod">R–COO<span class="e">Na</span></span> + <span class="w">H₂O</span></span><br><span class="m" style="color:var(--tx2);font-size:.75em">àcid gras + hidròxid sòdic → sal sòdica (sabó) + aigua</span>`,S2,rxSvg("R–COO","H","OH","Na","sal d’àcid gras: sabó"))+`<p style="color:var(--tx2);font-size:13px">Exemple: <span class="mono">CH₃–(CH₂)₁₄–COOH + NaOH → CH₃–(CH₂)₁₄–COONa + H₂O</span> · àcid palmític + hidròxid sòdic (base) → palmitat sòdic (sabó) + aigua.</p>`,p=>rxHook(p,S2)]]);
+/* aggregates */
+function mic(cx,cy,r,n,col){let g="";for(let i=0;i<n;i++){const a=i/n*6.283,x=cx+Math.cos(a)*r,y=cy+Math.sin(a)*r,x2=cx+Math.cos(a)*r*.45,y2=cy+Math.sin(a)*r*.45;g+=`<line x1="${x}" y1="${y}" x2="${x2}" y2="${y2}" stroke="#22d3ee" stroke-width="2"/><circle cx="${x}" cy="${y}" r="5" fill="${col||"#818cf8"}"/>`}return g}
+const water=`<rect x="0" y="0" width="300" height="170" rx="12" fill="rgba(59,130,246,.18)"/>`;
+tabs("agg",[
+["Pel·lícula",()=>`<svg viewBox="0 0 300 170"><rect x="0" y="60" width="300" height="110" rx="12" fill="rgba(59,130,246,.2)"/>${Array.from({length:12},(_,i)=>`<circle cx="${24+i*22}" cy="62" r="6" fill="#818cf8"/><line x1="${24+i*22}" y1="56" x2="${24+i*22}" y2="24" stroke="#22d3ee" stroke-width="2"/>`).join("")}<text x="150" y="130" fill="#93aad6" font-size="12" text-anchor="middle">aigua</text><text x="150" y="14" fill="#93aad6" font-size="10" text-anchor="middle">pel·lícula superficial d’àcids grassos</text></svg>`],
+["Micel·la",()=>`<svg viewBox="0 0 300 170">${water}${mic(150,85,52,18)}<text x="150" y="89" fill="#93aad6" font-size="11" text-anchor="middle">Micel·la</text></svg>`],
+["Bicapa",()=>`<svg viewBox="0 0 300 170">${water}${Array.from({length:12},(_,i)=>`<circle cx="${24+i*22}" cy="52" r="6" fill="#818cf8"/><line x1="${24+i*22}" y1="58" x2="${24+i*22}" y2="82" stroke="#22d3ee" stroke-width="2"/><line x1="${24+i*22}" y1="88" x2="${24+i*22}" y2="112" stroke="#22d3ee" stroke-width="2"/><circle cx="${24+i*22}" cy="118" r="6" fill="#818cf8"/>`).join("")}</svg>`]]);
+tabs("soap",[
+["Micel·la monocapa",()=>`<svg viewBox="0 0 300 170">${water}${mic(150,85,56,20)}<text x="150" y="89" fill="#93aad6" font-size="11" text-anchor="middle">Aigua</text></svg>`],
+["Efecte emulsionant",()=>`<svg viewBox="0 0 300 170">${water}<circle cx="150" cy="85" r="30" fill="#fbbf24" opacity=".7"/><text x="150" y="89" font-size="12" fill="#050b1c" text-anchor="middle" font-weight="700">Oli</text>${mic(150,85,60,22).replace(/x2="[^"]+" y2="[^"]+"/g,m=>m)}</svg>`],
+["Efecte escumós",()=>`<svg viewBox="0 0 300 170">${water}<circle cx="150" cy="85" r="30" fill="#dbeafe" opacity=".5"/><text x="150" y="89" font-size="12" fill="#050b1c" text-anchor="middle" font-weight="700">Aire</text><circle cx="150" cy="85" r="46" fill="none" stroke="#818cf8" stroke-width="7" stroke-dasharray="1 8" stroke-linecap="round"/><circle cx="150" cy="85" r="62" fill="none" stroke="#818cf8" stroke-width="7" stroke-dasharray="1 9" stroke-linecap="round"/></svg>`]]);
+/* bilayer */
+{let g=`<rect x="0" y="0" width="520" height="260" rx="14" fill="rgba(59,130,246,.14)"/>`;
+ for(let i=0;i<22;i++){const x=20+i*23;g+=`<circle cx="${x}" cy="80" r="7" fill="#818cf8"/><path d="M${x-3} 87 V122 M${x+3} 87 V122" stroke="#22d3ee" stroke-width="1.6"/><path d="M${x-3} 138 V173 M${x+3} 138 V173" stroke="#22d3ee" stroke-width="1.6"/><circle cx="${x}" cy="180" r="7" fill="#818cf8"/>`}
+ g+=`<g class="hot" data-t="Cap hidròfil" data-i="Part polar dels fosfolípids, orientada cap a l’aigua."><rect x="10" y="68" width="500" height="22" rx="8" fill="transparent" stroke="#818cf8" stroke-opacity=".5"/></g><g class="hot" data-t="Cues hidròfobes" data-i="Cadenes d’àcids grassos que s’allunyen de l’aigua."><rect x="10" y="94" width="500" height="76" rx="8" fill="transparent" stroke="#22d3ee" stroke-opacity=".5"/></g>
+ <g class="hot" data-t="Proteïna integral" data-i="Travessa la bicapa; inclou proteïnes globulars, de canal i alfa-hèlix."><rect x="250" y="62" width="44" height="126" rx="14" fill="rgba(129,140,248,.6)" stroke="#818cf8"/></g>
+ <g class="hot" data-t="Colesterol" data-i="Entre els fosfolípids; confereix estabilitat a la membrana."><rect x="130" y="100" width="18" height="60" rx="8" fill="#fbbf24" stroke="#fbbf24"/></g>
+ <g class="hot" data-t="Glicolípid i glicoproteïna" data-i="Porten carbohidrats a la cara externa de la membrana. Proteïna periférica: unida a la superfície."><circle cx="390" cy="56" r="9" fill="#22d3ee" stroke="#22d3ee"/><path d="M390 65 V80" stroke="#22d3ee" stroke-width="3"/></g>
+ <text x="14" y="24" fill="#93aad6" font-size="12">AIGUA</text><text x="14" y="250" fill="#93aad6" font-size="12">AIGUA</text>`;
+ $("#bil").innerHTML=hs(`<svg viewBox="0 0 520 260">${g}</svg>`,"Toca una part de la bicapa.")}
+/* melting */
+const SAT={4:-3,6:0,8:16,10:31,12:44,14:57,16:63,18:71,20:76,22:80,24:90},D18=[71,14,-5,-11],DROP=[0,56,75,81];
+function bars(l,v,min,max,col,hl){const H=140,W=300,bw=W/l.length;let g="";const z=H-(0-min)/(max-min)*H;l.forEach((t,i)=>{const h=(v[i]-0)/(max-min)*H,y=h>=0?z-h:z;g+=`<rect x="${i*bw+3}" y="${y}" width="${bw-6}" height="${Math.max(2,Math.abs(h))}" rx="3" fill="${i===hl?"#ff6b9a":col}"/><text x="${i*bw+bw/2}" y="${H+14}" fill="#93aad6" font-size="9" text-anchor="middle">${t}</text>`});return `<svg viewBox="0 0 ${W} ${H+20}"><line x1="0" y1="${z}" x2="${W}" y2="${z}" stroke="#27427e"/>${g}</svg>`}
+$("#ch1").innerHTML=bars(Object.keys(SAT),Object.values(SAT),-10,95,"#3b82f6",7);
+$("#ch2").innerHTML=bars(["0","1","2","3"],D18.map((x,i)=>x),-15,75,"#818cf8",-1);
+const dots=liq=>{let g="";for(let i=0;i<4;i++)for(let j=0;j<10;j++){const x=18+j*30+(i%2?10:0),y=14+i*20;g+=`<circle cx="${x}" cy="${y}" r="7" fill="${liq?"#22d3ee":"#60a5fa"}" style="${liq?`animation:jit ${(1+((i*7+j*3)%5)/4).toFixed(2)}s ease-in-out ${(-(i+j)/3).toFixed(2)}s infinite`:""}"/>`}return `<svg class="jt" viewBox="0 0 330 84" style="max-width:360px;margin-top:8px">${g}</svg><p style="font-size:12px;color:var(--tx2);margin:2px 0 0">${liq?"Líquid: les molècules es mouen lliurement.":"Sòlid: molècules ordenades, unides per forces de Van der Waals."}</p>`};
+function mpUpd(){const n=+$("#nR").value,d=+$("#dR").value;$("#nv").textContent=n;$("#dv").textContent=d;const mp=d==0?SAT[n]:(n==18?D18[d]:SAT[n]-DROP[d]);const liq=mp<25;
+ $("#mpOut").innerHTML=chain(n,dbPos(n).slice(0,d),true,.8)+dots(liq)+`<div class="row"><span class="big">${mp} °C</span><span class="chip ${liq?"cc":"cp"}">${liq?"líquid a Tª ambient":"sòlid a Tª ambient"}</span></div><div style="height:14px;border-radius:99px;background:rgba(39,66,126,.5);margin-top:8px;position:relative"><div class="bar" style="width:${Math.max(3,(mp+15)/110*100)}%"></div></div><p style="font-size:12px;margin:6px 0 0;color:var(--tx2)">Valors aproximats del gràfic (Tª ambient ≈ 25 °C). Estàndard: C18 amb 0, 1, 2 i 3 dobles enllaços cis.</p>`}
+$("#nR").oninput=mpUpd;$("#dR").oninput=mpUpd;mpUpd();
+/* energy slider */
+function gUpd(){const g=+$("#gR").value;$("#gv").textContent=g;$("#gOut").innerHTML=`<div class="row"><span class="big">${(g*9.4).toFixed(0)}</span><span style="color:var(--tx2)">kcal de lípids</span></div><div class="bar" style="width:100%"></div><div class="row" style="margin-top:8px"><span class="big" style="color:var(--vi)">${(g*4.1).toFixed(0)}</span><span style="color:var(--tx2)">kcal de glúcids o proteïnes</span></div><div class="bar" style="width:${4.1/9.4*100}%;background:var(--vi)"></div>`}
+$("#gR").oninput=gUpd;gUpd();
+/* acylglycerol builder */
+{const O=[["–","Buit"],["L","Saturat llarg"],["I","Insaturat"],["C","Saturat curt"]];let st=["L","L","L"];
+ const draw=()=>{const n=st.filter(x=>x!="–").length,nm=["Glicerina","Monoacilglicèrid","Diacilglicèrid","Triacilglicèrid"][n];let g="",used=st.filter(x=>x!="–");
+  st.forEach((s,i)=>{const y=24+i*46;g+=`<rect x="8" y="${y-12}" width="46" height="26" rx="8" fill="rgba(34,211,238,.18)" stroke="#22d3ee"/><text x="31" y="${y+5}" font-size="11" fill="#b9f3fd" text-anchor="middle">CH${i==1?"OH":"₂"}</text>`;
+   if(s=="–")g+=`<text x="64" y="${y+5}" font-size="12" fill="#93aad6">OH lliure (polar)</text>`;else{g+=`<rect x="54" y="${y-4}" width="14" height="10" fill="#ff6b9a"/>`+(s=="C"?`<path d="M68 ${y} l16 -8 l16 8 l16 -8" fill="none" stroke="#60a5fa" stroke-width="3"/>`:s=="I"?`<path d="M68 ${y} l18 -8 l18 8 l12 -8 l14 12 l12 -4 l18 -8 l18 8 l18 -8 l18 8 l18 -8" fill="none" stroke="#60a5fa" stroke-width="3"/><line x1="124" y1="${y+4}" x2="136" y2="${y-4}" stroke="#ff6b9a" stroke-width="3"/>`:`<path d="M68 ${y} l18 -8 l18 8 l18 -8 l18 8 l18 -8 l18 8 l18 -8 l18 8 l18 -8 l18 8 l18 -8" fill="none" stroke="#60a5fa" stroke-width="3"/>`)}});
+  const simple=n==3&&used.every(x=>x==used[0]);let est=n==0?"—":used.includes("C")?"semisòlid: mantega":used.includes("I")?"líquid: oli (punt de fusió < 15 °C)":"sòlid: sèu (punt de fusió > 40 °C)";
+  $("#bldO").innerHTML=`<svg viewBox="0 0 360 150" style="max-width:460px">${g}</svg><div class="row"><span class="chip cb">${nm}</span><span class="chip cc">${n} H₂O alliberades</span>${n==3?`<span class="chip cv">${simple?"simple":"mixt"}</span>`:""}<span class="chip ${n>1&&n<3?"cp":"cb"}">${n==3?"apolar (greix neutre)":n?"certa polaritat (OH lliures)":"alcohol amb 3 -OH"}</span></div><p style="color:var(--tx2);margin-bottom:0">Estat físic: <b class="k">${est}</b></p>`};
+ $("#bld").innerHTML=`<div class="grid s">${[0,1,2].map(i=>`<div><p style="margin:0 0 6px;font-size:12px;color:var(--tx2)">Posició ${i+1}</p><div class="tabs" data-p="${i}">${O.map(o=>`<button class="pill" data-v="${o[0]}">${o[1]}</button>`).join("")}</div></div>`).join("")}</div><div id="bldO"></div>`;
+ const mark=()=>$$("#bld .tabs").forEach(t=>$$(".pill",t).forEach(b=>b.classList.toggle("on",b.dataset.v==st[+t.dataset.p])));
+ $("#bld").onclick=e=>{const b=e.target.closest(".pill");if(!b)return;st[+b.parentNode.dataset.p]=b.dataset.v;mark();draw()};mark();draw()}
+/* fat states */
+const zz=(x,y,n,k)=>{let p=`M${x} ${y}`,cx=x,cy=y;for(let i=0;i<n;i++){cx+=16;cy+=(i%2?7:-7);p+=` L${cx} ${cy}`;if(k&&i==k){cy+=12;cx+=8;p+=` L${cx} ${cy}`}}return p};
+const trig=t=>{const N=t=="M"?5:12,rows=[0,1,2].map(i=>{const y=26+i*38,kk=t=="I"&&i>0?(i==1?4:6):0;return `<rect x="42" y="${y-5}" width="12" height="10" fill="#ff6b9a"/><path d="${zz(54,y,N,kk)}" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linejoin="round"/>`}).join("");
+ return `<svg viewBox="0 0 300 118" style="max-width:380px"><rect x="8" y="8" width="30" height="102" rx="8" fill="rgba(34,211,238,.18)" stroke="#22d3ee"/><text x="23" y="62" fill="#b9f3fd" font-size="11" text-anchor="middle" transform="rotate(-90 23 59)">Glicerol</text>${rows}<text x="290" y="12" fill="#93aad6" font-size="10" text-anchor="end">${t=="I"?"colzes: líquid":t=="M"?"cadenes curtes: semisòlid":"cadenes rectes: sòlid"}</text></svg>`};
+tabs("fat",[
+["Olis",()=>trig("I")+`<p style="margin-top:0;color:var(--tx2)">Els acilglicèrids que presenten com a mínim un àcid gras <span class="pk">insaturat</span>, són líquids a temperatura ambient i reben el nom d’<b>olis</b>. L’oli d’oliva està constituït bàsicament pel triacilglicèrid <i>trioleïna</i>, format per 3 àcids olèics i una glicerina. (Oli d’oliva verge extra, per 100 g: 900 kcal, 100 g de greixos totals: saturats 13 g, poliinsaturats 8 g, monoinsaturats 79 g; vitamina E 20 mg, vitamina A 200 µg.)</p>`],
+["Sèus",()=>trig("S")+`<p style="margin-top:0;color:var(--tx2)">Els acilglicèrids que presenten tots els àcids grassos <span class="pk">saturats</span>, són sòlids a temperatura ambient i reben el nom de <b>sèu</b>. Exemple: el sèu de bou i de cavall està constituït bàsicament pel triacilglicèrid triestearina, format per 3 àcids esteàrics i una glicerina.</p>`],
+["Mantegues",()=>trig("M")+`<p style="margin-top:0;color:var(--tx2)">Els acilglicèrids que presenten àcids grassos de cadena curta, a temperatura ambient són semisòlids i reben el nom de <b>mantegues</b>. En ella hi ha molts tipus diferents d’acilglicèrids. (Mantega, per 100 g: 3.054 kJ / 743 kcal; greixos 82 g, dels quals saturats 57 g; hidrats de carboni 0,5 g; proteïnes 0,7 g; sal 0,03 g; vitamina A 602 µg.)</p>`]]);
+/* membrane lipids tree */
+{let n=nd(250,6,170,"Lípids de membrana","També anomenats lípids amfipàtics.",COL.b,"s6"),d="";
+ n+=nd(60,76,140,"Fosfolípids","Contenen àcid fosfòric.",COL.c,"s6")+nd(330,76,130,"Glicolípids","Contenen un glúcid.",COL.c,"s6")+nd(560,76,110,"Colesterol","Esterol que s’intercala entre els fosfolípids i estabilitza la bicapa.",COL.v,"s7");
+ d+=ed(250,6,170,60,76,140)+ed(250,6,170,330,76,130)+ed(250,6,170,560,76,110);
+ n+=nd(0,146,150,"Fosfoglicèrids","Glicerol + 2 àcids grassos + fosfat + aminoalcohol.",COL.v,"s6")+nd(160,146,170,"Fosfoesfingolípids","Esfingosina + àcid gras + fosfat + aminoalcohol (esfingomielina).",COL.v,"s6")+nd(340,146,170,"Glicoesfingolípids","Esfingosina + àcid gras + glúcid.",COL.v,"s6");
+ d+=ed(60,76,140,0,146,150)+ed(60,76,140,160,146,170)+ed(330,76,130,340,146,170);
+ $("#memT").innerHTML=`<div class="tw">`+hs(`<svg viewBox="0 0 680 190" style="min-width:560px"><path d="${d}" stroke="#27427e" stroke-width="1.6" fill="none"/>${n}</svg>`,"Fosfolípids i glicolípids formen les bicapes; el colesterol hi té funció estabilitzadora.")+`</div>`}
+/* phosphoglycerides */
+{const A=[["Etanolamina","Fosfatidiletanolamina (o cefalina): abundant al cervell"],["Colina","Fosfatidilcolina (o lecitina): abundant al fetge, cervell i rovell d’ou"],["Serina","Fosfatidilserina: abundant a la cara interna de la membrana plasmàtica"]];
+ const dr=i=>`<svg viewBox="0 0 340 160"><rect x="4" y="20" width="110" height="30" rx="6" fill="rgba(255,107,154,.15)" stroke="#ff6b9a"/><text x="59" y="40" font-size="12" fill="#ffd3e1" text-anchor="middle">Àcid gras</text><rect x="4" y="80" width="110" height="30" rx="6" fill="rgba(255,107,154,.15)" stroke="#ff6b9a"/><text x="59" y="100" font-size="12" fill="#ffd3e1" text-anchor="middle">Àcid gras</text><rect x="114" y="10" width="26" height="110" rx="6" fill="rgba(34,211,238,.2)" stroke="#22d3ee"/><text x="127" y="68" font-size="11" fill="#b9f3fd" text-anchor="middle" transform="rotate(-90 127 68)">Glicerina</text><rect x="150" y="50" width="76" height="30" rx="6" fill="rgba(129,140,248,.25)" stroke="#818cf8"/><text x="188" y="70" font-size="11" fill="#dcdfff" text-anchor="middle">Àcid fosfòric</text><rect x="236" y="50" width="100" height="30" rx="6" fill="rgba(251,191,36,.2)" stroke="#fbbf24"/><text x="286" y="70" font-size="11" fill="#fde68a" text-anchor="middle">${A[i][0]}</text><text x="130" y="142" font-size="10" fill="#93aad6" text-anchor="middle">enllaços èster · enllaços fosfoèster</text></svg>`;
+ $("#pg").innerHTML=`<div class="tabs">${A.map((a,i)=>`<button class="pill" data-i="${i}">${a[0]}</button>`).join("")}</div><div id="pgO"></div>`;
+ const u=i=>{$$("#pg .pill").forEach((b,k)=>b.classList.toggle("on",k==i));$("#pgO").innerHTML=dr(i)+`<p style="color:var(--tx2)">${A[i][1]}.</p>`};$("#pg").onclick=e=>{const b=e.target.closest(".pill");b&&u(+b.dataset.i)};u(0)}
+/* blood groups */
+{const SG={N:["N-acetil-glucosamina","#14b8a6"],G:["Galactosa","#d4a574"],F:["Fucosa","#dc2626"],A:["N-acetil-galactosamina","#8b5cf6"]},Q={O:"NGF",A:"NGFA",B:"NGFG",AB:"NGFAG"};
+ const hexp=(cx,cy,r)=>Array.from({length:6},(_,k)=>{const a=(60*k-30)*Math.PI/180;return (cx+r*Math.cos(a)).toFixed(1)+","+(cy+r*Math.sin(a)).toFixed(1)}).join(" ");
+ $("#abo").innerHTML=`<div class="tabs">${Object.keys(Q).map(k=>`<button class="pill" data-k="${k}">${k}</button>`).join("")}</div><div id="aboO"></div><div>${Object.values(SG).map(v=>`<span class="chip" style="background:${v[1]}33;color:#eaf1ff;border:1px solid ${v[1]}">${v[0]}</span>`).join("")}</div>`;
+ const u=k=>{$$("#abo .pill").forEach(b=>b.classList.toggle("on",b.dataset.k==k));const q=Q[k];let g=`<circle cx="36" cy="60" r="30" fill="#b91c1c" stroke="#fca5a5"/><text x="36" y="66" fill="#fff" text-anchor="middle" font-weight="800" font-size="18">${k}</text>`;
+  [...q].forEach((c,i)=>{const x=100+i*46,y=60,ex=i>2;g+=`<line x1="${x-46+(i?0:-4)}" y1="60" x2="${x}" y2="60" stroke="#93aad6" stroke-width="2"/><polygon points="${hexp(x,y,19)}" fill="${SG[c][1]}" stroke="${ex?"#ff6b9a":"#050b1c"}" stroke-width="${ex?3:1}"/>`});
+  $("#aboO").innerHTML=`<svg viewBox="0 0 340 120" style="max-width:420px">${g}<text x="170" y="112" font-size="10" fill="#93aad6" text-anchor="middle">glòbul vermell · els glúcids afegits (vora rosa) defineixen el grup</text></svg>`};
+ $("#abo").onclick=e=>{const b=e.target.closest(".pill");b&&u(b.dataset.k)};u("O")}
+/* repassem */
+{let n=nd(0,6,300,"Lípids d’emmagatzemament o neutres","Triglicèrids: glicerol + 3 àcids grassos.",COL.b,"s5")+nd(430,6,210,"Lípids de membrana","Fosfolípids i glicolípids.",COL.v,"s6"),d="";
+ n+=nd(50,76,150,"Triglicèrids","Glicerol + 3 àcids grassos.",COL.b,"s5")+nd(300,76,130,"Fosfolípids","Glicerofosfolípids i esfingolípids.",COL.c,"s6")+nd(540,76,130,"Glicolípids","Esfingolípids amb glúcid.",COL.c,"s6");
+ d+=ed(0,6,300,50,76,150)+ed(430,6,210,300,76,130)+ed(430,6,210,540,76,130);
+ n+=nd(190,146,150,"Glicerofosfolípids","Glicerol + 2 àcids grassos + PO₄ + alcohol.",COL.v,"s6")+nd(350,146,130,"Esfingolípids","Esfingosina + àcid gras + PO₄ + colina.",COL.v,"s6")+nd(540,146,130,"Esfingolípids","Esfingosina + àcid gras + mono- o oligosacàrid.",COL.v,"s6");
+ d+=ed(300,76,130,190,146,150)+ed(300,76,130,350,146,130)+ed(540,76,130,540,146,130);
+ const B=(t,c)=>`<span class="chip c${c}">${t}</span>`;
+ $("#rep").innerHTML=hs(`<div class="tw"><svg viewBox="0 0 690 190" style="min-width:600px"><path d="${d}" stroke="#27427e" stroke-width="1.6" fill="none"/>${n}</svg></div>`,"Toca un grup per veure’n la composició.")+`<div class="tw" style="margin-top:12px"><table><tr><th>Grup</th><th>Blocs</th></tr><tr><td>Triglicèrids</td><td>${B("Glicerol","v")}${B("Àcid gras","c")}${B("Àcid gras","c")}${B("Àcid gras","c")}</td></tr><tr><td>Glicerofosfolípids</td><td>${B("Glicerol","v")}${B("Àcid gras","c")}${B("Àcid gras","c")}${B("PO₄","p")}${B("Alcohol","b")}</td></tr><tr><td>Esfingolípids (fosfolípids)</td><td>${B("Esfingosina","v")}${B("Àcid gras","c")}${B("PO₄","p")}${B("Colina","b")}</td></tr><tr><td>Esfingolípids (glicolípids)</td><td>${B("Esfingosina","v")}${B("Àcid gras","c")}${B("Mono- o oligosacàrid","b")}</td></tr></table></div>`}
+/* isoprenoids */
+$$("tr[data-r]").forEach(r=>r.onclick=()=>{$$("tr[data-r]").forEach(x=>x.classList.remove("sel"));r.classList.add("sel");const n=+r.dataset.r,big=n>8,k=big?8:n;let g="";for(let u=0;u<k;u++){const x=8+u*56,c=u%2?"#22d3ee":"#818cf8";g+=`<g stroke="${c}" stroke-width="3" fill="none" stroke-linecap="round"><polyline points="${x},56 ${x+14},40 ${x+30},56 ${x+44},40"/><line x1="${x+14}" y1="40" x2="${x+14}" y2="18"/></g><line x1="${x+44}" y1="40" x2="${x+53}" y2="55" stroke="#93aad6" stroke-width="2"/><line x1="${x+30}" y1="56" x2="${x+44}" y2="40" stroke="#ff6b9a" stroke-width="3"/>`}
+ if(big)g+=`<text x="${8+8*56}" y="60" fill="#93aad6" font-size="22">… milers</text>`;
+ $("#iso").innerHTML=`<svg viewBox="0 0 ${big?560:Math.max(130,k*56+20)} 76" style="width:${big?560:k*90}px;max-width:100%">${g}</svg><div>${r.children[0].textContent}: ${big?"milers d’unitats":n+" unitats"} d’isoprè (cada unitat: 5 carbonis amb una ramificació metil i dos dobles enllaços).</div>`});
+$("tr[data-r]").click();
+/* sterane */
+{const hex=(cx,cy)=>Array.from({length:6},(_,k)=>{const a=(-90+60*k)*Math.PI/180;return [cx+32*Math.cos(a),cy+32*Math.sin(a)].map(v=>v.toFixed(1)).join(",")}).join(" ");
+ const core=`<g fill="rgba(59,130,246,.15)" stroke="#60a5fa" stroke-width="2.5" stroke-linejoin="round"><polygon points="${hex(60,140)}"/><polygon points="${hex(115.4,140)}"/><polygon points="${hex(143.1,92)}"/><polygon points="170.8,76 170.8,108 199,117 216,92 199,67"/></g><g fill="#93aad6" font-size="14" font-weight="700" text-anchor="middle" font-family="Sora"><text x="60" y="146">A</text><text x="115" y="146">B</text><text x="143" y="98">C</text><text x="193" y="97">D</text></g><g stroke="#60a5fa" stroke-width="2.5"><line x1="87.7" y1="124" x2="87.7" y2="98"/><line x1="170.8" y1="76" x2="170.8" y2="50"/></g><text x="95" y="96" font-size="10" fill="#93aad6">19</text><text x="178" y="52" font-size="10" fill="#93aad6">18</text>`;
+ const mk=h=>`<svg viewBox="0 0 360 200">${core}<g class="hot" data-t="C3" data-i="${h?"Hormona esteroide: oxigen unit al C3 per doble enllaç (C=O).":"Esterol: grup hidroxil (OH) al C3."}"><circle cx="32" cy="156" r="14" fill="transparent" stroke="${h?"#ff6b9a":"#22d3ee"}" stroke-opacity=".5"/>${h?`<line x1="32" y1="156" x2="14" y2="172" stroke="#ff6b9a" stroke-width="3"/><line x1="38" y1="160" x2="20" y2="176" stroke="#ff6b9a" stroke-width="3"/><text x="2" y="190" fill="#ffd3e1" font-size="13" font-weight="700">=O</text>`:`<line x1="32" y1="156" x2="14" y2="172" stroke="#60a5fa" stroke-width="2.5"/><text x="0" y="188" fill="#ffd3e1" font-size="13" font-weight="700">HO</text>`}</g>
+ <g class="hot" data-t="C17" data-i="${h?"Les hormones esteroides no tenen la cadena alifàtica llarga.":"Cadena alifàtica unida al C17."}"><circle cx="199" cy="117" r="14" fill="transparent" stroke="#22d3ee" stroke-opacity=".5"/>${h?"":`<path d="M199 117 L222 140 L250 128 L274 150 L300 138 L324 158" fill="none" stroke="#60a5fa" stroke-width="2.5"/>`}</g></svg>`;
+ tabs("ster",[["Esterol",()=>hs(mk(0),"Toca C3 o C17.")],["Hormona esteroide",()=>hs(mk(1),"Toca C3 o C17.")]])}
+/* esterols & hormones */
+const hx=(cx,cy)=>Array.from({length:6},(_,k)=>{const a=(-90+60*k)*Math.PI/180;return [cx+32*Math.cos(a),cy+32*Math.sin(a)].map(v=>v.toFixed(1)).join(",")}).join(" ");
+const Lq=(a,b,c,d,col="#60a5fa")=>`<line x1="${a}" y1="${b}" x2="${c}" y2="${d}" stroke="${col}" stroke-width="2.5" stroke-linecap="round"/>`,Tx=(x,y,t,col="#ffd3e1")=>`<text x="${x}" y="${y}" fill="${col}" font-size="12" font-weight="700">${t}</text>`,PK="#ff6b9a";
+const D={oh3:Lq(32.3,156,14,172)+Tx(-2,188,"HO"),o3:Lq(32.3,156,16,172,PK)+Lq(38,160,22,176,PK)+Tx(4,190,"O",PK),me19:Lq(87.7,124,87.7,98)+Tx(92,100,"19","#93aad6"),me18:Lq(170.8,76,170.8,50)+Tx(176,52,"18","#93aad6"),cho18:Lq(170.8,76,170.8,50)+Tx(176,50,"CHO",PK),
+ ch17:`<polyline points="199,117 222,140 250,128 274,150 300,138" fill="none" stroke="#60a5fa" stroke-width="2.5"/>`,oh17:Lq(199,117,214,138)+Tx(210,152,"OH"),
+ oh11:Lq(115.4,76,100,56)+Tx(82,52,"HO"),oh12:Lq(143.1,60,143.1,38)+Tx(132,32,"HO"),oh7:Lq(115.4,172,115.4,194)+Tx(104,208,"OH"),
+ cooh:`<polyline points="199,117 222,140 246,128" fill="none" stroke="#60a5fa" stroke-width="2.5"/>`+Tx(250,128,"COOH"),
+ ac:Lq(199,117,225,132)+Lq(225,132,252,118)+Lq(222,132,222,156,PK)+Lq(228,132,228,156,PK)+Tx(214,170,"O",PK)+Tx(256,120,"CH₃","#93aad6"),
+ acoh:Lq(199,117,225,132)+Lq(225,132,252,118)+Lq(252,118,278,132)+Lq(222,132,222,156,PK)+Lq(228,132,228,156,PK)+Tx(214,170,"O",PK)+Tx(270,150,"OH")};
+function mol(name,deco,aro){return `<svg viewBox="0 0 330 215" style="max-width:320px;flex:1 1 260px"><g fill="rgba(59,130,246,.15)" stroke="#60a5fa" stroke-width="2.5" stroke-linejoin="round"><polygon points="${hx(60,140)}"/><polygon points="${hx(115.4,140)}"/><polygon points="${hx(143.1,92)}"/><polygon points="170.8,76 170.8,108 199,117 216,92 199,67"/></g>${aro?`<circle cx="60" cy="140" r="18" fill="none" stroke="#22d3ee" stroke-width="2"/>`:""}<g fill="#93aad6" font-size="12" font-weight="700" text-anchor="middle"><text x="60" y="146" ${aro?'opacity=".0"':""}>A</text><text x="115" y="146">B</text><text x="143" y="98">C</text><text x="193" y="97">D</text></g>${deco}<text x="165" y="14" fill="#eaf1ff" font-size="13" font-weight="700" text-anchor="middle">${name}</text></svg>`}
+const mols=(...a)=>`<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center">${a.join("")}</div>`;
+const vitD=`<svg viewBox="0 0 700 90" style="min-width:560px">${[["Raigs UV del Sol",0],["Pell: síntesi",1],["Vitamina D",2],["Absorció de Ca",3],["Ossos sans",4]].map(([t,i])=>`<rect x="${i*140}" y="20" width="124" height="38" rx="19" fill="rgba(59,130,246,.2)" stroke="${i==4?"#22d3ee":"#60a5fa"}"/><text x="${i*140+62}" y="43" fill="#eaf1ff" font-size="12" font-weight="600" text-anchor="middle">${t}</text>${i<4?`<path d="M${i*140+126} 39 h12 m-5 -4 l5 4 l-5 4" stroke="#93aad6" fill="none" stroke-width="2"/>`:""}`).join("")}<rect x="420" y="66" width="124" height="22" rx="11" fill="rgba(255,107,154,.16)" stroke="#ff6b9a"/><text x="482" y="81" fill="#ffd3e1" font-size="11" font-weight="700" text-anchor="middle">falta → raquitisme</text></svg>`;
+tabs("est",[
+["Colesterol",()=>mols(mol("Colesterol",D.oh3+D.me19+D.me18+D.ch17))+`<p style="color:var(--tx2)">El <b>colesterol</b>: membranes de les cèl·lules animals (estabilitat), serveix per a la síntesi de quasi tots els esteroides. És una molècula amfipàtica, amb una part polar (OH del C3) i una part no polar. Forma part de les membranes cel·lulars dels animals a les quals confereix estabilitat ja que es situa entre els fosfolípids i els fixa. Molt abundant en l’organisme. A partir d’ella es sintetitzen altres esteroides com hormones i els àcids biliars.</p>`],
+["Àcids biliars",()=>mols(mol("Àcid cólic",D.oh3+D.oh7+D.oh12+D.me19+D.me18+D.cooh))+`<p style="color:var(--tx2)">Són produïts al fetge a partir del colesterol, faciliten la digestió dels greixos, emulsionant-los i afavorint l’acció de les lipases intestinals per a la seva posterior absorció. Són més solubles que el colesterol ja que té més grups OH. Exemple: <b>àcid cólic</b>. S’encarreguen de l’emulsió dels greixos a l’intestí.</p>`],
+["Vitamines D",()=>`<div class="tw">${vitD}</div><p style="color:var(--tx2)">Regulen el metabolisme del calci i la seva absorció intestinal (regulen el metabolisme i absorció del Ca). La seva síntesi és induïda a la pell pels raigs ultraviolats del Sol. El rovell de l’ou, la tonyina, el fetge i els cereals són aliments rics en vitamina D. La deficiència de vitamina D condueix a la formació defectuosa dels ossos característica del <span class="pk">raquitisme</span>. Exemple: 1-α,25-dihidroxicolecalciferol.</p>`],
+["Estradiol",()=>mols(mol("β-estradiol",D.oh3+D.me18+D.oh17,1))+`<p style="color:var(--tx2)">Hormona sexual femenina del grup dels estrògens (β-estradiol). És sintetitzada als ovaris i s’encarrega de regular l’aparició dels caràcters sexuals secundaris femenins i de la regulació del cicle menstrual.</p>`]]);
+tabs("hor",[
+["Suprarenals",()=>mols(mol("Aldosterona",D.o3+D.me19+D.cho18+D.oh11+D.acoh),mol("Cortisol",D.o3+D.me19+D.me18+D.oh11+D.acoh+Lq(199,117,199,140)+Tx(190,154,"OH")))+`<p style="color:var(--tx2)">Sintetitzades a les càpsules suprarenals; es troben a l’escorça suprarenal.</p><ul style="color:var(--tx2)"><li><b>Aldosterona</b> (mineralocorticoide): incrementa la reabsorció del Na i Clorur al ronyó; regula l’excreció de sal i aigua pels ronyons.</li><li><b>Cortisol</b> (hidrocortisona, glucocorticoide): afavoreix la síntesi de glucosa i del glicogen; participa en el metabolisme dels glúcids, proteïnes i lípids.</li></ul>`],
+["Sexuals",()=>mols(mol("Progesterona",D.o3+D.me19+D.me18+D.ac),mol("Testosterona",D.o3+D.me19+D.me18+D.oh17))+`<p style="color:var(--tx2)">Produïdes principalment per les gònades (testicles i ovaris).</p><ul style="color:var(--tx2)"><li><b>Progesterona</b>: prepara els òrgans sexuals femenins per a la gestació.</li><li><b>Testosterona</b> (androgen): principal hormona sexual masculina; responsable dels caràcters sexuals masculins.</li></ul>`]]);
+/* functions */
+{const F=[["Protectora","Els acilglicèrids recobreixen òrgans per protegir-los dels cops. Les ceres impermeabilitzen la superfície de la pell, fruits, fulles, pèls i plomes. Els greixos actuen com aïllants tèrmics."],["Transport","Els àcids biliars i els proteolípids emulsionen els lípids a l’intestí prim transportant-los fins al lloc on s’utilitzen o fins al teixit adipòs, on s’emmagatzemen. El transport fins a les cèl·lules es fa mitjançant una emulsió de lípids; emulsionen al duoden (l’intestí prim) afavorint la seva digestió i absorció."],["Estructural","Alguns lípids (fosfolípids, esfingolípids i colesterol) són components de la membrana cel·lular formant la bicapa lipídica."],["Energètica","Els lípids són la principal reserva energètica dels organismes. La combustió metabòlica d’un gram de greix produeix 9,4 kcal davant de les 4,1 kcal de les proteïnes i els glúcids. Els principals lípids de reserva són els triacilglicèrids (adipòcits sota la pell)."],["Reguladora o biocatalitzadora","Intervenen en nombrosos processos fisiològics de l’organisme. Per exemple les vitamines lipídiques que actuen com a cofactors de molts enzims i les hormones lipídiques que actuen de missatgers químics sobre determinades cèl·lules i regulen així el metabolisme. Moltes vitamines (A, E, K, D...), hormones lipídiques i prostaglandines catalitzen (faciliten) determinades reaccions bioquímiques. Ex: la vitamina K (<i>Koagulation-vitamin</i>) facilita la “activació” de proteïnes que intervenen en la coagulació sanguínia. Ex: la vitamina D ajuda a mantenir els nivells de calci i fòsfor en els ossos. Carència de vitamina D → raquitisme (estovament i deformació dels ossos)."]];
+ const pos=[[20,100],[300,20],[300,180],[20,20],[150,180]];
+ $("#fun").innerHTML=hs(`<svg viewBox="0 0 460 250"><ellipse cx="230" cy="125" rx="62" ry="32" fill="rgba(251,191,36,.18)" stroke="#fbbf24"/><text x="230" y="130" text-anchor="middle" font-size="13" fill="#fde68a" font-weight="700" font-family="Sora">FUNCIONS</text>`+[[20,20,0],[170,0,1],[320,20,2],[20,190,3],[300,190,4]].map(([x,y,i])=>`<line x1="230" y1="125" x2="${x+60}" y2="${y+17}" stroke="#27427e"/><g class="hot" data-t="${F[i][0]}" data-i="${F[i][1]}"><rect x="${x}" y="${y}" width="${i==4?150:120}" height="34" rx="17" fill="rgba(59,130,246,.2)" stroke="#60a5fa"/><text x="${x+(i==4?75:60)}" y="${y+21}" text-anchor="middle" font-size="11" fill="#eaf1ff" font-weight="600" font-family="Sora">${i==4?"REGULADORA":F[i][0].toUpperCase()}</text></g>`).join("")+`</svg>`,"Toca una funció.")}
+/* summary */
+{const lk=(x1,y1,x2,y2)=>{const m=(x1+x2)/2;return `M${x1} ${y1} H${m} V${y2} H${x2} `};let d="",n="";
+ n+=nd(10,172,100,"Lípids","Formats bàsicament per C i H. També poden aparèixer O, P, N i S. Insolubles en dissolvents polars i solubles en dissolvents apolars. Baixa densitat.","#fbbf24","s1")+nd(150,172,150,"Grup heterogeni","Tipus: grup molt heterogeni.",COL.b,"s1");
+ n+=nd(10,80,230,"Formats per C i H (O, P, N, S)","Formats bàsicament per C i H. També poden aparèixer O, P, N i S. Insolubles en dissolvents polars i solubles en dissolvents apolars. Baixa densitat.",COL.b,"s1")+nd(10,264,230,"Funcions","De reserva, estructura, protectora, aïllant i biocatalitzadora.","#4ade80","s8");
+ d+="M60 172 V114 M60 206 V264 M110 189 H150 ";
+ n+=nd(360,100,150,"Saponificables","Amb àcids grassos.",COL.c,"s5")+nd(360,260,170,"Insaponificables","Sense àcids grassos.",COL.v,"s7");
+ d+=lk(300,189,360,117)+lk(300,189,360,277);
+ const L=[["Àcids grassos","Cadena de C i H amb un grup –COOH. Molècules amfipàtiques. Insaturats i saturats.","s2",20],["Acilglicèrids","Mono-, diacilglicèrids i triacilglicèrids.","s5",64],["Cèrids o ceres","Sòlids molt insolubles.","s5",108],["Fosfoglicèrids","Molècules amfipàtiques que formen les membranes.","s6",152],["Fosfoesfingolípids","Esfingomielina.","s6",196],["Glicoesfingolípids","Dos tipus: cerebròsids i gangliòsids.","s6",240]];
+ L.forEach(l=>{n+=nd(580,l[3],200,l[0],l[1],COL.b,l[2]);d+=lk(510,117,580,l[3]+17)});
+ const M=[["Isoprenoides","Mono-, di-, tri-, tetra i politerpens.","s7",290],["Esteroides","Colesterol, àcids biliars, vitamina D, estradiol, hormones suprarenals i sexuals.","s7",334],["Prostaglandines","Derivades de l’àcid prostanoic.","s7",378]];
+ M.forEach(l=>{n+=nd(580,l[3],200,l[0],l[1],COL.v,l[2]);d+=lk(530,277,580,l[3]+17)});
+ $("#sum").innerHTML=`<div class="tw">`+hs(`<svg viewBox="0 0 800 420" style="min-width:680px"><path d="${d}" stroke="#27427e" stroke-width="1.6" fill="none"/>${n}</svg>`,"Toca un node per veure’n el resum.")+`</div>`}
+/* game */
+{const C={ac:"Acilglicèrids",ce:"Cèrids",fg:"Fosfoglicèrids",fe:"Fosfoesfingolípids",ge:"Glicoesfingolípids",is:"Isoprenoides",es:"Esteroides",pr:"Prostaglandines"};
+ const I=[["Trioleïna","ac"],["Sèu","ac"],["Mantega","ac"],["Cera d’abella","ce"],["Cerumen","ce"],["Espermaceti","ce"],["Cefalina","fg"],["Lecitina","fg"],["Esfingomielina","fe"],["Cerebròsid","ge"],["β-carotè","is"],["Vitamina K","is"],["Colesterol","es"],["Testosterona","es"],["Àcid cólic","es"],["Derivat de l’àcid prostanoic","pr"]].sort(()=>Math.random()-.5);
+ let sel=null,ok=0,er=0;$("#gItems").innerHTML=I.map((x,i)=>`<span class="item" data-i="${i}">${x[0]}</span>`).join("");
+ $("#gBins").innerHTML=Object.entries(C).map(([k,v])=>`<div class="bin" data-k="${k}"><h4>${v}</h4><div></div></div>`).join("");
+ const sc=()=>$("#gSc").textContent=`Encerts: ${ok}/${I.length} · Errors: ${er}`+(ok==I.length?" · Completat!":"");sc();
+ $("#gItems").onclick=e=>{const t=e.target.closest(".item");if(!t||t.classList.contains("ok"))return;$$("#gItems .item").forEach(x=>x.classList.remove("sel"));t.classList.add("sel");sel=t};
+ $("#gBins").onclick=e=>{const b=e.target.closest(".bin");if(!b||!sel)return;if(I[+sel.dataset.i][1]==b.dataset.k){sel.classList.remove("sel");sel.classList.add("ok");$("div",b).appendChild(sel);sel=null;ok++}else{er++;sel.classList.add("no");const s=sel;setTimeout(()=>s.classList.remove("no"),450)}sc()}}
+/* flashcards */
+{const F=[["Què són els lípids?","Biomolècules orgàniques molt heterogènies, formades bàsicament per C i H, insolubles en aigua."],["Quantes kcal/g donen?","9,3 kcal/g, davant de 4,1 kcal/g dels glúcids i proteïnes."],["Àcid gras saturat","Només enllaços simples; cadena lineal (alifàtica). Ex.: palmític (16C), esteàric (18C)."],["Àcid gras insaturat","Un o més dobles enllaços; colzes; líquid a temperatura ambient. Oleic, linoleic."],["Àcids grassos essencials","No es poden sintetitzar però són imprescindibles: s’han d’obtenir de la dieta."],["Esterificació","Àcid + alcohol → èster + aigua."],["Saponificació","Àcid gras + base forta (NaOH/KOH) → sabó + aigua."],["Punt de fusió","Augmenta amb la llargària de la cadena i disminueix amb el grau d’insaturació."],["Triacilglicèrid","Glicerol amb tres àcids grassos; apolar; greix neutre."],["Cèrid","Èster d’àcid gras llarg amb alcohol llarg; sòlid, dur, impermeable."],["Fosfoglicèrid","Glicerol + 2 àcids grassos + àcid fosfòric + aminoalcohol. Molècula amfipàtica."],["Esfingomielina","Fosfoesfingolípid amb colina; present a les beines de mielina."],["Esterà","Nucli de 4 anells (ciclopentà perhidrofenantrè) dels esteroides."],["Prostaglandines","Derivades de l’àcid prostanoic; dolor, febre, pressió sanguínia, coagulació."]];
+ $("#fcs").innerHTML=F.map(f=>`<div class="fc" tabindex="0"><div class="fci"><div class="fcf">${f[0]}</div><div class="fcb">${f[1]}</div></div></div>`).join("");
+ $("#fcs").onclick=e=>{const c=e.target.closest(".fc");c&&c.classList.toggle("fl")}}
+/* quiz */
+{const Q=[
+["Quins elements formen bàsicament els lípids?",["C i H","C i N","P i S","O i N"],0,"Estan constituïts bàsicament per C i H; l’O hi és en proporcions molt baixes."],
+["Quantes kcal/g aporten els lípids?",["9,3","4,1","2,5","12"],0,"9,3 kcal/g en comptes de 4,1 kcal/g dels glúcids i proteïnes."],
+["Els àcids grassos saturats tenen…",["Només enllaços simples","Un doble enllaç","Un triple enllaç","Colzes"],0,"Només enllaços simples: cadenes rectilínies (alifàtiques)."],
+["Què són els àcids grassos essencials?",["No es poden sintetitzar però cal obtenir-los de la dieta","Els saturats","Els que sintetitzem al fetge","Només els vegetals"],0,"Són imprescindibles per a la vida i s’han d’obtenir a partir de la dieta."],
+["L’esterificació d’un àcid gras amb un alcohol dóna…",["Un èster i aigua","Un sabó","Un esteroide","Una sal"],0,"Àcid gras + alcohol → èster + molècula d’aigua."],
+["La saponificació d’un àcid gras amb NaOH dóna…",["Un sabó","Un èster","Un alcohol","Una cera"],0,"Dóna una sal d’àcid gras (sabó) i aigua."],
+["Quin tindrà major punt de fusió: àcid esteàric o palmític? Per què?",["Esteàric: té més carbonis (18 vs 16)","Palmític: té menys carbonis","Són iguals","Palmític: és insaturat"],0,"A més llargària de cadena, més enllaços de Van der Waals i més punt de fusió."],
+["Quin tindrà major punt de fusió: àcid oleic o linoleic? Per què?",["Oleic: només té un doble enllaç","Linoleic: té dos dobles enllaços","Són iguals","Linoleic: és més llarg"],0,"A més dobles enllaços, més colzes i menys punt de fusió; l’oleic en té un i el linoleic dos."],
+["Un greix líquid a temperatura ambient rep el nom de…",["Oli","Sèu","Mantega","Cera"],0,"Olis: tenen com a mínim un àcid gras insaturat (punt de fusió < 15 °C)."],
+["Els triacilglicèrids són…",["Molècules apolars","Molt polars","Amfipàtiques","Sals"],0,"Són greixos neutres apolars; mono- i diacilglicèrids tenen certa polaritat."],
+["Una cera és un èster d’…",["àcid gras llarg amb alcohol llarg","àcid gras amb glicerol","àcid gras amb esfingosina","isoprè"],0,"Àcid gras de 16 a 20 C amb alcohol de 14 a 30 C."],
+["Un fosfoglicèrid conté…",["Glicerol, 2 àcids grassos, àcid fosfòric i aminoalcohol","Esfingosina i glúcid","Un nucli d’esterà","Unitats d’isoprè"],0,"És el lípid més abundant de la membrana plasmàtica."],
+["L’esfingomielina té com a aminoalcohol…",["Colina","Serina","Etanolamina","Glicerol"],0,"Abunda a les beines de mielina de les neurones."],
+["Quin lípid és un tetraterpè?",["Carotè","Mentol","Esqualè","Làtex"],0,"Tetraterpens (8 isoprens): pigments fotosintètics com carotens i xantofil·les."],
+["L’esterol és diferent de les hormones esteroides perquè té…",["OH al C3","=O al C3","Un àcid gras","Un fosfat"],0,"Esterols: OH al C3; hormones: C=O al C3."],
+["La deficiència de vitamina D causa…",["Raquitisme","Escorbut","Anèmia","Hipertensió"],0,"La vitamina D regula el calci: la seva falta deforma els ossos."],
+["Les prostaglandines deriven de…",["L’àcid prostanoic","El colesterol","L’isoprè","La glicerina"],0,"Anell ciclopentà més dues cadenes alifàtiques."]];
+ let order,idx,score,miss,cur;const el=$("#quiz");
+ const start=l=>{order=l;idx=0;score=0;miss=[];show()};
+ const show=()=>{if(idx>=order.length)return end();const q=Q[order[idx]],o=q[1].map((t,i)=>[t,i]).sort(()=>Math.random()-.5);
+  el.innerHTML=`<p style="margin:0 0 6px;color:var(--tx2);font-size:13px">Pregunta ${idx+1} de ${order.length}</p><div class="bar" style="width:${idx/order.length*100}%;height:6px;margin-bottom:14px"></div><h3 style="margin:0 0 10px">${q[0]}</h3>${o.map(([t,i])=>`<button class="opt" data-c="${i==q[2]?1:0}">${t}</button>`).join("")}<div id="qx"></div>`;
+  el.onclick=e=>{const b=e.target.closest(".opt");if(b&&!b.disabled){$$(".opt",el).forEach(x=>{x.disabled=true;if(x.dataset.c=="1")x.classList.add("ok");else if(x==b)x.classList.add("bad")});if(b.dataset.c=="1")score++;else miss.push(order[idx]);$("#qx").innerHTML=`<div class="info"><b>${b.dataset.c=="1"?"Correcte.":"No exactament."}</b> ${q[3]}</div><button class="btn" id="qn" style="margin-top:12px">${idx+1<order.length?"Següent":"Veure resultat"}</button>`}if(e.target.id=="qn"){idx++;show()}}};
+ const end=()=>{const p=score/order.length,C=2*Math.PI*52;el.innerHTML=`<div class="row" style="gap:24px"><svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="52" fill="none" stroke="#27427e" stroke-width="12"/><circle cx="70" cy="70" r="52" fill="none" stroke="${p>.7?"#22d3ee":"#ff6b9a"}" stroke-width="12" stroke-linecap="round" stroke-dasharray="${C*p} ${C}" transform="rotate(-90 70 70)"/><text x="70" y="78" text-anchor="middle" fill="#fff" font-size="26" font-weight="800" font-family="Sora">${score}/${order.length}</text></svg><div><h3 style="margin:0">${p==1?"Perfecte!":p>.7?"Molt bé!":"Cal repassar"}</h3><p style="color:var(--tx2)">${miss.length?miss.length+" preguntes fallades.":"Cap error."}</p><div class="row">${miss.length?`<button class="btn" id="rm">Repetir les fallades</button>`:""}<button class="btn g" id="ra">Tornar a començar</button></div></div></div>`;el.onclick=e=>{if(e.target.id=="rm")start(miss.slice());if(e.target.id=="ra")start(Q.map((_,i)=>i).sort(()=>Math.random()-.5))}};
+ start(Q.map((_,i)=>i).sort(()=>Math.random()-.5))}
+/* glossary */
+{const G=[["Lípid","Biomolècula orgànica heterogènia formada bàsicament per C i H, insoluble en aigua."],["Àcid gras","Molècula amb llarga cadena hidrocarbonada i un grup carboxil (-COOH)."],["Saturat","Àcid gras amb només enllaços simples."],["Insaturat","Àcid gras amb un o més dobles enllaços."],["Monoinsaturat","Àcid gras amb un únic doble enllaç (ex. oleic)."],["Poliinsaturat","Àcid gras amb més d’un doble enllaç (ex. linoleic)."],["Àcid gras essencial","No es pot sintetitzar però cal prendre’l de la dieta."],["Cis","Configuració amb els hidrògens al mateix costat del doble enllaç; produeix colze."],["Trans","Hidrògens en costats oposats; estructura recta; típic de la hidrogenació industrial."],["Amfipàtica","Molècula amb una part polar (hidròfila) i una apolar (hidròfoba)."],["Hidròfob","Que repel·leix l’aigua; lipòfil."],["Hidròfil","Que té afinitat per l’aigua; lipòfob."],["Van der Waals","Forces d’atracció entre cadenes hidrocarbonades."],["Pont d’hidrogen","Enllaç entre grups polars, com els carboxils."],["Esterificació","Reacció entre àcid i alcohol que forma un èster i aigua."],["Hidròlisi","Reacció inversa: l’èster es trenca amb aigua."],["Saponificació","Reacció d’un àcid gras amb una base forta que dóna sabó."],["Sabó","Sal d’àcid gras; forma micel·les."],["Micel·la","Agregat esfèric de molècules amfipàtiques amb les cues cap a dins."],["Bicapa lipídica","Doble capa de lípids amfipàtics entre dos medis aquosos."],["Punt de fusió","Temperatura a la qual es passa de sòlid a líquid."],["Acilglicèrid","Èster de glicerol amb àcids grassos (greix)."],["Glicerol","Alcohol amb tres grups -OH (glicerina)."],["Sèu","Greix sòlid, amb àcids grassos saturats."],["Oli","Greix líquid, amb com a mínim un àcid gras insaturat."],["Cèrid","Cera: èster d’àcid gras llarg i alcohol llarg."],["Fosfoglicèrid","Lípid de membrana amb glicerol, àcids grassos, fosfat i aminoalcohol."],["Esfingosina","Aminoalcohol de cadena llarga."],["Esfingomielina","Fosfoesfingolípid amb colina, abundant a la mielina."],["Glicoesfingolípid","Esfingosina, àcid gras i glúcid; receptor a la cara externa de la membrana."],["Isoprè","Unitat de 5 carbons dels terpens (2-metil-1,3-butadiè)."],["Terpè","Isoprenoide format per dues o més unitats d’isoprè."],["Esterà","Nucli de 4 anells dels esteroides."],["Esterol","Esteroide amb OH al C3 (colesterol, vitamina D, àcids biliars, estradiol)."],["Àcid biliar","Derivat del colesterol que emulsiona els greixos."],["Raquitisme","Deformació dels ossos per falta de vitamina D."],["Prostaglandina","Lípid derivat de l’àcid prostanoic."]].sort((a,b)=>a[0].localeCompare(b[0],"ca"));
+ const r=q=>{q=q.toLowerCase();const f=G.filter(g=>!q||(g[0]+g[1]).toLowerCase().includes(q));$("#gl").innerHTML=f.length?f.map(g=>`<div class="card"><h4 style="color:var(--b2)">${g[0]}</h4><p style="margin:0;font-size:14px">${g[1]}</p></div>`).join(""):`<p style="color:var(--tx2)">Cap resultat.</p>`};r("");$("#gs").oninput=e=>r(e.target.value)}
+/* counters */
+const cio=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const b=e.target,t=+b.dataset.c,d=+b.dataset.d||0,t0=performance.now();const f=n=>{const k=Math.min(1,(n-t0)/1400);b.textContent=(t*(1-Math.pow(1-k,3))).toFixed(d).replace(".",",");k<1&&requestAnimationFrame(f)};requestAnimationFrame(f);cio.unobserve(b)}));$$("[data-c]").forEach(b=>cio.observe(b));
+/* reveal */
+const rio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");rio.unobserve(e.target)}}),{threshold:.08});$$(".rv").forEach(x=>rio.observe(x));
+/* progress + active link */
+const secs=NS.map(n=>document.getElementById(n[0])),lk=$$(".links a");
+const onS=()=>{const h=document.documentElement,p=h.scrollTop/(h.scrollHeight-h.clientHeight||1);$("#prog").style.width=(p*100)+"%";let a=-1;secs.forEach((s,i)=>{if(s.getBoundingClientRect().top<140)a=i});lk.forEach((l,i)=>{l.classList.toggle("on",i==a);if(i==a&&l.offsetParent){const c=l.parentNode;c.scrollLeft=l.offsetLeft-c.clientWidth/2+l.clientWidth/2}})};
+addEventListener("scroll",onS,{passive:true});onS();
+</script>
+</body>
+</html>
