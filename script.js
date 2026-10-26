@@ -32,7 +32,7 @@ const MATERIAS = [
         ],
         temas: [
             { nombre: "Glúcidos", url: "Paginas/Glúcidos.html", etiqueta: "Bioquímica" },
-            { nombre: "Lípidos", url: "#", etiqueta: "Bioquímica" },
+            { nombre: "Lípidos", url: "Paginas/Els lípids.html", etiqueta: "Bioquímica" },
             { nombre: "Proteínas", url: "#", etiqueta: "Bioquímica" },
             { nombre: "Ácidos nucleicos", url: "#", etiqueta: "Bioquímica" },
             { nombre: "Evolución", url: "#", etiqueta: "Bioquímica" },
