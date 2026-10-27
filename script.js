@@ -64,14 +64,14 @@ const MATERIAS = [
             "Proyectos personales, herramientas, lecturas y otros recursos de aprendizaje.",
         icono: "grid",
         etiquetas: [
-            ["Proyectos", ""],
-            ["Planificación", "cyan"],
+            ["Lenguas", ""],
+            ["Proyectos", "cyan"],
             ["Notas", "violet"],
             ["Herramientas", "pink"],
         ],
         temas: [
-            { nombre: "", url: "#", etiqueta: "" },
-            { nombre: "", url: "#", etiqueta: "" },
+            { nombre: "Poesia Catalana", url: "Paginas/Poesia catalana", etiqueta: "" },
+            { nombre: "ATP", url: "abouzian.github.io/EF", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
         ],
