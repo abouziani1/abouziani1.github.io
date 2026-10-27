@@ -70,8 +70,8 @@ const MATERIAS = [
             ["Herramientas", "pink"],
         ],
         temas: [
-            { nombre: "Poesia Catalana", url: "Paginas/Poesia catalana", etiqueta: "" },
-            { nombre: "ATP", url: "abouzian.github.io/EF", etiqueta: "" },
+            { nombre: "Poesia Catalana", url: "Paginas/Poesia catalana.html", etiqueta: "" },
+            { nombre: "ATP", url: "/EF", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
         ],
