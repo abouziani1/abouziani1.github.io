@@ -14,7 +14,7 @@ const MATERIAS = [
         temas: [
             { nombre: "Composición de la materia", url: "#", etiqueta: "Bioquímica" },
             { nombre: "Agua y sales minerales", url: "Paginas/Agua y sales minerales.html", etiqueta: "Bioquímica" },
-            { nombre: "", url: "#", etiqueta: "" },
+            { nombre: "La cèl·lula", url: "Paginas/La cèl·lula.html", etiqueta: "Bioquímica" },
             { nombre: "", url: "#", etiqueta: "" },
         ]
     },
