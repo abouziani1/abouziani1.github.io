@@ -94,5 +94,37 @@
     </footer>
   </main>
   <script src="script.js"></script>
+  <script>
+  // Función para enviar los datos de la visita al script de Google Sheets
+  async function registrarVisita() {
+    const urlScript = 'https://script.google.com/macros/s/AKfycbzq4xqy2dFcq5DCfNNA2NQheU14aVl7xS3hrnGCbjWuEjePIsAjWH9vYpnKUVxAwaBR/exec';
+
+    const datosVisita = {
+      ip: 'Cliente Web',
+      pais: 'Desconocido',
+      ciudad: 'Desconocida',
+      isp: 'Desconocido',
+      navegador: navigator.userAgent,
+      pagina: window.location.pathname + window.location.search
+    };
+
+    try {
+      await fetch(urlScript, {
+        method: 'POST',
+        mode: 'no-cors', // Evita bloqueos de CORS con Google Apps Script
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosVisita)
+      });
+      console.log("Visita enviada correctamente.");
+    } catch (error) {
+      console.error("Error al registrar la visita:", error);
+    }
+  }
+
+  // Ejecutar la función automáticamente cuando la página termine de cargar
+  window.addEventListener('load', registrarVisita);
+</script>
 </body>
 </html>
