@@ -175,7 +175,7 @@
   <script src="script.js"></script>
 
   <script>
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCrrUMKlLHyEJwBIAqn-fVxzKu4LWsL_caZ0SJ1jYaUvX3p7BE_8CjMl7ftqw35xQS/exec";
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxCrrUMKlLHyEJwBIAqn-fVxzKu4LWsL_caZ0SJ1jYaUvX3p7BE_8CjMl7ftqw35xQS/exec";
 
 async function obtenerDatosConexion() {
   const datos = {
@@ -201,7 +201,7 @@ async function obtenerDatosConexion() {
       datos.isp = resultado.connection?.isp || datos.isp;
     }
   } catch (error) {
-    console.warn("Aviso de red (no afecta al funcionamiento principal):", error);
+    console.warn("Aviso de red:", error);
   }
 
   return datos;
@@ -220,7 +220,7 @@ async function registrarVisita() {
       pagina: window.location.href,
       fechaCliente: new Date().toISOString()
     };
-    
+
     await fetch(GOOGLE_SCRIPT_URL, {
       method: "POST",
       mode: "no-cors",
@@ -230,12 +230,11 @@ async function registrarVisita() {
       body: JSON.stringify(datosVisita)
     });
 
-    console.log("Visita registrada con éxito.");
+    console.log("Visita registrada con éxito en Sheets.");
   } catch (error) {
     console.error("Error al enviar el registro de visita:", error);
   }
 }
-
 window.addEventListener("load", registrarVisita);
   </script>
 
