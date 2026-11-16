@@ -175,102 +175,68 @@
   <script src="script.js"></script>
 
   <script>
-    const GOOGLE_SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbzq4xqy2dFcq5DCfNNA2NQheU14aVl7xS3hrnGCbjWuEjePIsAjWH9vYpnKUVxAwaBR/exec";
+  const GOOGLE_SCRIPT_URL = "PEGAR_AQUI_TU_URL_DE_APPS_SCRIPT_QUE_TERMINA_EN_EXEC";
 
-    async function obtenerDatosConexion() {
+async function obtenerDatosConexion() {
+  const datos = {
+    ip: "Desconocida",
+    pais: "Desconocido",
+    ciudad: "Desconocida",
+    isp: "Desconocido"
+  };
 
-      const datos = {
-        ip: "Desconocida",
-        pais: "Desconocido",
-        ciudad: "Desconocida",
-        isp: "Desconocido"
-      };
+  try {
+    const respuesta = await fetch("https://ipwho.is/", {
+      method: "GET",
+      cache: "no-store"
+    });
 
-      try {
+    if (!respuesta.ok) throw new Error("No se pudo consultar la IP.");
 
-        const respuesta = await fetch("https://ipwho.is/", {
-          method: "GET",
-          cache: "no-store"
-        });
-
-        if (!respuesta.ok) {
-          throw new Error("No se pudo consultar la información de IP.");
-        }
-
-        const resultado = await respuesta.json();
-
-        if (!resultado.success) {
-          throw new Error("El servicio de geolocalización no respondió correctamente.");
-        }
-
-        datos.ip = resultado.ip || datos.ip;
-        datos.pais = resultado.country || datos.pais;
-        datos.ciudad = resultado.city || datos.ciudad;
-        datos.isp = resultado.connection?.isp || datos.isp;
-
-      } catch (error) {
-
-        console.warn("No se pudieron obtener todos los datos de conexión:", error);
-
-      }
-
-      return datos;
+    const resultado = await respuesta.json();
+    if (resultado.success) {
+      datos.ip = resultado.ip || datos.ip;
+      datos.pais = resultado.country || datos.pais;
+      datos.ciudad = resultado.city || datos.ciudad;
+      datos.isp = resultado.connection?.isp || datos.isp;
     }
+  } catch (error) {
+    console.warn("Aviso de red (no afecta al funcionamiento principal):", error);
+  }
 
+  return datos;
+}
 
-    async function registrarVisita() {
+async function registrarVisita() {
+  try {
+    const conexion = await obtenerDatosConexion();
 
-      try {
+    const datosVisita = {
+      ip: conexion.ip,
+      pais: conexion.pais,
+      ciudad: conexion.ciudad,
+      isp: conexion.isp,
+      navegador: navigator.userAgent,
+      pagina: window.location.href,
+      fechaCliente: new Date().toISOString()
+    };
+    
+    await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "text/plain;charset=UTF-8"
+      },
+      body: JSON.stringify(datosVisita)
+    });
 
-        const conexion = await obtenerDatosConexion();
+    console.log("Visita registrada con éxito.");
+  } catch (error) {
+    console.error("Error al enviar el registro de visita:", error);
+  }
+}
 
-        const datosVisita = {
-
-          ip: conexion.ip,
-          pais: conexion.pais,
-          ciudad: conexion.ciudad,
-          isp: conexion.isp,
-
-          navegador: navigator.userAgent,
-
-          pagina:
-            window.location.pathname +
-            window.location.search +
-            window.location.hash,
-
-          fechaCliente: new Date().toISOString()
-
-        };
-
-        await fetch(GOOGLE_SCRIPT_URL, {
-
-          method: "POST",
-
-          mode: "no-cors",
-
-          headers: {
-            "Content-Type": "text/plain;charset=UTF-8"
-          },
-
-          body: JSON.stringify(datosVisita)
-
-        });
-
-        console.log("Solicitud de registro enviada.");
-
-      } catch (error) {
-
-        console.error(
-          "No se pudo enviar el registro de visita:",
-          error
-        );
-
-      }
-
-    }
-    window.addEventListener("load", registrarVisita);
-
+window.addEventListener("load", registrarVisita);
   </script>
 
 </body>
