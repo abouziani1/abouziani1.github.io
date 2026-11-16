@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,126 +6,272 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#050b1c" />
+
+  <meta name="description" content="Tu espacio personal de estudio. Organiza tus materias y recursos en un solo lugar." />
+
   <title>Espacio de estudio</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
   <header class="topbar">
+
     <div class="navrow">
-      <a class="brand" href="#inicio"><svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
-          <path d="M20 2 36 11v18L20 38 4 29V11L20 2Z" stroke="currentColor" stroke-width="2" />
-          <path d="m20 8 10 6v12l-10 6-10-6V14l10-6Z" stroke="#818cf8" stroke-width="1.5" />
-        </svg>Estudio</a>
+
+      <a class="brand" href="#inicio">
+        <svg viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M20 2 36 11v18L20 38 4 29V11L20 2Z"
+            stroke="currentColor" stroke-width="2" />
+          <path d="m20 8 10 6v12l-10 6-10-6V14l10-6Z"
+            stroke="#818cf8" stroke-width="1.5" />
+        </svg>
+        Estudio
+      </a>
+
       <nav class="navlinks" aria-label="Materias">
-        <a class="active" href="#inicio">Inicio</a><a href="#Bio y Geo">Biología y Geología</a><a
-          href="#Bio +">Biologia +</a><a href="#Química">Química</a><a href="#otros">Otros</a>
+        <a class="active" href="#inicio">Inicio</a>
+        <a href="#Bio y Geo">Biología y Geología</a>
+        <a href="#Bio +">Biologia +</a>
+        <a href="#Química">Química</a>
+        <a href="#otros">Otros</a>
       </nav>
-      <label class="search"><input id="search" type="search" placeholder="Buscar tema..."
-          aria-label="Buscar tema" /></label>
+
+      <label class="search">
+        <input
+          id="search"
+          type="search"
+          placeholder="Buscar tema..."
+          aria-label="Buscar tema"
+        />
+      </label>
+
     </div>
+
     <div class="progressline">
       <div class="progressfill" id="progress"></div>
     </div>
-    <div class="progresslabel" id="progresslabel">Progreso de lectura 0%</div>
+
+    <div class="progresslabel" id="progresslabel">
+      Progreso de lectura 0%
+    </div>
+
   </header>
+
   <main id="inicio">
+
     <section class="hero reveal">
+
       <div>
+
         <div class="eyebrow">Tu espacio de estudio</div>
+
         <h1>
-          <span class="gradient">Grandes metas,</span><br /><span class="gradient">un buen plan</span>
+          <span class="gradient">Grandes metas,</span>
+          <br />
+          <span class="gradient">un buen plan</span>
         </h1>
+
         <p>
-          Todas tus páginas de estudio, organizadas en un solo lugar. Entra
-          directamente a cada tema, encuentra tus recursos y mantén el foco en
-          lo importante.
+          Todas tus páginas de estudio, organizadas en un solo lugar.
+          Entra directamente a cada tema, encuentra tus recursos y
+          mantén el foco en lo importante.
         </p>
+
         <div class="stats">
+
           <div class="stat">
-            <strong id="subjectCount">6</strong><span>Materias</span>
+            <strong id="subjectCount">6</strong>
+            <span>Materias</span>
           </div>
+
           <div class="stat">
-            <strong id="topicCount">0</strong><span>Temas enlazados</span>
+            <strong id="topicCount">0</strong>
+            <span>Temas enlazados</span>
           </div>
+
           <div class="stat">
-            <strong>1 clic</strong><span>Para abrir cada página</span>
+            <strong>1 clic</strong>
+            <span>Para abrir cada página</span>
           </div>
+
         </div>
+
       </div>
-      <svg class="heroart" viewBox="0 0 440 330" role="img"
+
+      <svg class="heroart"
+        viewBox="0 0 440 330"
+        role="img"
         aria-label="Ilustración abstracta de órbitas y nodos científicos">
+
         <defs>
+
           <radialGradient id="glow">
             <stop stop-color="#3b82f6" stop-opacity=".5" />
             <stop offset="1" stop-color="#3b82f6" stop-opacity="0" />
           </radialGradient>
+
           <linearGradient id="core">
             <stop stop-color="#22d3ee" />
             <stop offset=".55" stop-color="#3b82f6" />
             <stop offset="1" stop-color="#ff6b9a" />
           </linearGradient>
+
         </defs>
+
         <circle cx="220" cy="160" r="115" fill="url(#glow)" />
+
         <g class="orbit" fill="none" stroke="#3b82f6" stroke-width="1.2">
-          <ellipse cx="220" cy="160" rx="155" ry="54" transform="rotate(-28 220 160)" />
-          <ellipse cx="220" cy="160" rx="145" ry="70" transform="rotate(42 220 160)" stroke="#22d3ee" />
-          <ellipse cx="220" cy="160" rx="105" ry="140" transform="rotate(68 220 160)" stroke="#818cf8" />
+          <ellipse cx="220" cy="160" rx="155" ry="54"
+            transform="rotate(-28 220 160)" />
+          <ellipse cx="220" cy="160" rx="145" ry="70"
+            transform="rotate(42 220 160)" stroke="#22d3ee" />
+          <ellipse cx="220" cy="160" rx="105" ry="140"
+            transform="rotate(68 220 160)" stroke="#818cf8" />
         </g>
-        <path d="m220 105 48 28v56l-48 28-48-28v-56l48-28Z" fill="#071a3b" stroke="url(#core)" stroke-width="2.5" />
-        <path d="m220 122 33 19v38l-33 19-33-19v-38l33-19Z" fill="#0d2b59" stroke="#60a5fa" stroke-width="1.3" />
-        <path d="m220 142 16 9v18l-16 9-16-9v-18l16-9Z" fill="#818cf8" />
+
+        <path d="m220 105 48 28v56l-48 28-48-28v-56l48-28Z"
+          fill="#071a3b" stroke="url(#core)" stroke-width="2.5" />
+
+        <path d="m220 122 33 19v38l-33 19-33-19v-38l33-19Z"
+          fill="#0d2b59" stroke="#60a5fa" stroke-width="1.3" />
+
+        <path d="m220 142 16 9v18l-16 9-16-9v-18l16-9Z"
+          fill="#818cf8" />
+
         <g fill="#22d3ee" stroke="#07152d" stroke-width="3">
           <circle cx="87" cy="116" r="9" />
           <circle cx="325" cy="48" r="12" />
           <circle cx="352" cy="245" r="8" />
         </g>
+
         <g fill="#818cf8" stroke="#07152d" stroke-width="3">
           <circle cx="128" cy="40" r="6" />
           <circle cx="88" cy="245" r="7" />
           <circle cx="375" cy="113" r="5" />
         </g>
+
       </svg>
+
     </section>
+
     <div id="subjects"></div>
+
     <footer class="footer">
       <p></p>
     </footer>
+
   </main>
+
   <script src="script.js"></script>
+
   <script>
-  // Función para enviar los datos de la visita al script de Google Sheets
-  async function registrarVisita() {
-    const urlScript = 'https://script.google.com/macros/s/AKfycbzq4xqy2dFcq5DCfNNA2NQheU14aVl7xS3hrnGCbjWuEjePIsAjWH9vYpnKUVxAwaBR/exec';
+    const GOOGLE_SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycbzq4xqy2dFcq5DCfNNA2NQheU14aVl7xS3hrnGCbjWuEjePIsAjWH9vYpnKUVxAwaBR/exec";
 
-    const datosVisita = {
-      ip: 'Cliente Web',
-      pais: 'Desconocido',
-      ciudad: 'Desconocida',
-      isp: 'Desconocido',
-      navegador: navigator.userAgent,
-      pagina: window.location.pathname + window.location.search
-    };
+    async function obtenerDatosConexion() {
 
-    try {
-      await fetch(urlScript, {
-        method: 'POST',
-        mode: 'no-cors', // Evita bloqueos de CORS con Google Apps Script
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datosVisita)
-      });
-      console.log("Visita enviada correctamente.");
-    } catch (error) {
-      console.error("Error al registrar la visita:", error);
+      const datos = {
+        ip: "Desconocida",
+        pais: "Desconocido",
+        ciudad: "Desconocida",
+        isp: "Desconocido"
+      };
+
+      try {
+
+        const respuesta = await fetch("https://ipwho.is/", {
+          method: "GET",
+          cache: "no-store"
+        });
+
+        if (!respuesta.ok) {
+          throw new Error("No se pudo consultar la información de IP.");
+        }
+
+        const resultado = await respuesta.json();
+
+        if (!resultado.success) {
+          throw new Error("El servicio de geolocalización no respondió correctamente.");
+        }
+
+        datos.ip = resultado.ip || datos.ip;
+        datos.pais = resultado.country || datos.pais;
+        datos.ciudad = resultado.city || datos.ciudad;
+        datos.isp = resultado.connection?.isp || datos.isp;
+
+      } catch (error) {
+
+        console.warn("No se pudieron obtener todos los datos de conexión:", error);
+
+      }
+
+      return datos;
     }
-  }
 
-  // Ejecutar la función automáticamente cuando la página termine de cargar
-  window.addEventListener('load', registrarVisita);
-</script>
+
+    async function registrarVisita() {
+
+      try {
+
+        const conexion = await obtenerDatosConexion();
+
+        const datosVisita = {
+
+          ip: conexion.ip,
+          pais: conexion.pais,
+          ciudad: conexion.ciudad,
+          isp: conexion.isp,
+
+          navegador: navigator.userAgent,
+
+          pagina:
+            window.location.pathname +
+            window.location.search +
+            window.location.hash,
+
+          fechaCliente: new Date().toISOString()
+
+        };
+
+        await fetch(GOOGLE_SCRIPT_URL, {
+
+          method: "POST",
+
+          mode: "no-cors",
+
+          headers: {
+            "Content-Type": "text/plain;charset=UTF-8"
+          },
+
+          body: JSON.stringify(datosVisita)
+
+        });
+
+        console.log("Solicitud de registro enviada.");
+
+      } catch (error) {
+
+        console.error(
+          "No se pudo enviar el registro de visita:",
+          error
+        );
+
+      }
+
+    }
+    window.addEventListener("load", registrarVisita);
+
+  </script>
+
 </body>
 </html>
