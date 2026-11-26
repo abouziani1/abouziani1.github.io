@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ca"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atles cel·lular · Estudi d'estructures</title>
+<style>
+:root{--bg:#050b1f;--pn:#0b1533;--ln:#1e3a8a;--cy:#22d3ee;--vi:#8b5cf6;--pk:#f472b6;--tx:#e2e8f0;--mu:#94a3b8;--ok:#34d399;--ko:#fb7185}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;min-height:100vh;color:var(--tx);font:16px/1.5 "Segoe UI",system-ui,sans-serif;background:linear-gradient(rgba(34,211,238,.06) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,rgba(34,211,238,.06) 1px,transparent 1px) 0 0/32px 32px,radial-gradient(ellipse at top,#0f1f55,var(--bg) 70%)}
+header{padding:22px 28px 8px}h1{margin:0;font-size:26px;letter-spacing:.3px;background:linear-gradient(90deg,var(--cy),var(--vi));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{margin:2px 0 0;color:var(--mu);font-size:14px}
+.wrap{display:grid;grid-template-columns:290px 1fr;gap:18px;padding:14px 28px 30px;max-width:1280px;margin:auto}
+.pn{background:rgba(11,21,51,.88);border:1px solid var(--ln);border-radius:14px;padding:18px;box-shadow:0 0 0 1px rgba(139,92,246,.12),0 12px 40px rgba(0,0,0,.35)}
+h2{font-size:13px;font-weight:600;color:var(--cy);margin:16px 0 8px}h2:first-child{margin-top:0}
+.grp{display:grid;gap:8px}
+button,select{font:inherit;color:var(--tx);background:#10204a;border:1px solid #27407f;border-radius:9px;padding:9px 12px;cursor:pointer;text-align:left;transition:.18s}
+button:hover,select:hover{border-color:var(--cy);background:#14295c}button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--pk);outline-offset:2px}
+button.on{border-color:var(--pk);background:linear-gradient(90deg,#2a1b5c,#1d2f6b);box-shadow:inset 3px 0 0 var(--pk)}
+select{width:100%}#reset{margin-top:18px;width:100%;text-align:center;border-color:var(--vi)}
+.top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-weight:600}#ct{color:var(--cy)}#pg{color:var(--mu);font-weight:400}
+.bar{height:4px;background:#14234f;border-radius:4px;margin:8px 0 12px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cy),var(--vi));transition:width .4s}
+#stage,.stg{background:#0a1330;border:1px solid var(--ln);border-radius:12px;overflow:hidden}.sv{width:100%;display:block;max-height:62vh}
+#qt{margin:14px 0 10px;font-size:18px}
+#ans{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}#ans input{grid-column:1/-1;width:100%;font:inherit;color:var(--tx);background:#08122b;border:1px solid #27407f;border-radius:9px;padding:11px 13px}
+.opt.sel{border-color:var(--cy);background:#173266}.opt.good{border-color:var(--ok);background:#0f3a35}.opt.bad{border-color:var(--ko);background:#431b2c}
+.act{display:flex;gap:10px;margin-top:12px}.act button{background:linear-gradient(90deg,#7c3aed,#2563eb);border:0;padding:10px 22px;font-weight:600}.act button:hover{filter:brightness(1.15)}
+#fb{margin-top:12px;min-height:26px;font-weight:600}#fb.ok{color:var(--ok)}#fb.ko{color:var(--ko)}#fb.w{color:var(--pk)}
+#end{text-align:center;padding:30px 10px}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin:20px 0}
+.stats div{background:#0a1330;border:1px solid var(--ln);border-radius:12px;padding:16px}.stats b{display:block;font-size:34px;color:var(--cy)}.stats span{color:var(--mu);font-size:14px}
+#again{background:linear-gradient(90deg,#7c3aed,#2563eb);border:0;font-weight:600;padding:11px 26px}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}#vl{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px;margin-top:12px}#vl button,.row button{padding:6px 10px;font-size:14px}.stg{margin-top:12px}
+@media(max-width:900px){.wrap{grid-template-columns:1fr;padding:12px}#ans{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+/* SVG */
+.caps{fill:#8b5cf622;stroke:#a78bfa;stroke-width:2;stroke-dasharray:6 4}.wallp{fill:none;stroke:#2dd4bf;stroke-width:8}.wallv{fill:none;stroke:#86efac;stroke-width:14}.wallf{fill:none;stroke:#d6a76b;stroke-width:14}
+.cyt{fill:#1d4ed82e}.mem{fill:none;stroke:#f9a8d4;stroke-width:2.5}.ncld{fill:#7c3aed55;stroke:#a78bfa;stroke-dasharray:3 3}.dna{fill:none;stroke:#67e8f9;stroke-width:2.5}.pls{fill:none;stroke:#f0abfc;stroke-width:2.5}
+.rib{fill:#fbbf24}.pili{stroke:#cbd5e1;stroke-width:2.5;stroke-linecap:round}.flg{fill:none;stroke:#e2e8f0;stroke-width:4;stroke-linecap:round}
+.ncl{fill:#4c1d95aa}.env{fill:none;stroke:#c4b5fd;stroke-width:7}.env2{fill:none;stroke:#0a1330;stroke-width:1.5}.pore{fill:#0a1330;stroke:#fff;stroke-width:1.5}.nu{fill:#f472b6}.chr{fill:none;stroke:#67e8f9;stroke-width:2.2;stroke-linecap:round}
+.er{fill:none;stroke:#60a5fa;stroke-width:6;stroke-linecap:round}.rel{fill:none;stroke:#2dd4bf;stroke-width:5;stroke-linecap:round}.gol{fill:none;stroke:#fb923c;stroke-width:5;stroke-linecap:round}
+.mit{fill:#9a3412;stroke:#fdba74;stroke-width:2}.cr{fill:none;stroke:#fed7aa;stroke-width:1.5}.lys{fill:#a3e635;stroke:#3f6212;stroke-width:1.5}.lyd{fill:#3f6212}.per{fill:#f5d0fe;stroke:#a21caf;stroke-width:1.5}.pec{fill:#701a75}
+.ves{fill:#5eead4;stroke:#0f766e;stroke-width:1.5}.pcm{fill:#e2e8f022;stroke:#cbd5e1;stroke-dasharray:2 3}.cen{fill:#e2e8f0;stroke:#475569;stroke-width:1.5}.cenl{fill:none;stroke:#475569;stroke-width:1.5}
+.mt{fill:none;stroke:#c4b5fd;stroke-width:6;stroke-linecap:round}.mt2{fill:none;stroke:#312e81;stroke-width:1.5;stroke-linecap:round}.ske{fill:none;stroke:#94a3b8;stroke-width:1.5}
+.vacf{fill:#38bdf833}.vac{fill:#38bdf833;stroke:#7dd3fc;stroke-width:2}.ton{fill:none;stroke:#f0abfc;stroke-width:3}.chl{fill:#166534;stroke:#bbf7d0;stroke-width:2}.gr{fill:#4ade80}.gap{fill:#0a1330}.pdt{fill:none;stroke:#60a5fa;stroke-width:2.5}
+.cyt{fill:url(#gCy)}.ncl{fill:url(#gNu)}.mit{fill:url(#gMi)}.chl{fill:url(#gCh)}.vacf,.vac{fill:url(#gVa)}.lys{fill:url(#gLy)}
+.mit,.chl,.lys,.per,.ves,.ncl{filter:drop-shadow(0 2px 3px rgba(0,0,0,.55))}
+.wtp,.wtv,.wtf{fill:none;stroke-dasharray:1 5;opacity:.55}.wtp{stroke:#115e59;stroke-width:8}.wtv{stroke:#166534;stroke-width:14}.wtf{stroke:#7c4a1d;stroke-width:14}
+.gol2{fill:none;stroke:#fed7aa;stroke-width:1.5;stroke-linecap:round;opacity:.7}.gol3{fill:#fb923c}.chp{fill:#67e8f9;opacity:.55}.bb{fill:#cbd5e1;stroke:#475569;stroke-width:1.5}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<radialGradient id="gCy" cx=".5" cy=".5" r=".7"><stop offset="0" stop-color="#2563eb" stop-opacity=".1"/><stop offset="1" stop-color="#1d4ed8" stop-opacity=".4"/></radialGradient>
+<radialGradient id="gNu" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#2e1065"/></radialGradient>
+<radialGradient id="gMi" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#ea580c"/><stop offset="1" stop-color="#7c2d12"/></radialGradient>
+<radialGradient id="gCh" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#22c55e"/><stop offset="1" stop-color="#14532d"/></radialGradient>
+<radialGradient id="gVa" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".22"/><stop offset="1" stop-color="#1d4ed8" stop-opacity=".5"/></radialGradient>
+<radialGradient id="gLy" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#ecfccb"/><stop offset="1" stop-color="#65a30d"/></radialGradient>
+</defs></svg>
+<header><h1>Atles cel·lular</h1><p>Identifica cada estructura assenyalada per la fletxa. Cada pregunta és independent de les anteriors.</p></header>
+<div class="wrap">
+<aside class="pn">
+<h2>Activitat</h2>
+<div class="grp" id="acts"><button data-a="q" class="on">Practicar (test)</button><button data-a="v">Veure la cèl·lula i totes les parts</button></div>
+<h2>Tipus cel·lular</h2>
+<div class="grp" id="cells">
+<button data-c="pro">Cèl·lula procariota</button><button data-c="ani">Cèl·lula eucariota animal</button><button data-c="veg">Cèl·lula eucariota vegetal</button><button data-c="fun">Cèl·lula eucariota fúngica</button><button data-c="all" class="on">Les quatre barrejades</button></div>
+<div id="qopts"><h2>Modalitat</h2>
+<div class="grp" id="modes"><button data-m="A" class="on">A · Escriure el nom</button><button data-m="B">B · Triar entre 4 opcions</button></div>
+<h2>Preguntes per ronda</h2>
+<select id="len"><option value="0">Totes les estructures</option><option value="10">10 preguntes</option><option value="20">20 preguntes</option></select>
+<button id="reset">Reiniciar la sessió</button></div>
+</aside>
+<main class="pn">
+<div id="play">
+<div class="top"><span id="ct"></span><span id="pg"></span></div>
+<div class="bar"><i id="bf"></i></div>
+<div id="stage"><svg id="sv" class="sv" viewBox="-50 -20 740 480" role="img" aria-label="Esquema cel·lular amb una fletxa"></svg></div>
+<p id="qt">Quina estructura assenyala la fletxa?</p>
+<div id="ans"></div>
+<div class="act"><button id="chk">Comprovar</button><button id="nxt" hidden>Següent</button></div>
+<div id="fb" role="status"></div>
+</div>
+<div id="end" hidden><h2 style="font-size:22px;color:var(--tx)">Ronda completada</h2>
+<div class="stats"><div><b id="s1"></b><span>Preguntes totals</span></div><div><b id="s2"></b><span>Correctes</span></div><div><b id="s3"></b><span>Incorrectes</span></div><div><b id="s4"></b><span>Percentatge d'encert</span></div></div>
+<button id="again">Iniciar una altra ronda</button>
+<div id="rev" hidden style="text-align:left;margin-top:22px"><h2>Estructures que has fallat (clica per veure-les)</h2><div class="row" id="rl"></div><div class="stg"><svg id="rsv" class="sv" viewBox="-50 -20 740 480"></svg></div></div></div>
+<div id="view" hidden><div class="top"><span id="vt"></span><button id="tg">Números: sí</button></div>
+<div class="stg"><svg id="vsv" class="sv" viewBox="-50 -20 740 480" role="img" aria-label="Cèl·lula amb totes les parts numerades"></svg></div>
+<p style="color:var(--mu);font-size:14px;margin:10px 0 0">Clica una estructura de la llista per veure-la assenyalada amb la fletxa i el seu nom.</p><div id="vl"></div></div>
+</main></div>
+
+<script>
+/* ===== DADES: cèl·lules, estructures i il·lustracions SVG ===== */
+const nrm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'');
+const CELLS=(()=>{
+const f=v=>+v.toFixed(1);
+const c=(x,y,r,k)=>`<circle cx="${x}" cy="${y}" r="${r}" class="${k}"/>`;
+const p=(d,k)=>`<path d="${d}" class="${k}"/>`;
+const el=(x,y,a,b,k)=>`<ellipse cx="${x}" cy="${y}" rx="${a}" ry="${b}" class="${k}"/>`;
+const rr=(x,y,w,h,r,k)=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" class="${k}"/>`;
+const dots=a=>a.map(([x,y])=>c(x,y,3,'rib')).join('');
+const g=(x,y,a,s)=>`<g transform="translate(${x} ${y}) rotate(${a})">${s}</g>`;
+const mit=(x,y,a)=>g(x,y,a,el(0,0,32,15,'mit')+el(0,0,28,11.5,'cr')+p('M-20-9q6 5 0 11M-6-11q6 7 0 14M8-11q6 7 0 14M21-7q-5 4 0 8M-13 9q-6-6 0-12M1 11q-6-7 0-14M15 10q-6-6 0-12','cr'));
+const chl=(x,y,a)=>{const st=x0=>[-7,-3,1,5].map(y=>`M${x0} ${y}h11v2.5h-11z`).join('');return g(x,y,a,el(0,0,32,16,'chl')+el(0,0,29,13,'cr')+p(st(-24)+st(-5.5)+st(13),'gr')+p('M-13 0H-5.5M5.5 0H13','cr'))};
+const ly=(x,y)=>c(x,y,11,'lys')+c(x-3,y-2,2,'lyd')+c(x+3,y+3,2,'lyd');
+const pe=(x,y)=>rr(x-9,y-9,18,18,5,'per')+c(x,y,3.5,'pec');
+const ve=(x,y)=>c(x,y,7,'ves');
+const GOL=(x,y,w,n,gp)=>Array.from({length:n},(_,i)=>{const d=`M${x-w/2+i*3} ${y+i*gp}Q${x} ${y+i*gp-12} ${x+w/2-i*3} ${y+i*gp}`;return p(d,'gol')+p(d,'gol2')+c(x-w/2+i*3,y+i*gp,3.2,'gol3')+c(x+w/2-i*3,y+i*gp,3.2,'gol3')}).join('');
+const RER=(x0,x1,y0)=>{let s='';[0,13,26].forEach(o=>{const y=y0+o;s+=p(`M${x0} ${y}Q${(x0+x1)/2} ${y-10} ${x1} ${y}`,'er');[.15,.38,.62,.85].forEach(t=>{s+=c(f(x0+(x1-x0)*t),f(y-20*t*(1-t)-5),2.3,'rib')})});return s};
+const NU=(cx,cy,r)=>{const a=f(r*.12),P=d=>[f(cx+r*Math.cos(d*Math.PI/180)),f(cy+r*Math.sin(d*Math.PI/180))],
+sq=(x,y)=>p(`M${f(x)} ${f(y)}q${a} ${-a} ${f(2*a)} 0t${f(2*a)} 0t${f(2*a)} 0`,'chr');
+return[
+['Nucli|nucleu',f(cx-.1*r),f(cy-.55*r),c(cx,cy,r,'ncl')],
+['Envoltura nuclear|membrana nuclear|envoltura del nucli|membrana del nucli',...P(210),c(cx,cy,r,'env')+c(cx,cy,r,'env2')],
+['Porus nuclears|porus nuclear|porus|pors nuclears|por nuclear',...P(0),[0,60,120,180,270,330].map(d=>c(...P(d),4.5,'pore')).join('')],
+['Nuclèol|nucleol|nuclèols',f(cx+.1*r),f(cy-.1*r),c(f(cx+.1*r),f(cy-.1*r),f(.25*r),'nu')],
+['Cromatina',f(cx-.6*r+2*a),f(cy+.2*r),sq(cx-.6*r,cy+.2*r)+sq(cx-.3*r,cy+.55*r)+[40,100,150,235,300,350].map(d=>c(f(cx+.78*r*Math.cos(d*Math.PI/180)),f(cy+.78*r*Math.sin(d*Math.PI/180)),2.6,'chp')).join('')]]};
+const mk=([sp,tx,ty,svg,ang,L])=>{const ns=sp.split('|');return{name:ns[0],al:ns.map(nrm),tx,ty,svg,ang,L}};
+const RERn='Reticle endoplasmàtic rugós (RER)|rer|reticle endoplasmàtic rugós|reticle rugós|reticle endoplasmatic rugos';
+const RELn='Reticle endoplasmàtic llis (REL)|rel|reticle endoplasmàtic llis|reticle llis';
+const RIBn='Ribosomes|ribosoma';
+const BODY='M320 30C430 22 560 80 585 190C605 290 520 405 380 412C250 420 90 395 60 270C35 170 130 38 320 30Z';
+const PROm='Membrana plasmàtica|membrana cel·lular|membrana citoplasmàtica|membrana bacteriana';
+const pro=[
+['Càpsula bacteriana|càpsula|capsula|capa mucosa',63,220,rr(50,100,460,240,120,'caps')],
+['Paret cel·lular|paret bacteriana|paret',76,220,rr(76,126,408,188,94,'wallp')+rr(76,126,408,188,94,'wtp')],
+['Citoplasma|citosol',310,284,rr(90,140,380,160,80,'cyt')],
+[PROm,90,220,rr(90,140,380,160,80,'mem'),0,45],
+['Nucleoide|nucleoid|regió del nucleoide',200,222,el(270,220,85,48,'ncld')],
+['ADN bacterià circular|adn circular|adn bacterià|adn|cromosoma bacterià|cromosoma circular',280,200,p('M215 220C220 190 260 185 280 200C305 175 340 195 330 220C345 245 300 260 280 245C255 262 215 250 215 220Z','dna')+p('M232 214C250 198 262 232 285 224C310 214 318 240 300 240','dna')],
+['Plàsmids|plàsmid|plasmid|plasmids',395,190,c(395,190,11,'pls')+c(165,255,11,'pls')],
+[RIBn,125,200,dots([[125,200],[140,262],[165,170],[190,285],[380,160],[432,212],[420,272],[355,286],[330,150],[240,288],[395,232],[250,158],[120,235]])],
+['Pili o fímbries|pili|pilus|fímbries|fimbries|fimbria',240,78,[150,195,240,285,330,375,420].map(x=>p(`M${x} 126V78`,'pili')).join('')+[170,230,290,350,410].map(x=>p(`M${x} 314V362`,'pili')).join('')],
+['Flagel bacterià|flagel|flagel bacteria',570,215,p('M484 220C510 180 545 260 570 215S610 245 625 222','flg')+c(484,220,6,'bb')]];
+const ani=[
+['Citoplasma|citosol',330,300,p(BODY,'cyt')],
+['Membrana plasmàtica|membrana cel·lular|membrana citoplasmàtica',585,190,p(BODY,'mem')],
+['Citoesquelet',140,115,p('M115 160L140 115L195 85L250 68M140 115L150 170M195 85L205 125','ske')],
+['Microtúbuls|microtúbul|microtubul|microtubuls',468,167,p('M408 202L540 125M405 224L548 272M392 193L400 68','mt')+p('M408 202L540 125M405 224L548 272M392 193L400 68','mt2')],
+...NU(255,200,70),
+[RIBn,310,268,dots([[310,268],[352,262],[410,285],[425,150],[300,60],[480,220],[195,325],[290,395]])],
+[RERn,149,228,RER(110,188,220)],
+[RELn,180,290,p('M120 290C140 265 160 315 180 290S220 315 240 290','rel')],
+['Aparell de Golgi|golgi|complex de golgi|aparell golgi',300,329,GOL(300,335,100,4,12)],
+['Vesícules|vesícula|vesicula|vesicules',368,340,ve(368,340)+ve(236,345)+ve(372,372)],
+['Mitocondris|mitocondri',480,320,mit(150,345,-15)+mit(480,320,25)+mit(440,105,-20)],
+['Lisosomes|lisosoma',345,100,ly(345,100)+ly(530,205)],
+['Peroxisomes|peroxisoma',345,155,pe(345,155)+pe(205,362)],
+['Centrosoma',366,200,c(385,215,31,'pcm')],
+['Centríols|centríol|centriol|centriols',376,221,rr(361,215,30,11,3,'cen')+rr(393,193,11,30,3,'cen')+p('M367 215v11M373 215v11M379 215v11M385 215v11M393 199h11M393 205h11M393 211h11M393 217h11','cenl')]];
+const veg=[
+['Paret cel·lular|paret cellulòsica|paret vegetal|paret',40,220,rr(40,30,560,380,24,'wallv')+rr(40,30,560,380,24,'wtv')],
+['Citoplasma|citosol',555,215,rr(54,44,532,352,14,'cyt')],
+['Membrana plasmàtica|membrana cel·lular|membrana citoplasmàtica',54,220,rr(54,44,532,352,14,'mem'),0,45],
+['Plasmodesmes|plasmodesma|plasmodesmes',600,130,[130,220,310].map(y=>`<rect x="590" y="${y-8}" width="20" height="16" class="gap"/>`+p(`M586 ${y-5}H612M586 ${y+5}H612`,'mem')+p(`M586 ${y}H612`,'pdt')).join('')],
+['Vacúol central|vacúol|vacuol|vacuol central',360,250,el(370,220,150,120,'vacf')],
+['Tonoplast|membrana del vacúol|membrana vacuolar',520,220,el(370,220,150,120,'ton')],
+['Citoesquelet',180,54,p('M80 60L180 54L260 60M180 54L190 78M260 60L268 80','ske')],
+...NU(125,145,52),
+[RIBn,195,100,dots([[195,100],[75,350],[205,322],[548,150],[420,375]])],
+[RERn,125,233,RER(85,165,225)],
+[RELn,140,288,p('M80 288C100 263 120 313 140 288S180 313 200 288','rel')],
+['Aparell de Golgi|golgi|complex de golgi|aparell golgi',330,349,GOL(330,355,80,4,10)],
+['Mitocondris|mitocondri',470,350,mit(470,350,-15)+mit(556,310,85)],
+['Cloroplasts|cloroplast',150,350,chl(150,350,15)+chl(320,68,-5)+chl(470,70,8)],
+['Peroxisomes|peroxisoma',225,365,pe(225,365)+pe(525,105)]];
+const fun=[
+['Paret cel·lular|paret cel·lular de quitina|paret de quitina|paret|quitina',30,220,rr(30,90,580,260,120,'wallf')+rr(30,90,580,260,120,'wtf')],
+['Citoplasma|citosol',320,195,rr(46,106,548,228,104,'cyt')],
+['Membrana plasmàtica|membrana cel·lular|membrana citoplasmàtica',46,220,rr(46,106,548,228,104,'mem'),0,45],
+['Vacúols|vacúol|vacuol|vacuols|vacuoles',520,215,c(520,215,44,'vac')+c(515,138,20,'vac')],
+['Citoesquelet',300,308,p('M230 300L300 308L370 303L440 311M300 308L303 296M370 303L376 290','ske')],
+...NU(150,215,48),
+[RIBn,250,135,dots([[250,135],[470,300],[75,165],[80,285],[385,200]])],
+[RERn,238,208,RER(200,276,200)],
+[RELn,275,268,p('M215 268C235 243 255 293 275 268S315 293 335 268','rel')],
+['Aparell de Golgi|golgi|complex de golgi|aparell golgi',340,134,GOL(340,140,80,4,10)],
+['Mitocondris|mitocondri',435,165,mit(435,165,-10)+mit(430,230,10)],
+['Peroxisomes|peroxisoma',365,235,pe(365,235)+pe(150,300)]];
+return{
+pro:{t:'Cèl·lula procariota',l:pro.map(mk)},ani:{t:'Cèl·lula eucariota animal',l:ani.map(mk)},
+veg:{t:'Cèl·lula eucariota vegetal',l:veg.map(mk)},fun:{t:'Cèl·lula eucariota fúngica',l:fun.map(mk)}}})();
+</script>
+<script>
+/* ===== LÒGICA ===== */
+const $=s=>document.querySelector(s);
+const lev=(a,b)=>{let p=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){const q=[i];for(let j=1;j<=b.length;j++)q[j]=Math.min(p[j]+1,q[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1));p=q}return p[b.length]};
+const good=(t,en)=>{const n=nrm(t);return !!n&&en.al.some(a=>n===a||(a.length>=6&&lev(n,a)<=(a.length>=12?2:1)))};
+const ALL=Object.entries(CELLS).flatMap(([k,v])=>v.l.map(en=>({k,en})));
+let tail={},vc='pro',vsel=null,nums=true;let cfg={a:'q',c:'all',m:'A',len:0},R=null,bag=[],sel=null;
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+function take(){const P=ALL.filter(x=>cfg.c==='all'||x.k===cfg.c),n=cfg.len||P.length;
+ let out=bag.splice(0,n);
+ if(out.length<n){bag=shuffle(P.filter(x=>!out.includes(x)));out=out.concat(bag.splice(0,n-out.length))}
+ return shuffle(out)}
+function arrow(tx,ty,ang,L0){let ux,uy;
+ if(ang!=null){ux=Math.cos(ang*Math.PI/180);uy=Math.sin(ang*Math.PI/180)}
+ else{let dx=tx-320,dy=ty-220,d=Math.hypot(dx,dy);if(d<25){dx=0;dy=-1;d=1}ux=dx/d;uy=dy/d}
+ let t=1e9;if(ux>0)t=Math.min(t,(680-tx)/ux);if(ux<0)t=Math.min(t,(-40-tx)/ux);if(uy>0)t=Math.min(t,(450-ty)/uy);if(uy<0)t=Math.min(t,(-10-ty)/uy);
+ const L=L0||Math.max(45,Math.min(t,120)),sx=tx+ux*L,sy=ty+uy*L,hx=tx+ux*13,hy=ty+uy*13,px=-uy*5,py=ux*5;
+ tail={sx,sy,ux,uy};const pts=`${tx},${ty} ${hx+px},${hy+py} ${hx-px},${hy-py}`;
+ return `<g stroke-linecap="round" stroke-linejoin="round"><line x1="${sx}" y1="${sy}" x2="${hx}" y2="${hy}" stroke="#050b1f" stroke-width="6"/><line x1="${sx}" y1="${sy}" x2="${hx}" y2="${hy}" stroke="#f472b6" stroke-width="2.5"/><polygon points="${pts}" fill="#f472b6" stroke="#050b1f" stroke-width="1.5"/><circle cx="${sx}" cy="${sy}" r="4.5" fill="#f472b6" stroke="#050b1f" stroke-width="1.5"/></g>`}
+function lbl(en,bad){const {sx,sy,ux,uy}=tail,col=bad?'#fb7185':'#34d399',w=en.name.length*7.2+18;let x=sx+ux*24,y=sy+uy*24;x=Math.max(-40+w/2,Math.min(680-w/2,x));y=Math.max(0,Math.min(445,y));
+ return `<circle cx="${en.tx}" cy="${en.ty}" r="14" fill="none" stroke="${col}" stroke-width="2" stroke-dasharray="4 3"/><rect x="${x-w/2}" y="${y-13}" width="${w}" height="26" rx="6" fill="#050b1f" stroke="${col}" stroke-width="1.5"/><text x="${x}" y="${y+5}" text-anchor="middle" font-size="13" fill="#e2e8f0" font-family="Segoe UI,sans-serif">${en.name}</text>`}
+const markers=k=>CELLS[k].l.map((s,i)=>`<circle cx="${s.tx}" cy="${s.ty}" r="9" fill="#050b1f" stroke="#f472b6" stroke-width="1.5"/><text x="${s.tx}" y="${s.ty+3.5}" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Segoe UI,sans-serif">${i+1}</text>`).join('');
+function draw(svg,k,en,bad,n){svg.innerHTML=CELLS[k].l.map(s=>s.svg).join('')+(n?markers(k):'')+(en?arrow(en.tx,en.ty,en.ang,en.L)+(bad===undefined?'':lbl(en,bad)):'')}
+function fb(m,k){const o=$('#fb');o.innerHTML=m;o.className=k||''}
+function start(){R={q:take(),i:0,ok:0,ko:0,ans:false,miss:[]};$('#rev').hidden=true;setAct(cfg.a);render()}
+function render(){const x=R.q[R.i],{k,en}=x;R.ans=false;
+ $('#ct').textContent=CELLS[k].t;$('#pg').textContent=`Pregunta ${R.i+1} de ${R.q.length}`;$('#bf').style.width=(100*R.i/R.q.length)+'%';
+ draw($('#sv'),k,en);
+ if(!x.opts)x.opts=shuffle([en,...shuffle(CELLS[k].l.filter(s=>s!==en)).slice(0,3)]);
+ fb('');$('#chk').hidden=false;$('#nxt').hidden=true;renderAns()}
+function renderAns(){sel=null;const a=$('#ans'),x=R.q[R.i];
+ if(cfg.m==='A'){a.innerHTML='<input id="ti" type="text" autocomplete="off" spellcheck="false" placeholder="Escriu el nom de l\'estructura…" aria-label="Resposta">';$('#ti').focus()}
+ else a.innerHTML=x.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o.name}</button>`).join('')}
+function check(){if(!R||R.ans)return;const x=R.q[R.i];let r;
+ if(cfg.m==='A'){const v=$('#ti').value;if(!v.trim()){fb('Escriu una resposta abans de comprovar.','w');return}r=good(v,x.en);$('#ti').disabled=true}
+ else{if(sel==null){fb('Selecciona una opció abans de comprovar.','w');return}r=x.opts[sel]===x.en;
+  document.querySelectorAll('.opt').forEach((b,i)=>{b.classList.remove('sel');if(x.opts[i]===x.en)b.classList.add('good');else if(i===sel)b.classList.add('bad')})}
+ R.ans=true;if(r)R.ok++;else{R.ko++;R.miss.push(x)}draw($('#sv'),x.k,x.en,!r);
+ fb(r?'Correcte!':`Incorrecte. Resposta correcta: <b>${x.en.name}</b>`,r?'ok':'ko');$('#chk').hidden=true;$('#nxt').hidden=false;$('#nxt').focus()}
+function next(){if(!R||!R.ans)return;R.i++;if(R.i>=R.q.length){const n=R.q.length;$('#play').hidden=true;$('#end').hidden=false;
+ $('#s1').textContent=n;$('#s2').textContent=R.ok;$('#s3').textContent=R.ko;$('#s4').textContent=Math.round(100*R.ok/n)+'%';
+ $('#rev').hidden=!R.miss.length;$('#rl').innerHTML=R.miss.map((m,i)=>`<button data-i="${i}">${m.en.name} · ${CELLS[m.k].t.replace('Cèl·lula ','')}</button>`).join('');
+ if(R.miss.length)draw($('#rsv'),R.miss[0].k,R.miss[0].en,true)}else render()}
+function setAct(a){cfg.a=a;const done=R.i>=R.q.length;$('#play').hidden=a==='v'||done;$('#end').hidden=a==='v'||!done;$('#view').hidden=a!=='v';$('#qopts').hidden=a==='v';
+ document.querySelectorAll('#acts button').forEach(b=>b.classList.toggle('on',b.dataset.a===a));sync();if(a==='v')view()}
+function sync(){const cur=cfg.a==='v'?vc:cfg.c;document.querySelectorAll('#cells button').forEach(b=>{b.classList.toggle('on',b.dataset.c===cur);b.hidden=cfg.a==='v'&&b.dataset.c==='all'})}
+function view(){const L=CELLS[vc].l;draw($('#vsv'),vc,vsel==null?null:L[vsel],vsel==null?undefined:false,nums);$('#vt').textContent=CELLS[vc].t;
+ $('#vl').innerHTML=L.map((s,i)=>`<button data-i="${i}" class="${i===vsel?'on':''}">${i+1}. ${s.name}</button>`).join('')}
+/* Esdeveniments */
+$('#chk').onclick=check;$('#nxt').onclick=next;$('#again').onclick=start;
+$('#reset').onclick=()=>{bag=[];start()};
+$('#ans').onclick=e=>{const b=e.target.closest('.opt');if(!b||R.ans)return;sel=+b.dataset.i;document.querySelectorAll('.opt').forEach(o=>o.classList.toggle('sel',o===b))};
+$('#cells').onclick=e=>{const b=e.target.closest('button');if(!b)return;if(cfg.a==='v'){vc=b.dataset.c;vsel=null;view()}else{cfg.c=b.dataset.c;bag=[];start()}sync()};
+$('#acts').onclick=e=>{const b=e.target.closest('button');if(b)setAct(b.dataset.a)};
+$('#vl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;vsel=vsel===i?null:i;view()};
+$('#tg').onclick=()=>{nums=!nums;$('#tg').textContent='Números: '+(nums?'sí':'no');view()};
+$('#rl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const m=R.miss[+b.dataset.i];draw($('#rsv'),m.k,m.en,true)};
+$('#modes').onclick=e=>{const b=e.target.closest('button');if(!b)return;cfg.m=b.dataset.m;document.querySelectorAll('#modes button').forEach(o=>o.classList.toggle('on',o===b));if(R&&!R.ans&&!$('#play').hidden)renderAns()};
+$('#len').onchange=e=>{cfg.len=+e.target.value;bag=[];start()};
+document.addEventListener('keydown',e=>{if(e.key!=='Enter'||e.target.tagName==='BUTTON'||e.target.tagName==='SELECT'||!R||$('#play').hidden)return;if(R.ans)next();else check()});
+start();
+</script></body></html>
