@@ -72,7 +72,7 @@ const MATERIAS = [
         temas: [
             { nombre: "Poesia Catalana", url: "Paginas/Poesia catalana.html", etiqueta: "" },
             { nombre: "ATP", url: "/EF", etiqueta: "" },
-            { nombre: "", url: "#", etiqueta: "" },
+            { nombre: "Juego células", url: "Paginas/juego-celulas.html", etiqueta: "" },
             { nombre: "", url: "#", etiqueta: "" },
         ],
     },
